@@ -7,6 +7,7 @@ const projects = {
     startDate: "15/01/2025",
     endDate: "30/03/2025",
     url: "https://timelink-bootstrap.onrender.com",
+    repo: "https://github.com/drbarranco/timelink",
     description: "Aplicación Web de control horario de empleados",
     descriptionEn: "Employee time tracking web application",
     details: `Aplicación desarrollada durante mis prácticas en Newtron Informática en 2025 para la gestión del control horario en empresas. 
@@ -182,6 +183,7 @@ const projects = {
     startDate: "15/09/2024",
     endDate: "10/03/2025",
     url: "https://padel.drbarranco.es/",
+    repo: "https://github.com/drbarranco/gotopadel",
     description: "Aplicación web para la gestión de reservas de pistas de pádel",
     descriptionEn: "Web application for managing padel court bookings",
     details:   `Aplicación desarrollada como Proyecto Final del Ciclo de Desarrollo de Aplicaciones Web (DAW), calificada con un 10.

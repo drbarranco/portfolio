@@ -327,6 +327,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <li><strong>URL</strong>: <a href="${project.url}" target="_blank" rel="noopener noreferrer">${project.url}</a></li>
       `;
     }
+    if (project.repo) {
+      infoHTML += `
+        <li><strong>GitHub</strong>: <a href="${project.repo}" target="_blank" rel="noopener noreferrer">${project.repo}</a></li>
+      `;
+
+    }
 
     document.querySelector(".portfolio-info ul").innerHTML = infoHTML;
     document.querySelector(".portfolio-description h2").textContent = languajeES ? project.description : project.descriptionEn;
@@ -378,13 +384,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  document.getElementById("downloadCV").addEventListener("click", function () {
-    downloadCV();
-  });
+  let downloadCv = document.getElementById("downloadCV");
+  let downloadEn = document.getElementById("downloadCV-en");
 
-  document.getElementById("downloadCV-en").addEventListener("click", function () {
-    downloadCV(true);
-  });
-
+  if (downloadCv) {
+    document.getElementById("downloadCV").addEventListener("click", function () {
+      downloadCV();
+    });
+  }
+  if (downloadEn) {
+    document.getElementById("downloadCV-en").addEventListener("click", function () {
+      downloadCV(true);
+    });
+  }
 
 });
