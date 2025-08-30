@@ -623,27 +623,27 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
-.about .content h2 {
+.resume .content h2 {
   font-weight: 700;
   font-size: 24px;
 }
 
-.about .content ul {
+.resume .content ul {
   list-style: none;
   padding: 0;
 }
 
-.about .content ul li {
+.resume .content ul li {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
 }
 
-.about .content ul strong {
+.resume .content ul strong {
   margin-right: 10px;
 }
 
-.about .content ul i {
+.resume .content ul i {
   font-size: 16px;
   margin-right: 5px;
   color: var(--accent-color);
@@ -1379,6 +1379,11 @@ section,
   margin-right: 8px;
   vertical-align: middle;
   border-radius: 2px;
+}
+
+.link-about{
+  color: whitesmoke;
+  text-decoration: underline;
 }
 
 

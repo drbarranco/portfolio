@@ -83,11 +83,10 @@
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="#hero" class="active" data-i18n="nav_home"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#about" data-i18n="nav_about"><i class="bi bi-person navicon"></i> Sobre Mí</a></li>
-        <li><a href="#resume" data-i18n="nav_resume"><i class="bi bi-file-earmark-text navicon"></i> Currículum</a></li>
         <li><a href="#portfolio" data-i18n="nav_portfolio"><i class="bi bi-images navicon"></i> Proyectos</a></li>
-        <li><a href="#services" data-i18n="nav_services"><i class="bi bi-hdd-stack navicon"></i> Certificaciones</a>
-        </li>
+        <li><a href="#skills" data-i18n="nav_about"><i class="bi bi-layers navicon"></i> Tech Stack</a></li>
+        <li><a href="#resume" data-i18n="nav_resume"><i class="bi bi-file-earmark-text navicon"></i> Currículum</a></li>        
+        <li><a href="#services" data-i18n="nav_services"><i class="bi bi-hdd-stack navicon"></i> Certificaciones</a></li>
         <li><a href="#contact" data-i18n="nav_contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
       </ul>
     </nav>
@@ -775,91 +774,6 @@
 
     </section><!-- /Portfolio Section -->
 
-    <!-- About Section -->
-    <section id="about" class="about section dark-background">
-      <!-- Section Title -->
-      <div class="container section-title pb-2" data-aos="fade-up">
-        <h2 data-i18n="nav_about">Sobre Mí</h2>
-        <!-- <p data-i18n="about_text">Desde pequeño, la tecnología ha sido mi gran pasión. Empecé trasteando con programas
-          en Basic y desmontando
-          cualquier cacharro que caía en mis manos. Esa curiosidad me llevó a convertirme en desarrollador, un camino
-          que he recorrido con entusiasmo tras formarme en DAW y DAM.</p> -->
-
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4 justify-content-center">
-          <!-- <div class="col-lg-4">
-            <img src="assets/img/fondo_linkedin5.png" class="img-fluid" alt="Fondo de código">
-          </div> -->
-          <div class="content">
-            <!-- <h2 data-i18n="about_subtitle">Desarrollador de Aplicaciones Web y Android</h2> -->
-
-            <p class="mb-5" data-i18n="about_paragraph">Soy un desarrollador comprometido con una formación técnica
-              sólida y
-              experiencia tanto en frontend como
-              en backend, además del desarrollo de aplicaciones Android. Me adapto con facilidad a diferentes entornos y
-              tecnologías, y afronto cada proyecto con responsabilidad, iniciativa y atención al detalle. Disfruto
-              resolviendo problemas con código, especialmente cuando son complejos.</p>
-            <div class="row mb-3">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_birth">Lugar de nacimiento:</strong>
-                    <span>Linares, Jaén, ES</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong data-i18n="about_phone">Teléfono:</strong>
-                    <a href="tel:+34622811670">+34 622 811 670</a>
-                  </li>
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_email">Email:</strong>
-                    <a href="mailto:drbarrancodev@gmail.com" class="email"
-                      target="_blank"><span>drbarrancodev@gmail.com</span></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-
-
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_languages">Idiomas:</strong> <span
-                      data-i18n="about_languages_value">Español
-                      (nativo), Inglés (B2)</span></li>
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong>LinkedIn:</strong>
-                    <a href="https://www.linkedin.com/in/daniel-rodriguez-barranco/" target="_blank">
-                      linkedin.com/in/daniel-rodriguez-barranco
-                    </a>
-                  </li>
-
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong>GitHub:</strong>
-                    <a href="https://github.com/drbarranco" target="_blank">
-                      github.com/drbarranco
-                    </a>
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-            <a id="downloadCV" class="btn btn-secondary mt-3 me-3 border-info">
-              <span class="flag-icon-bg"></span>
-              Descargar CV (pdf)
-            </a>
-
-            <a id="downloadCV-en" class="btn btn-secondary mt-3 border-info">
-              <span class="flag-icon-en"></span>
-              Download CV (pdf)
-            </a>
-
-          </div>
-        </div>
-      </div>
-    </section><!-- End About Section -->
-
-
     <!-- Skills Section -->
     <section id="skills" class="skills section dark-background">
 
@@ -1023,20 +937,55 @@
       </div><!-- End Section Title -->
 
       <div class="container">
+        <div class="row gy-4 justify-content-center">      
+          <div class="content">
+            <!-- <h2 data-i18n="about_subtitle">Desarrollador de Aplicaciones Web y Android</h2> -->           
+            <div class="row mb-3">
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_birth">Lugar de nacimiento:</strong>
+                    <span>Linares, Jaén, ES</span>
+                  </li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <strong data-i18n="about_phone">Teléfono:</strong>
+                    <a class="link-about" href="tel:+34622811670">+34 622 811 670</a>
+                  </li>
+                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_email">Email:</strong>
+                    <a class="link-about" href="mailto:drbarrancodev@gmail.com" class="email"
+                      target="_blank"><span>drbarrancodev@gmail.com</span></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_languages">Idiomas:</strong> <span
+                      data-i18n="about_languages_value">Español
+                      (nativo), Inglés (B2)</span></li>
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <strong>LinkedIn:</strong>
+                    <a class="link-about" href="https://www.linkedin.com/in/daniel-rodriguez-barranco/" target="_blank">
+                      linkedin.com/in/daniel-rodriguez-barranco
+                    </a>
+                  </li>
+
+                  <li>
+                    <i class="bi bi-chevron-right"></i>
+                    <strong>GitHub:</strong>
+                    <a class="link-about" href="https://github.com/drbarranco" target="_blank">
+                      github.com/drbarranco
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+
+          </div>
+        </div>
         <div class="row">
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <!-- <h3 data-i18n="resume_summary_title" class="resume-title">Resumen</h3>
-            <div class="resume-item pb-0">
-              <h4>Daniel Rodríguez Barranco</h4>
-              <p data-i18n="resume_summary_desc"><em>Desarrollador full stack con formación técnica y experiencia en
-                  prácticas, enfocado en crear
-                  soluciones tecnológicas innovadoras para web y móviles.</em></p>
-              <ul>
-                <li>Costa Adeje, S/C de Tenerife</li>
-                <li>+34 622811670</li>
-                <li>drbarrancodev@gmail.com</li>
-              </ul>
-            </div> -->
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">            
 
             <h3 class="resume-title" data-i18n="resume_experience_title">Experiencia</h3>
 
@@ -1128,6 +1077,15 @@
 
           </div>
         </div>
+        <a id="downloadCV" class="btn btn-secondary mt-3 me-3 border-info">
+              <span class="flag-icon-bg"></span>
+              Descargar CV (pdf)
+            </a>
+
+            <a id="downloadCV-en" class="btn btn-secondary mt-3 border-info">
+              <span class="flag-icon-en"></span>
+              Download CV (pdf)
+            </a>
       </div>
     </section><!-- End Resume Section -->
 
