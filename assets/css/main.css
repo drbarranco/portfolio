@@ -156,7 +156,8 @@ h6 {
   transition: all ease-in-out 0.3s;
   overflow-y: auto;
   z-index: 997;
-  border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  /* border-right: 2px solid gray; */
+  border-right: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .header .profile-img img {
@@ -546,12 +547,13 @@ section,
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: 100vh;
+  min-height: 50vh;
   position: relative;
-  padding: 80px 0;
+  padding: 100px 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .hero img {
@@ -575,12 +577,14 @@ section,
 .hero .container {
   position: relative;
   z-index: 3;
+  min-height: 20vh;
 }
 
 .hero h2 {
   margin: 0;
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 700;
+  
 }
 
 .hero p {
