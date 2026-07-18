@@ -27,14 +27,14 @@
   // Configuración de zoom por hotspot (escala y traslación para centrar en 16:9)
   // Basado en el viewBox SVG (1024x576). El centro es (512, 288).
   const zoomSettings = {
-    "hot-pc": { scale: 2.2, x: -8, y: -132 },
-    "hot-movil": { scale: 3.5, x: -108, y: -257 },
-    "hot-tpv": { scale: 2.2, x: -303, y: -227 },
-    "hot-ideas": { scale: 2.3, x: 320, y: -252 },
-    "hot-estanteria": { scale: 2.0, x: 12, y: 93 },
-    "hot-pizarra": { scale: 2.1, x: 362, y: -7 },
-    "hot-taza": { scale: 2.5, x: 397, y: -247 },
-    "hot-arcade": { scale: 2.0, x: 260, y: -130 }
+    "hot-pc": { scale: 2.2, x: -8, y: 43 },
+    "hot-movil": { scale: 3.5, x: -113, y: -47 },
+    "hot-tpv": { scale: 2.2, x: -303, y: -27 },
+    "hot-ideas": { scale: 2.3, x: 332, y: -237 },
+    "hot-estanteria": { scale: 2.0, x: 12, y: 173 },
+    "hot-pizarra": { scale: 2.1, x: 362, y: 108 },
+    "hot-taza": { scale: 2.5, x: 397, y: -184 },
+    "hot-arcade": { scale: 2.0, x: 272, y: -62 }
   };
 
   // Frases de humor (Easter eggs) para clics normales
@@ -61,7 +61,7 @@
       ],
       "hot-poster": [
         "Un póster de Tenerife. La isla del Teide y el eterno verano.",
-        "Me recuerda mis raíces y de dónde soy."
+        "Me recuerda la caminata que me pegué para subirlo"
       ]
     },
     en: {
@@ -893,6 +893,43 @@
           applyZoom(hotId);
         } else {
           triggerSpeechBubble(hotId, e.clientX, e.clientY);
+        }
+      });
+    });
+
+    // VINCULACIÓN DE BALIZAS PULSANTES DE PRECISIÓN (HTML BEACONS)
+    document.querySelectorAll(".hotspot-beacon").forEach(beacon => {
+      const targetId = beacon.getAttribute("data-target");
+      const targetHotspot = document.getElementById(targetId);
+
+      if (!targetHotspot) return;
+
+      // Sincronizar hover con barra de acción superior
+      beacon.addEventListener("mouseenter", () => {
+        if (gameState.activeZoom) return;
+        const rawLabel = targetHotspot.getAttribute("data-label");
+        const parts = rawLabel.split(" | ");
+        const labels = {};
+        parts.forEach(p => {
+          const sub = p.split(": ");
+          labels[sub[0].trim()] = sub[1].trim();
+        });
+        if (hudText) hudText.textContent = labels[gameState.lang];
+      });
+
+      beacon.addEventListener("mouseleave", () => {
+        if (hudText && !gameState.activeZoom) hudText.textContent = "";
+      });
+
+      // Sincronizar click directo para disparar el zoom o globo de diálogo sin intermediarios
+      beacon.addEventListener("click", (e) => {
+        if (gameState.activeZoom) return;
+        
+        playSound("snd-click");
+        if (zoomSettings[targetId]) {
+          applyZoom(targetId);
+        } else {
+          triggerSpeechBubble(targetId, e.clientX, e.clientY);
         }
       });
     });

@@ -53,7 +53,7 @@
       </button>
     </div>
 
-    <!-- ESCENARIO DE LA HABITACIÓN (CON SOPORTE DE ZOOM) -->
+    <!-- ESCENARIO DE LA HABITACIÓN (CON SOPORTE DE ZOOM Y BALIZAS DE PRECISIÓN) -->
     <div class="room-wrapper" id="room-wrapper">
       <img src="assets/img/retro_room.jpg" class="room-bg" alt="Despacho de Daniel">
       
@@ -61,42 +61,56 @@
       <svg class="hotspot-svg" viewBox="0 0 1024 576" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         
         <!-- Puerta izquierda (Autodidacta) -->
-        <polygon id="hot-puerta" class="hotspot" points="0,90 80,90 80,480 0,480" data-label="es: → Leer cartel de la puerta | en: → Read sign on the door" />
+        <polygon id="hot-puerta" class="hotspot" points="0,70 80,70 80,280 0,280" data-label="es: → Leer cartel de la puerta | en: → Read sign on the door" />
         
         <!-- Pizarra de la pared izquierda ("PLAN DEL DÍA") -->
-        <polygon id="hot-pizarra" class="hotspot" points="100,150 200,150 200,440 100,440" data-label="es: → Examinar plan del día (Formación) | en: → Examine daily plan (Education)" />
+        <polygon id="hot-pizarra" class="hotspot" points="100,90 200,90 200,270 100,270" data-label="es: → Examinar plan del día (Formación) | en: → Examine daily plan (Education)" />
         
         <!-- Máquina recreativa arcade (Bug Hunter) -->
-        <polygon id="hot-arcade" class="hotspot" points="180,380 300,380 300,576 180,576" data-label="es: → Jugar a la máquina arcade | en: → Play arcade machine" />
+        <polygon id="hot-arcade" class="hotspot" points="180,230 300,230 300,470 180,470" data-label="es: → Jugar a la máquina arcade | en: → Play arcade machine" />
 
         <!-- Ventana (Tenerife / Sunset) -->
-        <polygon id="hot-ventana" class="hotspot" points="750,80 1000,80 1000,520 750,520" data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
+        <polygon id="hot-ventana" class="hotspot" points="750,60 1000,60 1000,320 750,320" data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
         
         <!-- Ordenador principal (TimeLink) -->
-        <polygon id="hot-pc" class="hotspot" points="380,330 660,330 660,510 380,510" data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
+        <polygon id="hot-pc" class="hotspot" points="380,190 660,190 660,300 380,300" data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
         
         <!-- Móvil (GoToPádel) -->
-        <polygon id="hot-movil" class="hotspot" points="590,525 650,525 650,565 590,565" data-label="es: → Inspeccionar smartphone (GoToPádel) | en: → Inspect mobile phone (GoToPádel)" />
+        <polygon id="hot-movil" class="hotspot" points="595,310 655,310 655,360 595,360" data-label="es: → Inspeccionar smartphone (GoToPádel) | en: → Inspect mobile phone (GoToPádel)" />
         
         <!-- TPV antiguo (OKBackups) -->
-        <polygon id="hot-tpv" class="hotspot" points="730,455 900,455 900,576 730,576" data-label="es: → Diagnosticar TPV de comercio (OKBackups) | en: → Diagnose shop POS terminal (OKBackups)" />
+        <polygon id="hot-tpv" class="hotspot" points="730,260 900,260 900,370 730,370" data-label="es: → Diagnosticar TPV de comercio (OKBackups) | en: → Diagnose shop POS terminal (OKBackups)" />
         
         <!-- Taza de café -->
-        <polygon id="hot-taza" class="hotspot" points="80,495 150,495 150,576 80,576" data-label="es: → Tomar taza de café | en: → Take coffee cup" />
+        <polygon id="hot-taza" class="hotspot" points="80,435 150,435 150,510 80,510" data-label="es: → Tomar taza de café | en: → Take coffee cup" />
         
         <!-- Cuaderno de Ideas (Currículum) -->
-        <polygon id="hot-ideas" class="hotspot" points="105,505 280,505 280,576 105,576" data-label="es: → Abrir cuaderno de ideas (Currículum) | en: → Open ideas notebook (Resume)" />
+        <polygon id="hot-ideas" class="hotspot" points="100,475 260,475 260,576 100,576" data-label="es: → Abrir cuaderno de ideas (Currículum) | en: → Open ideas notebook (Resume)" />
 
         <!-- Estantería de libros / manuales -->
-        <polygon id="hot-estanteria" class="hotspot" points="350,140 650,140 650,250 350,250" data-label="es: → Examinar archivador técnico (Tecnologías) | en: → Examine technical files (Tech Stack)" />
+        <polygon id="hot-estanteria" class="hotspot" points="350,80 650,80 650,150 350,150" data-label="es: → Examinar archivador técnico (Tecnologías) | en: → Examine technical files (Tech Stack)" />
         
         <!-- Raspberry Pi / Servidores -->
-        <polygon id="hot-raspberry" class="hotspot" points="720,415 780,415 780,540 720,540" data-label="es: → Inspeccionar servidores de pruebas | en: → Inspect testing servers" />
+        <polygon id="hot-raspberry" class="hotspot" points="720,265 780,265 780,355 720,355" data-label="es: → Inspeccionar servidores de pruebas | en: → Inspect testing servers" />
 
         <!-- Poster de Tenerife -->
-        <polygon id="hot-poster" class="hotspot" points="660,160 730,160 730,390 660,390" data-label="es: → Leer póster de Tenerife | en: → Look at Tenerife poster" />
+        <polygon id="hot-poster" class="hotspot" points="660,100 730,100 730,230 660,230" data-label="es: → Leer póster de Tenerife | en: → Look at Tenerife poster" />
 
       </svg>
+
+      <!-- BALIZAS PULSANTES DE PRECISIÓN (ELEMENTOS HTML RELATIVOS) -->
+      <div class="hotspot-beacon" style="left: 3.9%; top: 30.4%;" data-target="hot-puerta"></div>
+      <div class="hotspot-beacon" style="left: 14.6%; top: 31.3%;" data-target="hot-pizarra"></div>
+      <div class="hotspot-beacon" style="left: 23.4%; top: 60.8%;" data-target="hot-arcade"></div>
+      <div class="hotspot-beacon" style="left: 50.8%; top: 42.5%;" data-target="hot-pc"></div>
+      <div class="hotspot-beacon" style="left: 61.0%; top: 58.2%;" data-target="hot-movil"></div>
+      <div class="hotspot-beacon" style="left: 79.6%; top: 54.7%;" data-target="hot-tpv"></div>
+      <div class="hotspot-beacon" style="left: 11.2%; top: 82.0%;" data-target="hot-taza"></div>
+      <div class="hotspot-beacon" style="left: 17.6%; top: 91.1%;" data-target="hot-ideas"></div>
+      <div class="hotspot-beacon" style="left: 48.8%; top: 20.0%;" data-target="hot-estanteria"></div>
+      <div class="hotspot-beacon" style="left: 73.2%; top: 53.8%;" data-target="hot-raspberry"></div>
+      <div class="hotspot-beacon" style="left: 85.4%; top: 33.0%;" data-target="hot-ventana"></div>
+      <div class="hotspot-beacon" style="left: 67.9%; top: 28.6%;" data-target="hot-poster"></div>
     </div>
 
     <!-- BOTONERA MENÚ INFERIOR (HTML REAL) -->

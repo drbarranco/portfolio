@@ -87,9 +87,12 @@ body.game-body {
 }
 
 .room-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Encaje exacto y limpio libre de distorsiones */
+  object-fit: fill; /* Estira coordinado con el SVG para perfecta alineación de hotspots y beacons */
   display: block;
 }
 
@@ -130,15 +133,55 @@ body.ambient-night .ambient-overlay {
   fill: transparent;
   stroke: transparent;
   cursor: pointer;
-  transition: fill 0.3s, stroke 0.3s;
 }
 
-/* Resplandor al pasar el ratón */
+/* Desactivamos recuadros verdes invasivos */
 .hotspot:hover {
-  fill: rgba(57, 255, 20, 0.08);
-  stroke: var(--crt-green);
-  stroke-width: 1.5;
-  filter: drop-shadow(0 0 6px var(--crt-green-glow));
+  fill: transparent;
+  stroke: transparent;
+  filter: none;
+}
+
+/* Balizas Pulsantes de Precisión (Hotspot Beacons) */
+.hotspot-beacon {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--crt-glow); /* Ámbar retro */
+  border: 2px solid #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 15;
+  box-shadow: 0 0 8px rgba(255, 176, 0, 0.8), 0 0 16px rgba(255, 176, 0, 0.4);
+  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.5s ease;
+  animation: beacon-pulse 2s infinite ease-in-out;
+}
+
+.hotspot-beacon:hover {
+  background-color: var(--crt-green); /* Cambia a verde al apuntarlo */
+  border-color: #fff;
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 1), 0 0 24px rgba(57, 255, 20, 0.6);
+  animation-duration: 0.8s; /* Pulsa más rápido */
+}
+
+@keyframes beacon-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 176, 0, 0.7), 0 0 0 4px rgba(255, 176, 0, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent, 0 0 0 12px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
+  }
+}
+
+/* Ocultar balizas al hacer zoom para no obstruir pantallas detalladas */
+.game-viewport.zoomed-in .hotspot-beacon {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /*=============================================================================
