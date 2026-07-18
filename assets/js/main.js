@@ -1,358 +1,808 @@
 /**
-* Template Name: iPortfolio
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Updated: Jun 29 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+* DR-BIOS v2.0 - GRAPHIC ADVENTURE ENGINE
+* Author: Daniel Rodríguez Barranco
+* License: MIT
 */
 
 (function () {
   "use strict";
 
-  /**
-   * Header toggle
-   */
-  const headerToggleBtn = document.querySelector('.header-toggle');
+  // Estado del motor de juego
+  const gameState = {
+    lang: localStorage.getItem("lang") || "es",
+    activeZoom: null, // "hot-pc", "hot-movil", "hot-tpv", etc.
+    activeDialogueProject: null,
+    dialogueStep: "root"
+  };
 
-  function headerToggle() {
-    document.querySelector('#header').classList.toggle('header-show');
-    headerToggleBtn.classList.toggle('bi-list');
-    headerToggleBtn.classList.toggle('bi-x');
-  }
-  headerToggleBtn.addEventListener('click', headerToggle);
-
-  /**
-   * Hide mobile nav on same-page/hash links
-   */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.header-show')) {
-        headerToggle();
-      }
-    });
-
-  });
-
-  /**
-   * Toggle mobile nav dropdowns
-   */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function (e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
-
-  /**
-   * Preloader
-   */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      // preloader.remove();
-      preloader.style.display = "none";
-    });
-  }
-
-  /**
-   * Scroll top button
-   */
-  let scrollTop = document.querySelector('.scroll-top');
-
-  function toggleScrollTop() {
-    if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
-    }
-  }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
-
-  /**
-   * Animation on scroll function and init
-   */
-  function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-  window.addEventListener('load', aosInit);
-
-  /**
-   * Init typed.js
-   */
-  let typedInstance = null;
-  window.initTyped = function () {
-    const selectTyped = document.querySelector('.typed');
-    if (selectTyped) {
-      if (typedInstance) {
-        typedInstance.destroy();
-      }
-      let typed_strings = selectTyped.getAttribute('data-typed-items');
-      typed_strings = typed_strings.split(',');
-      typedInstance = new Typed('.typed', {
-        strings: typed_strings,
-        loop: true,
-        typeSpeed: 20,
-        backSpeed: 20,
-        backDelay: 2000,
-        //smartBackspace: false, // Evita borrar solo la diferencia entre cadenas
-        startDelay: 300,
-      });
+  // Sonidos
+  function playSound(soundId) {
+    const snd = document.getElementById(soundId);
+    if (snd) {
+      snd.currentTime = 0;
+      snd.play().catch(() => {});
     }
   }
 
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
+  // Configuración de zoom por hotspot (escala y traslación para centrar en 16:9)
+  // Basado en el viewBox SVG (1024x576). El centro es (512, 288).
+  const zoomSettings = {
+    "hot-pc": { scale: 2.2, x: -8, y: -132 },
+    "hot-movil": { scale: 3.5, x: -108, y: -257 },
+    "hot-tpv": { scale: 2.2, x: -303, y: -227 },
+    "hot-ideas": { scale: 2.3, x: 320, y: -252 },
+    "hot-estanteria": { scale: 2.0, x: 12, y: 93 },
+    "hot-pizarra": { scale: 2.1, x: 362, y: -7 },
+    "hot-taza": { scale: 2.5, x: 397, y: -247 },
+    "hot-arcade": { scale: 2.0, x: 260, y: -130 }
+  };
 
-  /**
-   * Animate the skills items on reveal
-   */
-  let skillsAnimation = document.querySelectorAll('.skills-animation');
-  skillsAnimation.forEach((item) => {
-    new Waypoint({
-      element: item,
-      offset: '80%',
-      handler: function (direction) {
-        let progress = item.querySelectorAll('.progress .progress-bar');
-        progress.forEach(el => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%';
-        });
-      }
-    });
-  });
+  // Frases de humor (Easter eggs) para clics normales
+  const speechBubbleDB = {
+    es: {
+      "hot-taza": [
+        "Nivel de cafeína: peligrosamente bajo.",
+        "Está caliente. Al menos no se ha congelado todavía.",
+        "Café frío, el mejor amigo del programador despistado."
+      ],
+      "hot-ventana": [
+        "Precioso atardecer en la costa. Se respira calma.",
+        "Está atardeciendo. El clima ideal para picar código.",
+        "Me encantan las vistas de Tenerife desde la ventana."
+      ],
+      "hot-raspberry": [
+        "Un prototipo de sistemas. Si toco este cable se cae todo.",
+        "Parpadea un LED rojo. Probablemente no sea nada grave... espero.",
+        "Administración de hardware real. Aquí empezó todo."
+      ],
+      "hot-puerta": [
+        "Cartel en la puerta: 'AUTODIDACTA EN CONSTRUCCIÓN DESDE SIEMPRE'.",
+        "La puerta está cerrada. Tengo que terminar este deploy primero."
+      ],
+      "hot-poster": [
+        "Un póster de Tenerife. La isla del Teide y el eterno verano.",
+        "Me recuerda mis raíces y de dónde soy."
+      ]
+    },
+    en: {
+      "hot-taza": [
+        "Caffeine level: dangerously low.",
+        "It's hot. At least it hasn't frozen yet.",
+        "Cold coffee: the distracted programmer's signature drink."
+      ],
+      "hot-ventana": [
+        "Beautiful sunset on the coast. Pure peace.",
+        "Sunset. The perfect time to code.",
+        "I love the Tenerife views from the window."
+      ],
+      "hot-raspberry": [
+        "A systems prototype. If I touch this wire, everything crashes.",
+        "A red LED is blinking. It's probably fine... hopefully.",
+        "Real systems automation. This is where it all started."
+      ],
+      "hot-puerta": [
+        "Sign on the door: 'SELF-TAUGHT DEVELOPER UNDER CONSTRUCTION SINCE DAY ONE'.",
+        "The door is locked. I must finish this deploy first."
+      ],
+      "hot-poster": [
+        "Tenerife poster. The island of Mount Teide and eternal summer.",
+        "Reminds me of my roots and where I come from."
+      ]
+    }
+  };
 
-  /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
-
-  /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
-
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
-      filters.addEventListener('click', function () {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
+  // Árboles de conversación interactivos (Diálogos)
+  const dialogueDB = {
+    es: {
+      timelink: {
+        root: {
+          speech: "Entorno local: SaaS de control horario 'TimeLink'. ¿Qué deseas inspeccionar?",
+          choices: [
+            { text: "1. ¿Qué problema resuelve este producto?", next: "problem" },
+            { text: "2. Explícame la arquitectura técnica.", next: "architecture" },
+            { text: "3. Formato de respuesta JSON de la API.", next: "api" },
+            { text: "4. [Abrir demostración en producción]", action: "link", url: "https://timelink-bootstrap.onrender.com" },
+            { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "TimeLink resuelve el control de jornada para pymes. Permite registros legales simplificados y móviles para operarios externos, automatizando cobros con Stripe sin gestiones manuales.",
+          choices: [
+            { text: "[ <- Volver al ordenador ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Desarrollado en Laravel (PHP) con Bootstrap/JS. Desplegado mediante contenedores Docker aislados en Render.com (Apache, MySQL, PHP-FPM) para garantizar consistencia lógica.",
+          choices: [
+            { text: "[ <- Volver al ordenador ]", next: "root" }
+          ]
+        },
+        api: {
+          speech: "Expone endpoints internos asíncronos para fichajes en AJAX. Respuesta JSON típica al registrar fichaje:\n{\n  'status': 'success',\n  'message': 'Fichaje registrado',\n  'data': { 'user_id': 42, 'check_in': '2026-07-18 16:15:00' }\n}",
+          choices: [
+            { text: "[ <- Volver al ordenador ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Selecciona el proyecto que deseas auditar en la terminal:",
+          choices: [
+            { text: "[ Auditar TimeLink SaaS ]", next: "root" },
+            { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" }
+          ]
         }
-      }, false);
-    });
-
-  });
-
-  /**
-   * Init swiper sliders
-   */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
-
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
+      },
+      gotopadel: {
+        root: {
+          speech: "Smartphone: Ecosistema 'GoToPádel'. ¿Qué módulo quieres diagnosticar?",
+          choices: [
+            { text: "1. ¿Qué problema resuelve esta app?", next: "problem" },
+            { text: "2. ¿Cómo funciona la sincronización cliente-servidor?", next: "architecture" },
+            { text: "3. Háblame de las transacciones concurrentes.", next: "database" },
+            { text: "4. [Abrir portal web de la plataforma]", action: "link", url: "https://padel.drbarranco.es/" },
+            { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "Permite organizar partidos de pádel y reservar pistas. El reto era conectar jugadores en tiempo real evitando solapamientos de reservas ni exceder los 4 jugadores por partido.",
+          choices: [
+            { text: "[ <- Volver al móvil ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Ecosistema híbrido. Servidor Spring Boot (Java) con JPA/Hibernate expuesto mediante REST API JWT. App móvil nativa Android en Java con SQLite y Google Maps API.",
+          choices: [
+            { text: "[ <- Volver al móvil ]", next: "root" }
+          ]
+        },
+        database: {
+          speech: "Para evitar condiciones de carrera cuando varios jugadores se inscribían al mismo cupo, apliqué bloqueos de escritura pesimistas en Spring Boot (PESSIMISTIC_WRITE) asegurando transacciones ACID atómicas.",
+          choices: [
+            { text: "[ <- Volver al móvil ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Selecciona el proyecto que deseas auditar en la terminal:",
+          choices: [
+            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar GoToPádel App ]", next: "root" },
+            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" }
+          ]
+        }
+      },
+      okbackups: {
+        root: {
+          speech: "TPV antiguo. Utilidad de sistemas 'OKBackups' cargada. ¿Qué deseas auditar?",
+          choices: [
+            { text: "1. ¿Qué problema resuelve este agente?", next: "problem" },
+            { text: "2. Explícame la arquitectura y empaquetado.", next: "architecture" },
+            { text: "3. ¿Cuáles fueron los mayores desafíos de red?", next: "challenges" },
+            { text: "4. [Ver repositorio de código en GitHub]", action: "link", url: "https://github.com/drbarranco/okbackups" },
+            { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "Los comercios a menudo pierden sus bases de datos locales (Firebird, MySQL) por cortes de luz. OKBackups automatiza la extracción, compresión y subida desasistida a Firebase Storage.",
+          choices: [
+            { text: "[ <- Volver al TPV ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Agente de bajo nivel desarrollado en Python, empaquetado a ejecutable Windows independiente (.exe) usando PyInstaller, corriendo como Windows Service nativo. Dashboard Flask.",
+          choices: [
+            { text: "[ <- Volver al TPV ]", next: "root" }
+          ]
+        },
+        challenges: {
+          speech: "Soportar cortes de red en subidas de archivos pesados. Diseñé un algoritmo de reintentos exponencial con Backoff y fragmentación para reanudar subidas fallidas.",
+          choices: [
+            { text: "[ <- Volver al TPV ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Selecciona el proyecto que deseas auditar en la terminal:",
+          choices: [
+            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Auditar OKBackups Systems ]", next: "root" }
+          ]
+        }
+      },
+      curriculum: {
+        root: {
+          speech: "Dossier y Currículum de Daniel Rodríguez. ¿Qué versión deseas descargar?",
+          choices: [
+            { text: "[ 📁 Descargar Currículum (Español) ]", action: "download", file: "es" },
+            { text: "[ 📁 Download Resume (English) ]", action: "download", file: "en" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        }
+      },
+      estanteria: {
+        root: {
+          speech: "Archivador de tecnologías del stack técnico de Daniel. Selecciona un bloque:",
+          choices: [
+            { text: "1. Tecnologías Backend (Java, PHP, Laravel, Spring Boot)", next: "backend" },
+            { text: "2. Bases de Datos & DevOps (MySQL, PostgreSQL, Docker)", next: "databases" },
+            { text: "3. Desarrollo Móvil & Scripts (Android Studio, Python)", next: "mobile" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        backend: {
+          speech: "Especialista en la construcción de APIs RESTful robustas y arquitecturas modulares en Java (Spring Boot) y PHP (Laravel / MVC).",
+          choices: [
+            { text: "[ <- Volver al archivador ]", next: "root" }
+          ]
+        },
+        databases: {
+          speech: "Modelado relacional y optimización en MySQL, PostgreSQL, SQLite y Firebird. Administración de entornos Dockerizados.",
+          choices: [
+            { text: "[ <- Volver al archivador ]", next: "root" }
+          ]
+        },
+        mobile: {
+          speech: "Creación de aplicaciones Android nativas seguras e interconectadas. Desarrollo de scripts de automatización e integración con Python.",
+          choices: [
+            { text: "[ <- Volver al archivador ]", next: "root" }
+          ]
+        }
+      },
+      pizarra: {
+        root: {
+          speech: "Pizarra de Tareas y Formación de Daniel. Historial formativo:",
+          choices: [
+            { text: "1. Ciclo Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)", next: "dam" },
+            { text: "2. Ciclo Técnico Superior en Desarrollo de Aplicaciones Web (DAW)", next: "daw" },
+            { text: "3. Inglés y certificaciones oficiales adicionales", next: "certs" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        dam: {
+          speech: "Técnico Superior en DAM (2020-2022). Especialidad en programación de sistemas, interfaces nativas de Android, Java, bases de datos relacionales y optimización de código.",
+          choices: [
+            { text: "[ <- Volver a la pizarra ]", next: "root" }
+          ]
+        },
+        daw: {
+          speech: "Técnico Superior en DAW (2022-2023). Especialidad en diseño y desarrollo de aplicaciones del lado del servidor (PHP/Laravel/Spring) y cliente (HTML/JS/Bootstrap/Tailwind).",
+          choices: [
+            { text: "[ <- Volver a la pizarra ]", next: "root" }
+          ]
+        },
+        certs: {
+          speech: "Nivel B2 de Inglés (Acreditación 'English for IT' de EF). Certificaciones adicionales en SQL de bases de datos avanzadas, desarrollo PHP y metodologías ágiles.",
+          choices: [
+            { text: "[ <- Volver a la pizarra ]", next: "root" }
+          ]
+        }
+      },
+      hablemos: {
+        root: {
+          speech: "Contacto y canales directos con Daniel. ¿Qué medio prefieres?",
+          choices: [
+            { text: "📧 Enviar correo electrónico (drbarrancodev@gmail.com)", action: "link", url: "mailto:drbarrancodev@gmail.com" },
+            { text: "🔗 Visitar perfil de LinkedIn", action: "link", url: "https://www.linkedin.com/in/drbarranco/" },
+            { text: "🐙 Examinar código en GitHub", action: "link", url: "https://github.com/drbarranco" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        }
+      },
+      experiencia: {
+        root: {
+          speech: "Trayectoria laboral de Daniel. Selecciona un período:",
+          choices: [
+            { text: "1. Soporte IT y Mantenimiento de Hardware (TPVs)", next: "hardware" },
+            { text: "2. Desarrollo de Aplicaciones en Prácticas (Sistemas)", next: "practices" },
+            { text: "3. Desarrollo SaaS y Soluciones de Software Libre", next: "saas" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        hardware: {
+          speech: "Años trabajando en soporte técnico informático de hardware y servidores locales. Diagnóstico y mantenimiento de TPVs, cableado e infraestructura de comercios y hostelería.",
+          choices: [
+            { text: "[ <- Volver a la experiencia ]", next: "root" }
+          ]
+        },
+        practices: {
+          speech: "Desarrollo de módulos e interconexiones de bases de datos locales con la nube, automatizaciones de scripts bash/python y control de flujos informáticos.",
+          choices: [
+            { text: "[ <- Volver a la experiencia ]", next: "root" }
+          ]
+        },
+        saas: {
+          speech: "Diseño, implementación y puesta en marcha de aplicaciones de control horario (TimeLink) y gestión de pistas deportivas (GoToPádel) para clientes autónomos reales.",
+          choices: [
+            { text: "[ <- Volver a la experiencia ]", next: "root" }
+          ]
+        }
+      },
+      arcade: {
+        root: {
+          speech: "Estás ante la recreativa retro 'BUG HUNTER'. ¿Qué deseas hacer?",
+          choices: [
+            { text: "1. Insertar moneda para debuguear código.", next: "insert" },
+            { text: "2. Ver tabla de records históricos.", next: "records" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        insert: {
+          speech: "¡Moneda aceptada! Tu código tiene ahora un 10% menos de bugs fatales. Sigue explorando.",
+          choices: [
+            { text: "[ <- Volver a la recreativa ]", next: "root" }
+          ]
+        },
+        records: {
+          speech: "HISTORIC RECORDS:\n1. DANIEL - 999,999 pts\n2. DANIEL - 888,880 pts\n3. DANIEL - 777,770 pts",
+          choices: [
+            { text: "[ <- Volver a la recreativa ]", next: "root" }
+          ]
+        }
       }
-    });
-  }
-
-  window.addEventListener("load", initSwiper);
-
-  /**
-   * Correct scrolling position upon page load for URLs containing hash links.
-   */
-  window.addEventListener('load', function (e) {
-    if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
-        setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
-          });
-        }, 100);
+    },
+    en: {
+      timelink: {
+        root: {
+          speech: "Local environment: TimeLink time-tracking SaaS. What do you want to inspect?",
+          choices: [
+            { text: "1. What problem does this product solve?", next: "problem" },
+            { text: "2. Tell me about the technical architecture.", next: "architecture" },
+            { text: "3. JSON API response format.", next: "api" },
+            { text: "4. [Open production live demo]", action: "link", url: "https://timelink-bootstrap.onrender.com" },
+            { text: "5. Switch to another software project.", next: "switch_proj" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "TimeLink automates employee clock-ins for SMEs. It provides legally compliant mobile tracking for remote workforces, automating card billing with Stripe without manual interactions.",
+          choices: [
+            { text: "[ <- Back to computer ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Developed in Laravel (PHP) with Bootstrap/JS. Deployed via Docker containers on Render.com (Apache, MySQL, PHP-FPM) to secure development environments.",
+          choices: [
+            { text: "[ <- Back to computer ]", next: "root" }
+          ]
+        },
+        api: {
+          speech: "Exposes internal async endpoints for quick AJAX clock-ins. Typical JSON response when checking in:\n{\n  'status': 'success',\n  'message': 'Check-in logged',\n  'data': { 'user_id': 42, 'check_in': '2026-07-18 16:15:00' }\n}",
+          choices: [
+            { text: "[ <- Back to computer ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Select the software project you want to audit in the terminal:",
+          choices: [
+            { text: "[ Audit TimeLink SaaS ]", next: "root" },
+            { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" }
+          ]
+        }
+      },
+      gotopadel: {
+        root: {
+          speech: "Smartphone: 'GoToPádel' platform emulator. Which module do you want to diagnose?",
+          choices: [
+            { text: "1. What problem does this app solve?", next: "problem" },
+            { text: "2. How does client-server syncing work?", next: "architecture" },
+            { text: "3. Tell me about database transactions.", next: "database" },
+            { text: "4. [Open platform web portal]", action: "link", url: "https://padel.drbarranco.es/" },
+            { text: "5. Switch to another software project.", next: "switch_proj" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "Enables padel match organization and court bookings. The challenge was connecting players in real-time without booking overlaps or exceeding 4 concurrent players per match.",
+          choices: [
+            { text: "[ <- Back to mobile ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Hybrid ecosystem. Spring Boot (Java) backend with JPA/Hibernate exposed via JWT REST APIs. Native Android client written in Java with SQLite database and Google Maps API.",
+          choices: [
+            { text: "[ <- Back to mobile ]", next: "root" }
+          ]
+        },
+        database: {
+          speech: "To prevent race conditions when multiple players joined the final match slot at the same time, I implemented pessimistic write locks (PESSIMISTIC_WRITE) in Spring Boot, securing atomic ACID transactions.",
+          choices: [
+            { text: "[ <- Back to mobile ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Select the software project you want to audit in the terminal:",
+          choices: [
+            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit GoToPádel App ]", next: "root" },
+            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" }
+          ]
+        }
+      },
+      okbackups: {
+        root: {
+          speech: "Old POS terminal. 'OKBackups' systems utility running. What do you want to audit?",
+          choices: [
+            { text: "1. What problem does this agent solve?", next: "problem" },
+            { text: "2. Tell me about the architecture and packaging.", next: "architecture" },
+            { text: "3. What were the main network challenges?", next: "challenges" },
+            { text: "4. [View source code on GitHub]", action: "link", url: "https://github.com/drbarranco/okbackups" },
+            { text: "5. Switch to another software project.", next: "switch_proj" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "Local shops lose POS databases due to hardware failures or power cuts. OKBackups automates background extraction, compression, and secure uploads to Firebase Storage.",
+          choices: [
+            { text: "[ <- Back to POS ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Low-level system agent written in Python, compiled to a standalone Windows executable (.exe) using PyInstaller, running as a native Windows Service. Flask monitor dashboard.",
+          choices: [
+            { text: "[ <- Back to POS ]", next: "root" }
+          ]
+        },
+        challenges: {
+          speech: "Supporting network dropouts during large file uploads. I designed an exponential backoff retry algorithm with file chunking to safely resume interrupted uploads.",
+          choices: [
+            { text: "[ <- Back to POS ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Select the software project you want to audit in the terminal:",
+          choices: [
+            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Audit OKBackups Systems ]", next: "root" }
+          ]
+        }
+      },
+      curriculum: {
+        root: {
+          speech: "Daniel Rodríguez's Dossier. Which version would you like to download?",
+          choices: [
+            { text: "[ 📁 Download CV (Spanish) ]", action: "download", file: "es" },
+            { text: "[ 📁 Download Resume (English) ]", action: "download", file: "en" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        }
+      },
+      estanteria: {
+        root: {
+          speech: "Daniel's stack files shelf. Select a technology stack:",
+          choices: [
+            { text: "1. Backend tech (Java, PHP, Laravel, Spring Boot)", next: "backend" },
+            { text: "2. Databases & DevOps (MySQL, PostgreSQL, Docker)", next: "databases" },
+            { text: "3. Mobile & Systems scripting (Android, Python)", next: "mobile" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        backend: {
+          speech: "Specialist in building robust RESTful APIs and modular MVC architectures using Java (Spring Boot) and PHP (Laravel).",
+          choices: [
+            { text: "[ <- Back to file ]", next: "root" }
+          ]
+        },
+        databases: {
+          speech: "Relational design and performance tuning in MySQL, PostgreSQL, SQLite, and Firebird. Dockerized environments.",
+          choices: [
+            { text: "[ <- Back to file ]", next: "root" }
+          ]
+        },
+        mobile: {
+          speech: "Developing native Android apps. Automation scripting and OS integrations using Python.",
+          choices: [
+            { text: "[ <- Back to file ]", next: "root" }
+          ]
+        }
+      },
+      pizarra: {
+        root: {
+          speech: "Daniel's Task Board & Education history:",
+          choices: [
+            { text: "1. Higher Technical Degree in Multiplatform Application Development (DAM)", next: "dam" },
+            { text: "2. Higher Technical Degree in Web Application Development (DAW)", next: "daw" },
+            { text: "3. English and additional official certifications", next: "certs" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        dam: {
+          speech: "Higher Degree in DAM (2020-2022). Specialization in system programming, Android native UI development, Java, database engines, and performance optimizations.",
+          choices: [
+            { text: "[ <- Back to whiteboard ]", next: "root" }
+          ]
+        },
+        daw: {
+          speech: "Higher Degree in DAW (2022-2023). Specialization in server-side technologies (PHP/Laravel/Spring) and client-side (HTML/JS/Bootstrap/Tailwind).",
+          choices: [
+            { text: "[ <- Back to whiteboard ]", next: "root" }
+          ]
+        },
+        certs: {
+          speech: "EF English B2 level ('English for IT' certification). Additional credentials in advanced databases, SQL, PHP web development, and agile practices.",
+          choices: [
+            { text: "[ <- Back to whiteboard ]", next: "root" }
+          ]
+        }
+      },
+      hablemos: {
+        root: {
+          speech: "Get in touch with Daniel Rodríguez. Which channel do you prefer?",
+          choices: [
+            { text: "📧 Send email (drbarrancodev@gmail.com)", action: "link", url: "mailto:drbarrancodev@gmail.com" },
+            { text: "🔗 Visit LinkedIn profile", action: "link", url: "https://www.linkedin.com/in/drbarranco/" },
+            { text: "🐙 Browse source code on GitHub", action: "link", url: "https://github.com/drbarranco" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        }
+      },
+      experiencia: {
+        root: {
+          speech: "Daniel's professional timeline. Select a period:",
+          choices: [
+            { text: "1. IT Support & Hardware Maintenance (POS/TPVs)", next: "hardware" },
+            { text: "2. Systems Application Development Internship", next: "practices" },
+            { text: "3. SaaS Development & Open-Source Solutions", next: "saas" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        hardware: {
+          speech: "Years working on local system setups and computer hardware support. Diagnostic and maintenance of POS hardware, network structures, and systems in shops and restaurants.",
+          choices: [
+            { text: "[ <- Back to experience ]", next: "root" }
+          ]
+        },
+        practices: {
+          speech: "Developing local SQL database connectors to cloud storage, bash/python script automations, and workflow optimizations.",
+          choices: [
+            { text: "[ <- Back to experience ]", next: "root" }
+          ]
+        },
+        saas: {
+          speech: "Design, deployment, and operation of TimeLink (time-tracking app) and GoToPádel (court booking ecosystem) for real local clients.",
+          choices: [
+            { text: "[ <- Back to experience ]", next: "root" }
+          ]
+        }
+      },
+      arcade: {
+        root: {
+          speech: "You are playing the retro 'BUG HUNTER' arcade cabinet. What do you want to do?",
+          choices: [
+            { text: "1. Insert coin to debug code.", next: "insert" },
+            { text: "2. View local high scores.", next: "records" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        insert: {
+          speech: "Coin accepted! Your active project codebase has now 10% fewer fatal bugs. Keep playing.",
+          choices: [
+            { text: "[ <- Back to cabinet ]", next: "root" }
+          ]
+        },
+        records: {
+          speech: "HIGH SCORES:\n1. DANIEL - 999,999 pts\n2. DANIEL - 888,880 pts\n3. DANIEL - 777,770 pts",
+          choices: [
+            { text: "[ <- Back to cabinet ]", next: "root" }
+          ]
+        }
       }
     }
-  });
+  };
 
-  /**
-   * Navmenu Scrollspy
-   */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
+  // ===========================================================================
+  // PARALLAX DEL RATÓN (DESHABILITADO POR DEFECTO A PETICIÓN)
+  // ===========================================================================
+  function initParallax() {}
 
-  function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
-      }
-    })
+  // ===========================================================================
+  // SISTEMA DE ZOOM & ENFOQUE
+  // ===========================================================================
+
+  function applyZoom(hotspotId) {
+    const roomWrapper = document.getElementById("room-wrapper");
+    const gameViewport = document.getElementById("game-viewport");
+    const btnZoomOut = document.getElementById("btn-zoom-out");
+
+    if (!roomWrapper || !btnZoomOut || !gameViewport) return;
+
+    const config = zoomSettings[hotspotId];
+    if (!config) return;
+
+    gameState.activeZoom = hotspotId;
+    playSound("snd-zoom");
+
+    // Aplicar transformación y añadir clase zoomed-in para atenuar menús HTML
+    roomWrapper.style.transform = `scale(${config.scale}) translate(${config.x}px, ${config.y}px)`;
+    gameViewport.classList.add("zoomed-in");
+    
+    // Ocultar HUD general
+    document.getElementById("hud-action-text").textContent = "";
+
+    // Mostrar botón de volver
+    btnZoomOut.classList.remove("d-none");
+
+    // Cargar diálogo interactivo correspondiente
+    const projectKeys = {
+      "hot-pc": "timelink",
+      "hot-movil": "gotopadel",
+      "hot-tpv": "okbackups",
+      "hot-estanteria": "estanteria",
+      "hot-pizarra": "pizarra",
+      "hot-taza": "hablemos",
+      "hot-ideas": "curriculum",
+      "hot-arcade": "arcade"
+    };
+
+    const projKey = projectKeys[hotspotId];
+    if (projKey) {
+      setTimeout(() => {
+        openDialoguePanel(projKey);
+      }, 500);
+    }
   }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
 
-})();
+  function resetZoom() {
+    const roomWrapper = document.getElementById("room-wrapper");
+    const gameViewport = document.getElementById("game-viewport");
+    const btnZoomOut = document.getElementById("btn-zoom-out");
 
-document.addEventListener("DOMContentLoaded", () => {
-  initTyped();
-  const defaultLang = "es";
-  const savedLang = localStorage.getItem("lang") || defaultLang;
-  setLanguaje(savedLang);
-  console.log("Language set to:", savedLang);
+    if (!roomWrapper || !btnZoomOut || !gameViewport) return;
 
-  if (window.location.pathname === "/index.html") {
-    document.querySelectorAll('.lang-switch').forEach(button => {
-      button.classList.remove('lang-switch-active');
-    });
-    document.querySelector(`.lang-switch[data-lang="${savedLang}"]`).classList.add('lang-switch-active');
+    gameState.activeZoom = null;
+    gameState.activeDialogueProject = null;
+    gameState.dialogueStep = "root";
+
+    playSound("snd-zoom");
+    roomWrapper.style.transform = "scale(1) translate(0, 0)";
+    gameViewport.classList.remove("zoomed-in");
+    btnZoomOut.classList.add("d-none");
+    closeDialoguePanel();
   }
 
-  document.querySelectorAll('.lang-switch').forEach(button => {
-    button.addEventListener('click', function () {
-      if (this.classList.contains('lang-switch-active')) return;
+  // ===========================================================================
+  // ÁRBOL DE DIÁLOGOS
+  // ===========================================================================
 
-      document.querySelectorAll('.lang-switch').forEach(switcher => {
-        switcher.classList.remove('lang-switch-active');
-      });
+  const diagPanel = document.getElementById("dialogue-panel");
+  const diagSpeaker = document.getElementById("dialogue-speaker");
+  const diagSpeech = document.getElementById("dialogue-speech-text");
+  const diagChoices = document.getElementById("dialogue-choices-list");
 
-      this.classList.add('lang-switch-active');
+  function openDialoguePanel(projKey) {
+    if (!diagPanel) return;
+    gameState.activeDialogueProject = projKey;
+    gameState.dialogueStep = "root";
 
-      const lang = this.getAttribute('data-lang');
-      localStorage.setItem('lang', lang);
-      setLanguaje(lang);
-    });
-  });
+    const speakers = {
+      timelink: "SYSTEM_STATUS_TIMELINK //",
+      gotopadel: "SYSTEM_STATUS_GOTOPADEL //",
+      okbackups: "SYSTEM_STATUS_OKBACKUPS //",
+      curriculum: "CV_DOSSIER //",
+      estanteria: "TECH_STACK //",
+      pizarra: "EDUCATION_BOARD //",
+      hablemos: "CONTACT_INTERFACE //",
+      experiencia: "WORK_HISTORY //",
+      arcade: "BUG_HUNTER_CABINET //"
+    };
 
-  function setLanguaje(lang) {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
+    diagSpeaker.textContent = speakers[projKey] || "LOG //";
+    diagPanel.classList.remove("d-none");
+    renderDialogueStep();
+  }
 
-      if (!el.dataset.original) {
-        el.dataset.original = el.innerHTML;
+  function closeDialoguePanel() {
+    if (diagPanel) diagPanel.classList.add("d-none");
+  }
+
+  function renderDialogueStep() {
+    const proj = gameState.activeDialogueProject;
+    const step = gameState.dialogueStep;
+    const lang = gameState.lang;
+
+    const data = dialogueDB[lang][proj] && dialogueDB[lang][proj][step];
+    if (!data) return;
+
+    diagSpeech.textContent = "";
+    let i = 0;
+    const text = data.speech;
+
+    if (window.typewriterInterval) clearInterval(window.typewriterInterval);
+
+    window.typewriterInterval = setInterval(() => {
+      diagSpeech.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(window.typewriterInterval);
+        renderChoices(data.choices);
       }
+    }, 12);
+  }
 
-      if (lang === "en" && translations[lang] && translations[lang][key]) {
-        if (el.classList.contains("typed")) {
-          el.setAttribute("data-typed-items", translations[lang][key]);
+  function renderChoices(choices) {
+    if (!diagChoices) return;
+    diagChoices.innerHTML = "";
+
+    choices.forEach((choice) => {
+      const li = document.createElement("li");
+      li.textContent = choice.text;
+      
+      li.addEventListener("click", () => {
+        if (choice.action === "exit") {
+          resetZoom();
+        } else if (choice.action === "link") {
+          playSound("snd-success");
+          window.open(choice.url, "_blank");
+        } else if (choice.action === "download") {
+          downloadCV(choice.file === "en");
+        } else if (choice.action === "switch") {
+          // Salto directo de proyecto a otro en la terminal
+          openDialoguePanel(choice.project);
         } else {
-          el.innerHTML = translations[lang][key];
+          gameState.dialogueStep = choice.next;
+          renderDialogueStep();
         }
-      } else {
-        if (el.classList.contains("typed")) {
-          el.setAttribute("data-typed-items", translations["es"]["hero_typed_items"]);
-        } else {
-          el.innerHTML = el.dataset.original;
-        }
-      }
+      });
+      
+      diagChoices.appendChild(li);
     });
-    // Reiniciar el efecto Typed
-    initTyped();
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const projectId = params.get("id");
-  const project = projects[projectId];
-  let infoHTML = "";
+  // ===========================================================================
+  // GLOBOS DE DIÁLOGO FLOTANTES (INTERACCIONES SECUNDARIAS)
+  // ===========================================================================
 
-  const lang = localStorage.getItem("lang") || "es";
-  const languajeES = lang === "es";
+  const speechBubble = document.getElementById("speech-bubble");
 
-  if (project) {
-    setLanguaje(lang);
-    document.querySelector(".portfolio-info h3").textContent = languajeES ? `Proyecto: ${project.title}` : `Project: ${project.title}`;
-    console.log(languajeES);
+  function triggerSpeechBubble(hotspotId, clientX, clientY) {
+    if (!speechBubble) return;
 
-    if (languajeES) {
-      infoHTML = `
-        <li><strong>Categoría</strong>: ${project.category}</li>
-        <li><strong>Cliente</strong>: ${project.client}</li>
-        <li><strong>Fecha de Inicio</strong>: ${project.startDate}</li>
-        <li><strong>Fecha de Entrega</strong>: ${project.endDate}</li>
-      `;
-    } else {
-      infoHTML = `
-        <li><strong>Category</strong>: ${project.categoryEn}</li>
-        <li><strong>Client</strong>: ${project.clientEn}</li>
-        <li><strong>Start Date</strong>: ${project.startDate}</li>
-        <li><strong>End Date</strong>: ${project.endDate}</li>
-      `;
-    }
+    const lang = gameState.lang;
+    const list = speechBubbleDB[lang][hotspotId];
+    if (!list) return;
 
-    if (project.url) {
-      infoHTML += `
-        <li><strong>URL</strong>: <a href="${project.url}" target="_blank" rel="noopener noreferrer">${project.url}</a></li>
-      `;
-    }
-    if (project.repo) {
-      infoHTML += `
-        <li><strong>GitHub</strong>: <a href="${project.repo}" target="_blank" rel="noopener noreferrer">${project.repo}</a></li>
-      `;
+    const text = list[Math.floor(Math.random() * list.length)];
 
-    }
+    const gameViewport = document.getElementById("game-viewport");
+    const rect = gameViewport.getBoundingClientRect();
+    
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
-    document.querySelector(".portfolio-info ul").innerHTML = infoHTML;
-    document.querySelector(".portfolio-description h2").textContent = languajeES ? project.description : project.descriptionEn;
-    document.querySelector(".portfolio-description p").textContent = languajeES ? project.details : project.detailsEn;
+    speechBubble.style.left = `${x}px`;
+    speechBubble.style.top = `${y - 15}px`;
+    speechBubble.textContent = "";
+    speechBubble.classList.remove("d-none");
 
-    // Rellenar imágenes del slider
-    const swiperWrapper = document.querySelector(".swiper-wrapper");
-    const extraStyle = (projectId === "gotopadel" || projectId === "super" || projectId === "burguer" || projectId === "maps") ? 'style="width: 300px; max-width: 100%; margin-left:32%"' : "";
+    playSound("snd-click");
 
-    swiperWrapper.innerHTML = project.images.map(src => `
-      <div class="swiper-slide">
-        <img src="${src}" alt="" ${extraStyle}>
-      </div>`).join('');
+    let i = 0;
+    if (window.bubbleInterval) clearInterval(window.bubbleInterval);
+    if (window.bubbleTimeout) clearTimeout(window.bubbleTimeout);
+
+    window.bubbleInterval = setInterval(() => {
+      speechBubble.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(window.bubbleInterval);
+        
+        window.bubbleTimeout = setTimeout(() => {
+          speechBubble.classList.add("d-none");
+        }, 3500);
+      }
+    }, 15);
   }
+
+  // ===========================================================================
+  // DESCARGA DE CV
+  // ===========================================================================
 
   function downloadCV(english = false) {
-    const preloader = document.querySelector('#preloader');
-    console.log(preloader);
-    if (preloader) preloader.style.display = 'block'; // Mostrar loader
-
+    playSound("snd-success");
+    
     fetch(`https://cv.drbarranco.es/api/cv/pdf?english=${english}`, {
       method: "GET",
       headers: {
@@ -360,9 +810,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     })
       .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        if (!response.ok) throw new Error("Connection error");
         return response.blob();
       })
       .then(blob => {
@@ -377,25 +825,203 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => {
         console.error("Error downloading CV:", error);
-        alert("Ocurrió un error al descargar el CV. Inténtalo de nuevo más tarde.");
-      })
-      .finally(() => {
-        if (preloader) preloader.style.display = 'none'; // Ocultar loader
+        alert("Puerto de descargas bloqueado. Por favor, inténtalo más tarde.");
       });
   }
 
-  let downloadCv = document.getElementById("downloadCV");
-  let downloadEn = document.getElementById("downloadCV-en");
+  // ===========================================================================
+  // IDIOMAS & MODALES
+  // ===========================================================================
 
-  if (downloadCv) {
-    document.getElementById("downloadCV").addEventListener("click", function () {
-      downloadCV();
+  function switchLanguage(lang) {
+    gameState.lang = lang;
+    localStorage.setItem("lang", lang);
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (translations[lang] && translations[lang][key]) {
+        el.textContent = translations[lang][key];
+      }
     });
-  }
-  if (downloadEn) {
-    document.getElementById("downloadCV-en").addEventListener("click", function () {
-      downloadCV(true);
+
+    document.querySelectorAll(".game-lang-selector .lang-btn").forEach(btn => {
+      btn.classList.remove("active");
+      if (btn.getAttribute("data-lang") === lang) btn.classList.add("active");
     });
+
+    if (gameState.activeDialogueProject) {
+      renderDialogueStep();
+    }
   }
 
-});
+  // ===========================================================================
+  // INICIALIZACIÓN
+  // ===========================================================================
+
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    switchLanguage(gameState.lang);
+
+    const hudText = document.getElementById("hud-action-text");
+    
+    document.querySelectorAll(".hotspot").forEach(hot => {
+      // Mouse Enter
+      hot.addEventListener("mouseenter", function () {
+        if (gameState.activeZoom) return;
+        const rawLabel = this.getAttribute("data-label");
+        const parts = rawLabel.split(" | ");
+        const labels = {};
+        parts.forEach(p => {
+          const sub = p.split(": ");
+          labels[sub[0].trim()] = sub[1].trim();
+        });
+        if (hudText) hudText.textContent = labels[gameState.lang];
+      });
+
+      // Mouse Leave
+      hot.addEventListener("mouseleave", function () {
+        if (hudText && !gameState.activeZoom) hudText.textContent = "";
+      });
+
+      // Clic interactivo en los hotspots SVG de la habitación
+      hot.addEventListener("click", function (e) {
+        if (gameState.activeZoom) return; // Bloquear clics paralelos
+
+        const hotId = this.getAttribute("id");
+        
+        if (zoomSettings[hotId]) {
+          applyZoom(hotId);
+        } else {
+          triggerSpeechBubble(hotId, e.clientX, e.clientY);
+        }
+      });
+    });
+
+    // BOTONES DE CONTROL SUPERIOR (HTML REAL)
+    const btnLight = document.getElementById("btn-light");
+    const btnAmbientSound = document.getElementById("btn-ambient-sound");
+    const btnMenuToggle = document.getElementById("btn-menu-toggle");
+
+    if (btnLight) {
+      btnLight.addEventListener("click", () => {
+        document.body.classList.toggle("ambient-night");
+        playSound("snd-click");
+      });
+    }
+
+    if (btnAmbientSound) {
+      btnAmbientSound.addEventListener("click", function() {
+        const ambient = document.getElementById("snd-ambient");
+        if (ambient) {
+          if (ambient.paused) {
+            ambient.play().catch(() => {});
+            this.classList.add("playing");
+          } else {
+            ambient.pause();
+            this.classList.remove("playing");
+          }
+          playSound("snd-click");
+        }
+      });
+    }
+
+    if (btnMenuToggle) {
+      btnMenuToggle.addEventListener("click", () => {
+        playSound("snd-glitch");
+        const modalOverlay = document.getElementById("modal-overlay");
+        if (modalOverlay) modalOverlay.classList.remove("d-none");
+      });
+    }
+
+    // BOTONES DE MENÚ INFERIOR (HTML REAL)
+    const menuCv = document.getElementById("menu-cv");
+    const menuExp = document.getElementById("menu-exp");
+    const menuProj = document.getElementById("menu-proj");
+    const menuTech = document.getElementById("menu-tech");
+    const menuEdu = document.getElementById("menu-edu");
+    const menuChat = document.getElementById("menu-chat");
+
+    if (menuCv) {
+      menuCv.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => openDialoguePanel("curriculum"), 200);
+      });
+    }
+
+    if (menuExp) {
+      menuExp.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => openDialoguePanel("experiencia"), 200);
+      });
+    }
+
+    if (menuProj) {
+      menuProj.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => openDialoguePanel("timelink"), 200);
+      });
+    }
+
+    if (menuTech) {
+      menuTech.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => applyZoom("hot-estanteria"), 200);
+      });
+    }
+
+    if (menuEdu) {
+      menuEdu.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => applyZoom("hot-pizarra"), 200);
+      });
+    }
+
+    if (menuChat) {
+      menuChat.addEventListener("click", () => {
+        resetZoom();
+        setTimeout(() => applyZoom("hot-taza"), 200);
+      });
+    }
+
+    // Botón de Volver zoom-out
+    const btnZoomOut = document.getElementById("btn-zoom-out");
+    if (btnZoomOut) {
+      btnZoomOut.addEventListener("click", () => {
+        resetZoom();
+      });
+    }
+
+    // Cerrar modal
+    const btnCloseModal = document.getElementById("btn-close-modal");
+    const modalOverlay = document.getElementById("modal-overlay");
+
+    if (btnCloseModal) {
+      btnCloseModal.addEventListener("click", () => {
+        playSound("snd-click");
+        if (modalOverlay) modalOverlay.classList.add("d-none");
+      });
+    }
+
+    if (modalOverlay) {
+      modalOverlay.addEventListener("click", function(e) {
+        if (e.target === this) {
+          playSound("snd-click");
+          this.classList.add("d-none");
+        }
+      });
+    }
+
+    // Descarga desde el modal rápido
+    document.getElementById("downloadCV-modal").addEventListener("click", () => downloadCV(false));
+    document.getElementById("downloadCV-en-modal").addEventListener("click", () => downloadCV(true));
+
+    // Selector de idiomas
+    document.querySelectorAll(".game-lang-selector .lang-btn").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const target = this.getAttribute("data-lang");
+        switchLanguage(target);
+      });
+    });
+  });
+
+})();

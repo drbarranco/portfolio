@@ -1,27 +1,26 @@
 const projects = {
   timelink: {
     title: "TimeLink",
-    category: "Aplicación Web",
-    categoryEn: "Web Application",
-    client: "Newtron Informática, SL",
+    category: "SaaS Full Stack & DevOps",
+    categoryEn: "Full Stack SaaS & DevOps",
+    client: "Newtron Informática, SL (Granada)",
+    clientEn: "Newtron Informática, SL (Granada)",
     startDate: "15/01/2025",
     endDate: "30/03/2025",
     url: "https://timelink-bootstrap.onrender.com",
     repo: "https://github.com/drbarranco/timelink",
-    description: "Aplicación Web de control horario de empleados",
-    descriptionEn: "Employee time tracking web application",
-    details: `Aplicación desarrollada durante mis prácticas en Newtron Informática en 2025 para la gestión del control horario en empresas. 
-              Permite registrar el inicio y fin de la jornada, así como los descansos, y generar informes exportables en varios formatos. Incorpora un sistema de envío de correos electrónicos para invitaciones y solicitudes de unión, además de integración con Stripe para gestionar suscripciones y pagos como solución SaaS. 
-              El backend está desarrollado con PHP y Laravel, y el frontend utiliza Bootstrap, HTML, CSS y JavaScript con jQuery. 
-              La base de datos es MySQL y se encuentra alojada en Alwaysdata, mientras que la aplicación está desplegada en Render.com. 
-              Incluye un botón de pruebas que crea una empresa ficticia con varios empleados, permitiendo explorar todas las funcionalidades sin necesidad de registro.`,
-    detailsEn: `Application developed during my internship at Newtron Computers in 2025 for managing employee time tracking in companies. 
-              It allows users to log the start and end of their workday, as well as breaks, and generate exportable reports in various formats. 
-              It features an email system for invitations and join requests, along with Stripe integration to manage subscriptions and payments as a SaaS solution. 
-              The backend is built with PHP and Laravel, and the frontend uses Bootstrap, HTML, CSS, and JavaScript with jQuery. 
-              The database is MySQL and hosted on Alwaysdata, while the application is deployed on Render.com. 
-              A demo button is included to create a fictitious company with several employees, allowing users to explore all features without registration.`,
-
+    description: "SaaS de registro de jornada laboral, gestión de ausencias y facturación recurrente para empresas.",
+    descriptionEn: "Employee time-tracking, leaves management and recurring billing SaaS platform for companies.",
+    problem: "Las pymes necesitaban un sistema digital de control horario adaptado a la legislación laboral que fuera fácil de usar para los empleados en movilidad, centralizado para los administradores de recursos humanos y capaz de cobrar cuotas mensuales de forma automática sin requerir administración manual.",
+    problemEn: "SMEs needed a user-friendly digital time-tracking system compliant with labor laws, centralized for HR admins, and capable of automated monthly billing management without manual invoice creation.",
+    architecture: "TimeLink está diseñado sobre un patrón MVC en Laravel (PHP) apoyado en Bootstrap, jQuery y JavaScript nativo para el frontend. El despliegue de producción se gestiona en Render.com mediante contenedores Docker separados para el servidor Apache/PHP-FPM y la base de datos MySQL, garantizando reproducibilidad y control del entorno.",
+    architectureEn: "TimeLink is built on a Laravel MVC architecture (PHP) backed by Bootstrap, jQuery and vanilla JS for the frontend. Deployment is containerized using Docker, isolating the Apache/PHP-FPM web server and MySQL database, ensuring dev-to-prod consistency (deployed on Render.com).",
+    database: "El esquema de base de datos MySQL cuenta con aislamiento lógico multi-inquilino (multi-tenant):\n\n- **Empresas (Tenants)**: Tabla raíz que identifica a cada cliente SaaS.\n- **Usuarios**: Clave foránea hacia Empresas, gestionando credenciales y roles (SuperAdmin, Admin, Empleado).\n- **Fichajes (Logs)**: Registra `id_usuario`, `check_in` (timestamp), `check_out` (timestamp) e `id_tipo` (jornada laboral o descanso).\n- **Suscripciones**: Mapea el estado del pago mediante el `customer_id` de Stripe.",
+    databaseEn: "The MySQL relational schema supports logical multi-tenant isolation:\n\n- **Companies (Tenants)**: Root table identifying each subscription customer.\n- **Users**: Foreign key pointing to Companies, managing credentials and roles (SuperAdmin, Admin, Employee).\n- **Time Logs**: Stores `user_id`, `check_in` (timestamp), `check_out` (timestamp) and `log_type` (workday or break).\n- **Subscriptions**: Tracks payment statuses mapped directly to Stripe customer IDs.",
+    api: "Laravel expone rutas internas para la inserción y consulta dinámica de fichajes de forma asíncrona mediante AJAX. Ejemplo de respuesta JSON al registrar un fichaje de entrada:\n\n```json\n{\n  \"status\": \"success\",\n  \"message\": \"Fichaje de entrada registrado correctamente\",\n  \"data\": {\n    \"user_id\": 42,\n    \"check_in\": \"2026-07-18 14:15:00\",\n    \"type\": \"workday\"\n  }\n}\n```",
+    apiEn: "Laravel exposes internal endpoints for dynamic, asynchronous check-in logs using AJAX. Sample JSON response when registering a check-in:\n\n```json\n{\n  \"status\": \"success\",\n  \"message\": \"Check-in logged successfully\",\n  \"data\": {\n    \"user_id\": 42,\n    \"check_in\": \"2026-07-18 14:15:00\",\n    \"type\": \"workday\"\n  }\n}\n```",
+    challenges: "1. **Sincronización de Suscripciones**: Implementado mediante la escucha de Webhooks cifrados de Stripe. La aplicación maneja eventos como `customer.subscription.deleted` o `invoice.payment_failed` de forma asíncrona para denegar o autorizar accesos instantáneamente.\n2. **Persistencia en Contenedores**: Configuración de volúmenes de datos mapeados en el host de producción para evitar la pérdida de los registros de fichajes al actualizar o reiniciar los contenedores Docker.",
+    challengesEn: "1. **Subscription Synchronization**: Solved by consuming encrypted Stripe Webhooks. The app handles events like `customer.subscription.deleted` or `invoice.payment_failed` asynchronously to immediately block or grant workspace access.\n2. **Container Persistence**: Configured mapped host data volumes in Docker to prevent time log data loss when upgrading or restarting containers.",
     images: [
       "assets/img/projects/Timelink1.PNG",
       "assets/img/projects/Timelink2.PNG",
@@ -35,210 +34,59 @@ const projects = {
       "assets/img/projects/Timelink10.PNG",
     ]
   },
-  converter: {
-    title: "Currency Converter",
-    category: "Aplicación Web",
-    categoryEn: "Web Application",
-    client: "Personal Project",
-    startDate: "09/07/2025",
-    endDate: "11/07/2025",
-    url: "https://converter.drbarranco.es/",
-    repo: "https://github.com/drbarranco/converter",
-    description: "Aplicación Web de conversión de divisas",
-    descriptionEn: "Currency conversion web application",
-    details: `Un proyecto personal de un sencillo microservicio que permite a los usuarios convertir divisas utilizando la API de ExchangeRate-API. 
-              La aplicación permite seleccionar dos divisas y realizar la conversión en tiempo real, mostrando el resultado de la conversión.
-              El backend está desarrollado con Spring Boot y el frontend utiliza React y Tailwind CSS. La aplicación está desplegada en Alwaysdata`,
-    detailsEn: `A personal project of a simple microservice that allows users to convert currencies using the ExchangeRate-API. 
-              The application lets users select two currencies and perform real-time conversion, displaying the conversion result. 
-              The backend is developed with Spring Boot while the frontend uses React and Tailwind CSS. The application is deployed on Alwaysdata.`,
-
-    images: [
-      "assets/img/projects/converter1.JPG",  
-    ]
-  },
-
   gotopadel: {
-    title: "GoToPádel",
-    category: "Aplicación Android",
-    categoryEn: "Android Application",
-    client: "TFG del CFGS de Desarrollo de Aplicaciones Multiplataforma",
-    clientEn: "Final Degree Project of the Higher Degree in Cross-Platform Application Development",
+    title: "GoToPádel Platform",
+    category: "Ecosistema Multiplataforma (Spring Boot & Android)",
+    categoryEn: "Cross-platform Ecosystem (Spring Boot & Android)",
+    client: "Proyecto Final DAW & DAM (Calificación: 10)",
+    clientEn: "DAW & DAM Final Projects (Grade: 10)",
     startDate: "15/09/2023",
-    endDate: "20/04/2024",
+    endDate: "10/03/2025",
     repo: "https://github.com/drbarranco/padel-android",
-    description: "Aplicación Android para organización de partidos de pádel",
-    descriptionEn: "Android application for organizing padel matches",
-    details: `Aplicación móvil desarrollada como Proyecto Final del Ciclo de Desarrollo de Aplicaciones Multiplataforma (DAM) durante el curso 2023/2024, con una calificación de 10. 
-              GoToPádel permite crear y gestionar partidos de pádel, inscribirse, recibir notificaciones locales y gestionar usuarios mediante un sistema de autenticación. 
-              Desarrollada con Android Studio, Java y SQLite para el almacenamiento local.`,
-    detailsEn: `Mobile application developed as the Final Degree Project of the Higher Degree in Cross-Platform 
-                Application Development (DAM) during the 2023/2024 academic year, graded 10.`,
-
+    url: "https://padel.drbarranco.es/",
+    description: "Plataforma completa de reservas y partidos de pádel. Consta de una API backend REST, un cliente web responsivo y una app nativa Android.",
+    descriptionEn: "Complete booking and padel match platform. Features a backend REST API, a responsive web client, and a native Android app.",
+    problem: "Automatizar la reserva de pistas y coordinar partidos abiertos requería una API centralizada que mantuviera la consistencia de datos en tiempo real entre los usuarios web y móviles, impidiendo sobreescribir reservas o exceder el cupo de jugadores.",
+    problemEn: "Automating court bookings and coordinating matches required a centralized API to maintain data consistency in real-time between web and mobile users, preventing reservation overwrites or exceeding player limits.",
+    architecture: "El backend está desarrollado en Java con Spring Boot, Spring Security (seguridad JWT) y JPA/Hibernate para el acceso a datos. El cliente web está implementado con HTML5/CSS3/JS/jQuery. La aplicación móvil está construida de forma nativa en Android Studio (Java) integrando almacenamiento local SQLite y APIs de Google Maps.",
+    architectureEn: "The backend is developed in Java with Spring Boot, Spring Security (JWT security), and JPA/Hibernate for database access. The web client uses HTML5/CSS3/JS/jQuery. The mobile application is built natively in Android (Java) integrating SQLite local storage and Google Maps APIs.",
+    database: "Modelo relacional robusto gestionado en MySQL para el backend y SQLite para móvil:\n\n- **Usuarios**: Almacena contraseñas cifradas con BCrypt y roles (ADMIN, USER).\n- **Partidos (Matches)**: ID, creador, fecha, pista y estado (Abierto, Completado, Cancelado).\n- **Inscripciones**: Tabla intermedia muchos a muchos (Usuarios-Partidos) limitada a un máximo de 4 jugadores por partido mediante lógica de negocio.",
+    databaseEn: "Robust relational model managed in MySQL for the backend and SQLite for mobile:\n\n- **Users**: Stores BCrypt-encrypted passwords and credentials with roles (ADMIN, USER).\n- **Matches**: ID, host, date, court, and status (Open, Completed, Cancelled).\n- **Signups**: Many-to-many intermediate table (Users-Matches) limited strictly to 4 players max per match via business logic constraints.",
+    api: "El backend expone endpoints RESTful documentados. Ejemplo de endpoint para listar partidos disponibles:\n\n`GET /api/v1/matches/active`\n\n```json\n[\n  {\n    \"id\": 108,\n    \"court\": \"Pista Central\",\n    \"date\": \"2026-07-20 18:00:00\",\n    \"players_count\": 3,\n    \"status\": \"OPEN\"\n  }\n]\n```",
+    apiEn: "The backend exposes documented RESTful endpoints. Key endpoint for listing available matches:\n\n`GET /api/v1/matches/active`\n\n```json\n[\n  {\n    \"id\": 108,\n    \"court\": \"Central Court\",\n    \"date\": \"2026-07-20 18:00:00\",\n    \"players_count\": 3,\n    \"status\": \"OPEN\"\n  }\n]\n```",
+    challenges: "1. **Límite Concurrente Transaccional**: Si dos usuarios intentaban apuntarse al último cupo libre a la vez, se producía una condición de carrera. Se solucionó usando bloqueos pesimistas en JPA (`LockModeType.PESSIMISTIC_WRITE`) para asegurar consistencia a nivel de base de datos.\n2. **Sincronización Android Offline**: Implementación de sincronización con Retrofit y guardado en SQLite local para permitir consultar los partidos cargados previamente cuando el dispositivo no tiene red.",
+    challengesEn: "1. **Transactional Concurrent Limits**: If two users tried to sign up for the last spot simultaneously, a race condition occurred. Solved by using pessimistic locking in JPA (`LockModeType.PESSIMISTIC_WRITE`) to guarantee database-level consistency.\n2. **Offline Android Synchronization**: Implemented SQLite caching and Retrofit request handlers to allow users to view previously loaded matches when cellular connection is lost.",
     images: [
-      "assets/img/projects/gotopadel1.PNG",
-      "assets/img/projects/gotopadel2.PNG",
-      "assets/img/projects/gotopadel3.PNG",
-      "assets/img/projects/gotopadel4.PNG",
+      "assets/img/projects/padelweb10.PNG",
+      "assets/img/projects/padelweb3.PNG",
       "assets/img/projects/gotopadel5.PNG",
       "assets/img/projects/gotopadel6.PNG",
-      "assets/img/projects/gotopadel7.PNG",
-      "assets/img/projects/gotopadel8.PNG",
-      "assets/img/projects/gotopadel9.PNG",
-      "assets/img/projects/gotopadel10.PNG",
-      "assets/img/projects/gotopadel11.PNG",
-      "assets/img/projects/gotopadel12.PNG"
-
+      "assets/img/projects/gotopadel2.PNG",
     ]
   },
-
-  weather: {
-    title: "Weather App",
-    category: "Aplicación Web",
-    categoryEn: "Web Application",
-    client: "Trabajo de clase",
-    clientEn: "Class Assignment",
-    startDate: "30/04/2024",
-    endDate: "02/05/2024",
-    repo: "https://github.com/drbarranco/weather",
-    description: "Aplicación web de previsión meteorológica",
-    descriptionEn: "Weather forecasting web application",
-    details: `Un trabajo de clase de una aplicación web de previsión meteorológica, que utiliza la API de OpenStretMap y 
-    VisualCrossing para obtener datos meteorológicos en tiempo real. Los usuarios pueden buscar por ciudad y ver la previsión del tiempo.`,
-    detailsEn: `A class assignment for a weather forecasting web application that uses the OpenStreetMap and VisualCrossing APIs to obtain real-time weather data. 
-                Users can search by city and view the weather forecast.`,
+  okbackups: {
+    title: "OKBackups",
+    category: "Agente de Sistemas & Backend Cloud",
+    categoryEn: "Systems Agent & Cloud Backend",
+    client: "Software Comercial / OK Computers",
+    clientEn: "Commercial Software / OK Computers",
+    startDate: "10/05/2025",
+    endDate: "20/06/2025",
+    repo: "https://github.com/drbarranco/okbackups",
+    description: "Agente de escritorio Windows y servidor Flask para la automatización de copias de seguridad de bases de datos locales (TPVs) a la nube de forma segura y desasistida.",
+    descriptionEn: "Windows desktop agent and Flask server for automated database backups from local POS systems to the cloud, securely and unattended.",
+    problem: "Los pequeños comercios y restaurantes con TPVs locales carecían de copias de seguridad remotas debido al coste y complejidad técnica. Un fallo de hardware o corte eléctrico provocaba pérdidas masivas de facturación. Se necesitaba un agente silencioso que extrajera, comprimiera y subiera bases de datos pesadas sin ralentizar la red comercial.",
+    problemEn: "Small businesses with local POS systems lacked remote backups due to cost and technical complexity. A hardware failure or power outage meant massive financial data losses. An autonomous background agent was required to extract, compress, and upload databases without choking shop bandwidth.",
+    architecture: "Agente autónomo desarrollado en Python, empaquetado en un ejecutable Windows sin dependencias (`okbackups.exe`) usando PyInstaller. Se ejecuta en segundo plano y se conecta a bases de datos Firebird, MySQL o SQL Server locales para extraer volcados SQL. Sube los archivos encriptados a Firebase Storage. Un servidor web Flask (PostgreSQL) centraliza la monitorización de alertas y estado de todos los agentes remotos.",
+    architectureEn: "Autonomous agent developed in Python, packaged into a standalone Windows executable (`okbackups.exe`) using PyInstaller. It runs in the background and connects to local Firebird, MySQL, or SQL Server engines to dump data. Files are encrypted and uploaded to Firebase Storage. A Flask web server (PostgreSQL) aggregates and monitors alert logs from all active remote agents.",
+    database: "El agente cliente no usa bases de datos locales (utiliza archivos de configuración JSON encriptados), pero el servidor central de monitorización en PostgreSQL almacena:\n\n- **Equipos (TPV Nodes)**: Clave primaria UUID, nombre comercial, IP pública, versión del agente y última señal de vida.\n- **Historial de Backups**: Registro de fecha, tamaño del archivo en megabytes, duración del proceso, estado (ÉXITO / FALLO) y el enlace criptográfico temporal para descarga de rescate.",
+    databaseEn: "The client agent does not use local databases (uses encrypted JSON config files), but the central monitoring PostgreSQL server tracks:\n\n- **Devices (POS Nodes)**: UUID primary key, client business name, public IP, agent version, and last heartbeat.\n- **Backup Logs**: Timestamp, file size in MBs, duration, backup status (SUCCESS / FAILURE), and a cryptographically secure temporary URL for rescue downloads.",
+    api: "El agente envía informes cifrados y señales de vida al servidor Flask mediante peticiones POST autenticadas con API Key. Payload JSON enviado al completar un backup:\n\n```json\n{\n  \"device_uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"SUCCESS\",\n  \"database_type\": \"Firebird\",\n  \"file_size_mb\": 148.5,\n  \"duration_seconds\": 28\n}\n```",
+    apiEn: "The agent sends encrypted status reports and heartbeats to the Flask server via POST requests authenticated with an API Key. JSON payload sent on backup completion:\n\n```json\n{\n  \"device_uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"SUCCESS\",\n  \"database_type\": \"Firebird\",\n  \"file_size_mb\": 148.5,\n  \"duration_seconds\": 28\n}\n```",
+    challenges: "1. **Empaquetado y Servicio en Windows**: Asegurar la compatibilidad sin obligar al cliente a instalar Python. Resuelto compilando con PyInstaller e instalando el ejecutable como servicio nativo de Windows. \n2. **Estabilidad de Carga y Ancho de Banda**: Para evitar saturar el internet del negocio, se programó la ejecución fuera del horario comercial y se diseñó un algoritmo de reintentos exponencial con Backoff ante pérdidas de paquetes durante la subida.",
+    challengesEn: "1. **Windows Packaging & Services**: Ensuring database driver compatibility without requiring python runtime. Resolved by bundling binaries with PyInstaller and running the app as a native Windows Service. \n2. **Bandwidth & Network Resilience**: To avoid saturating commercial bandwidth, backups are scheduled off-hours and built with an exponential backoff retry algorithm to resume uploads upon packet drops.",
     images: [
-      "assets/img/projects/dwectarea6_1.PNG",
-      "assets/img/projects/dwectarea6_2.PNG",
+      "assets/img/fondo-codigo.jpg",
     ]
-  },
-  // music: {
-  //   title: "Music Box",
-  //   category: "Aplicación Web",
-  //   categoryEn: "Web Application",
-  //   client: "Trabajo de clase",
-  //   clientEn: "Class Assignment",
-  //   startDate: "19/04/2024",
-  //   endDate: "23/04/2024",
-  //   url: "https://drbarranco78.github.io/DWEC5_Music/",
-  //   description: "Tarea de clase sobre manipulación del DOM y sonido",
-  //   descriptionEn: "Class assignment on DOM manipulation and sound",
-  //   details: `Una aplicación web que permite a los usuarios interactuar con diferentes elementos de la página, 
-  //   manipulando el DOM de forma dinámica con JQuery. Incluye un reproductor de música y efectos de sonido.`,
-  //   detailsEn: `A web application that allows users to interact with different elements of the page, dynamically manipulating the DOM with jQuery. 
-  //               It includes a music player and sound effects.`,
-  //   images: [
-  //     "assets/img/projects/dwectarea5_1.PNG",
-  //   ]
-  // },
-  super: {
-    title: "Supermarket",
-    category: "Aplicación Android",
-    categoryEn: "Android Application",
-    client: "Trabajo de clase",
-    clientEn: "Class Assignment",
-    startDate: "07/12/2022",
-    endDate: "17/12/2022",
-    repo: "https://github.com/drbarranco/super",
-    description: "Aplicación móvil de gestión de stock de un supermercado",
-    descriptionEn: "Mobile application for managing supermarket stock",
-    details: `Un proyecto sencillo de una aplicación móvil que permite a los usuarios gestionar el stock de un supermercado, añadiendo, 
-              eliminando y modificando productos mediante operaciones CRUD sobre una base de datos SQLite. Incluye funcionalidades de búsqueda y filtrado.`,
-    detailsEn: `A simple project of a mobile application that allows users to manage supermarket stock by adding, deleting, and modifying products 
-                through CRUD operations on a SQLite database. It includes search and filtering functionalities.`,
-    images: [
-      "assets/img/projects/super1.PNG",
-      "assets/img/projects/super2.PNG",
-      "assets/img/projects/super3.PNG",
-      "assets/img/projects/super4.PNG",
-      "assets/img/projects/super5.PNG",
-    ]
-  },
-  burguer: {
-    title: "Burguers",
-    category: "Aplicación Android",
-    categoryEn: "Android Application",
-    client: "Trabajo de clase",
-    clientEn: "Class Assignment",
-    startDate: "14/10/2022",
-    endDate: "27/10/2022",
-    repo: "https://github.com/drbarranco/burguers",
-    description: "Aplicación móvil para realizar pedidos en una hamburguesería",
-    descriptionEn: "Mobile application for placing orders at a burger restaurant",
-    details: `Un proyecto académico de una aplicación móvil que permite a los usuarios realizar pedidos en una hamburguesería, 
-              añadiendo, eliminando y modificando productos.`,
-    detailsEn: `An academic project of a mobile application that allows users to place orders at a burger restaurant by adding, deleting, and modifying products.`,
-    images: [
-      "assets/img/projects/burguer1.PNG",
-      "assets/img/projects/burguer2.PNG",
-      "assets/img/projects/burguer3.PNG",
-      "assets/img/projects/burguer4.PNG",
-      "assets/img/projects/burguer5.PNG",
-      "assets/img/projects/burguer6.PNG"
-    ]
-  },
-
-  padelweb: {
-    title: "GoToPadel Web",
-    category: "Aplicación Web",
-    categoryEn: "Web Application",
-    client: "Proyecto final del CFGS de Desarrollo de Aplicaciones Web",
-    clientEn: "Final Degree Project of the Higher Degree in Web Application Development",
-    startDate: "15/09/2024",
-    endDate: "10/03/2025",
-    url: "https://padel.drbarranco.es/",
-    repo: "https://github.com/drbarranco/gotopadel",
-    description: "Aplicación web para la gestión de reservas de pistas de pádel",
-    descriptionEn: "Web application for managing padel court bookings",
-    details:   `Aplicación desarrollada como Proyecto Final del Ciclo de Desarrollo de Aplicaciones Web (DAW), calificada con un 10.
-                Permite a los usuarios registrarse, iniciar sesión, crear y unirse a partidos de pádel, cancelar su participación y recibir notificaciones.
-                Los administradores pueden archivar o cancelar partidos, gestionar usuarios y visualizar información relevante.
-                Integra APIs externas para mostrar noticias relacionadas con el pádel y pistas disponibles por ciudad, utilizando un archivo JSON de ciudades españolas para filtrar los resultados.
-                El backend está desarrollado con Spring Boot, empleando Hibernate y JPA para el acceso a datos, y expone una API REST.
-                El frontend está implementado con HTML5, CSS3, JavaScript y jQuery.`,
-    detailsEn: `Application developed as the Final Degree Project of the Higher Degree in Web Application Development (DAW), graded 10.
-                It allows users to register, log in, create and join padel matches, cancel their participation, and receive notifications.
-                Administrators can archive or cancel matches, manage users, and view relevant information.
-                It integrates external APIs to display news related to padel and courts available by city, using a JSON file of Spanish cities to filter results.
-                The backend is developed with Spring Boot, using Hibernate and JPA for data access, and exposes a REST API.
-                The frontend is implemented with HTML5, CSS3, JavaScript, and jQuery.`,
-    images: [
-      "assets/img/projects/padelweb1.PNG",
-      "assets/img/projects/padelweb2.PNG",
-      "assets/img/projects/padelweb3.PNG",
-      "assets/img/projects/padelweb4.PNG",
-      "assets/img/projects/padelweb5.PNG",
-      "assets/img/projects/padelweb6.PNG",
-      "assets/img/projects/padelweb7.PNG",
-      "assets/img/projects/padelweb8.PNG",
-      "assets/img/projects/padelweb9.PNG",
-      "assets/img/projects/padelweb10.PNG",
-      "assets/img/projects/padelweb11.PNG",
-      "assets/img/projects/padelweb12.PNG",
-    ]
-  },
-    
-  maps: {
-    title: "Map Weather",
-    category: "Aplicación móvil",
-    categoryEn: "Mobile Application",
-    client: "Trabajo de clase",
-    clientEn: "Class Assignment",
-    startDate: "19/04/2023",
-    endDate: "21/04/2023",
-    repo: "https://github.com/drbarranco/maps",
-    description: "Aplicación móvil para la consulta del clima por ubicación",
-    descriptionEn: "Mobile application for weather consultation by location",
-    details: `Trabajo de clase que consiste en una aplicación móvil que permite a los usuarios consultar el clima en función de su ubicación, 
-    utilizando la API de Google Maps y los sensores del dispositivo.`,
-    detailsEn: `Class assignment that consists of a mobile application that allows users to check the weather based on their location, 
-                using the Google Maps API and device sensors.`,
-    images: [
-      "assets/img/projects/pmdm6.PNG",
-    ]
-  },
-
+  }
 };
-
-
-

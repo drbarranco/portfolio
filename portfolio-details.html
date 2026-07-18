@@ -1,241 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Detalles del Proyecto</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>DR-BIOS // Project Documentation</title>
+  <meta name="description" content="Detalles y documentación forense de sistemas de Daniel Rodríguez.">
+  <meta name="keywords" content="Daniel Rodríguez, proyectos, arquitectura, bases de datos, API REST">
+  <meta name="author" content="Daniel Rodríguez Barranco">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-98MD0RXFS9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-98MD0RXFS9');
-  </script>
+  
+  <style>
+    /* Estilos específicos para la página de detalles CRT */
+    .details-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      padding: 15px;
+      background-color: var(--bg-deep);
+      overflow-y: auto;
+    }
+    .details-workspace {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 15px;
+      flex-grow: 1;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 991px) {
+      .details-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+    .btn-crt-nav {
+      background: transparent;
+      border: 1px dashed var(--crt-glow);
+      color: var(--crt-glow);
+      padding: 6px 15px;
+      font-family: var(--font-terminal);
+      font-size: 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .btn-crt-nav:hover {
+      background: var(--crt-glow);
+      color: var(--bg-deep);
+      box-shadow: 0 0 10px var(--crt-glow);
+    }
+    .screenshot-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .gallery-img {
+      border: 1px solid var(--crt-border);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      aspect-ratio: 16/10;
+    }
+    .gallery-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) sepia(0.5) contrast(1.2);
+    }
+    .gallery-img:hover {
+      border-color: var(--crt-glow);
+      transform: scale(1.03);
+    }
+    .gallery-img:hover img {
+      filter: none;
+    }
+  </style>
 </head>
 
+<body class="crt-body">
+  <!-- CRT Screen overlay -->
+  <div class="crt-screen"></div>
+  <div class="crt-vignette"></div>
 
-<body class="portfolio-details-page">
+  <div class="details-container">
+    
+    <!-- HUD Header -->
+    <header class="hud-header">
+      <div class="hud-title">DR-OS // DECRYPTED_PROJECT_DUMP</div>
+      <a href="index.html" class="btn-crt-nav">[ <- BACK_TO_SHELL ]</a>
+    </header>
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <!-- <div class="profile-img">
-      <img src="assets/img/fotoPerfil.jpg" alt="" class="img-fluid rounded-circle">
-    </div> -->
-
-    <a href="index.html" class="logo d-flex flex-column align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename mb-2 mt-5">Daniel Rodríguez</h1><span data-i18n="site_role" class="grey-text">Programador Web
-        y
-        Android</span>
-    </a>
-
-    <div class="social-links text-center">
-      <a href="mailto:drbarranco@yahoo.es" class="email" target="_blank"><i class="bi bi-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/drbarranco/" class="linkedin" target="_blank"><i
-          class="bi bi-linkedin"></i></a>
-
-      <a href="https://github.com/drbarranco/" class="github" target="_blank">
-        <i class="bi bi-github"></i>
-      </a>
-    </div>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="index.html#hero"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a data-i18n="nav_about" href="index.html#about"><i class="bi bi-person navicon"></i> Sobre Mí</a></li>
-        <li><a data-i18n="nav_resume" href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i>
-            Currículum</a></li>
-        <li><a data-i18n="nav_portfolio" href="index.html#portfolio"><i class="bi bi-images navicon"></i> Proyectos</a>
-        </li>
-        <li><a data-i18n="nav_services" href="index.html#services"><i class="bi bi-hdd-stack navicon"></i>
-            Certificaciones</a></li>
-        <li><a data-i18n="nav_contact" href="index.html#contact"><i class="bi bi-envelope navicon"></i> Contacto</a>
-        </li>
-      </ul>
-    </nav>
-
-  </header>
-
-  <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title dark-background">
-      <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 data-i18n="project_details" class="mb-2 mb-lg-0">Detalles del proyecto</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li data-i18n="project_details" class="current">Detalles del proyecto</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Portfolio Details Section -->
-    <section id="portfolio-details" class="portfolio-details section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 gx-5">
-
-          <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper init-swiper">
-
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 4000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
-
-              <div class="swiper-wrapper align-items-center">
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink1.PNG" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink2.PNG" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink3.PNG" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink4.PNG" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink5.PNG" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/projects/Timelink6.PNG" alt="">
-                </div>
-
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
+    <!-- Workspace -->
+    <div class="details-workspace">
+      
+      <!-- Columna Izquierda: Ficha Técnica & Capturas -->
+      <aside class="hud-sidebar gap-3">
+        
+        <!-- Ficha -->
+        <div class="hud-card">
+          <div class="hud-card-header">
+            <span class="card-icon">📋</span>
+            <span>SYSTEM METADATA</span>
           </div>
+          <div class="hud-card-body">
+            <ul class="info-list" style="list-style: none; display: flex; flex-direction: column; gap: 8px;" id="project-meta-list">
+              <!-- Cargado dinámicamente -->
+            </ul>
+          </div>
+        </div>
 
-          <div class="col-lg-4">
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h3>Proyecto: Timelink</h3>
-              <ul>
-                <li><strong>Categoría</strong>: Aplicación Web</li>
-                <li><strong>Cliente</strong>: Newtron Informática, SL</li>
-                <li><strong>Fecha de Inicio</strong>: 15/01/2025</li>
-                <li><strong>Fecha de Entrega</strong>: 30/03/2025</li>
-                <li><strong>URL</strong>: <a
-                    href="https://timelink-bootstrap.onrender.com">https://timelink-bootstrap.onrender.com</a></li>
-                <li><strong>GitHub</strong>: <a
-                    href="https://github.com/drbarranco/timelink">https://github.com/drbarranco/timelink</a></li>
-              </ul>
-            </div>
-            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>Aplicación Web de control horario de empleados</h2>
-              <p>
-                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia.
-                Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia
-                accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt
-                eius.
-              </p>
+        <!-- Capturas de pantalla -->
+        <div class="hud-card flex-grow-1">
+          <div class="hud-card-header">
+            <span class="card-icon">🖼️</span>
+            <span>SCREENSHOT_BUFFERS</span>
+          </div>
+          <div class="hud-card-body">
+            <div class="screenshot-gallery" id="project-screenshot-gallery">
+              <!-- Cargado dinámicamente -->
             </div>
           </div>
         </div>
-      </div>
-    </section><!-- /Portfolio Details Section -->
 
-  </main>
+      </aside>
 
-  <footer id="footer" class="footer position-relative light-background">
+      <!-- Columna Derecha: Documentación Técnica Ampliada -->
+      <section class="hud-terminal-container">
+        <div class="terminal-body" style="background-color: var(--bg-surface); overflow-y: auto;" id="project-docs-body">
+          <!-- Cargado dinámicamente -->
+        </div>
+      </section>
 
-    <div class="container">
-      <!-- <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span>
-        </p>
-      </div> -->
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
 
-  </footer>
+    <!-- HUD Footer -->
+    <footer class="hud-footer">
+      <div class="footer-block">DECRYPT_ENGINE: ACTIVE</div>
+      <div class="footer-block">DR-AUDIT_SHELL v2.0</div>
+    </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  </div>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
+  <!-- Main Scripts -->
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/projects.js"></script>
-  <script src="assets/js/main.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get("id");
+      const project = projects[projectId];
+      
+      if (!project) {
+        window.location.href = "index.html";
+        return;
+      }
 
+      const lang = localStorage.getItem("lang") || "es";
+      const isES = lang === "es";
 
+      // 1. Cargar Ficha Técnica
+      const metaList = document.getElementById("project-meta-list");
+      const cat = isES ? project.category : project.categoryEn;
+      const client = isES ? project.client : project.clientEn;
+      
+      let metaHTML = `
+        <li><strong>[NODE]:</strong> ${project.title}</li>
+        <li><strong>[LAYER]:</strong> ${cat}</li>
+        <li><strong>[CLIENT]:</strong> ${client}</li>
+        <li><strong>[DATES]:</strong> ${project.startDate} - ${project.endDate}</li>
+      `;
+      if (project.url) {
+        metaHTML += `<li><strong>[ONLINE_URL]:</strong> <a href="${project.url}" target="_blank" style="color: var(--crt-glow);">${project.url}</a></li>`;
+      }
+      if (project.repo) {
+        metaHTML += `<li><strong>[SOURCE_CODE]:</strong> <a href="${project.repo}" target="_blank" style="color: var(--crt-glow);">${project.repo}</a></li>`;
+      }
+      metaList.innerHTML = metaHTML;
+
+      // 2. Cargar Capturas de Pantalla en el buffer
+      const gallery = document.getElementById("project-screenshot-gallery");
+      gallery.innerHTML = project.images.map(src => `
+        <a href="${src}" class="gallery-img glightbox">
+          <img src="${src}" alt="Screenshot">
+        </a>
+      `).join('');
+
+      // Inicializar GLightbox para ampliar imágenes con filtros sepia/CRT
+      const lightbox = GLightbox({
+        selector: '.glightbox'
+      });
+
+      // 3. Inyectar Documentación Técnica en la consola
+      const docsBody = document.getElementById("project-docs-body");
+      const probTitle = isES ? "01_DEFINICIÓN_DEL_PROBLEMA" : "01_PROBLEM_STATEMENT";
+      const probText = isES ? project.problem : project.problemEn;
+      
+      const archTitle = isES ? "02_ARQUITECTURA_DE_SISTEMAS" : "02_SYSTEMS_ARCHITECTURE";
+      const archText = isES ? project.architecture : project.architectureEn;
+
+      const dbTitle = isES ? "03_MODELADO_DE_BASE_DE_DATOS" : "03_DATABASE_SCHEMA";
+      const dbText = isES ? project.database : project.databaseEn;
+
+      const apiTitle = isES ? "04_INTEGRACIÓN_API_REST" : "04_REST_API_SPEC";
+      const apiText = isES ? project.api : project.apiEn;
+
+      const chalTitle = isES ? "05_RETOS_TÉCNICOS_RESUELTOS" : "05_RESOLVED_CHALLENGES";
+      const chalText = isES ? project.challenges : project.challengesEn;
+
+      docsBody.innerHTML = `
+        <div class="term-log header">>>> LOAD_DOCUMENTATION_DUMP: ${project.title.toUpperCase()}</div>
+        
+        <div class="term-log header" style="color: var(--crt-glow);">${probTitle}</div>
+        <div class="term-log">${probText}</div>
+
+        <div class="term-log header" style="color: var(--crt-glow);">${archTitle}</div>
+        <div class="term-log">${archText}</div>
+
+        <div class="term-log header" style="color: var(--crt-glow);">${dbTitle}</div>
+        <div class="term-log" style="white-space: pre-wrap;">${dbText}</div>
+
+        <div class="term-log header" style="color: var(--crt-glow);">${apiTitle}</div>
+        <div class="term-log" style="white-space: pre-wrap;">${apiText}</div>
+
+        <div class="term-log header" style="color: var(--crt-glow);">${chalTitle}</div>
+        <div class="term-log" style="white-space: pre-wrap;">${chalText}</div>
+      `;
+    });
+  </script>
 </body>
 
 </html>

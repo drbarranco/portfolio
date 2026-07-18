@@ -1,1404 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Daniel Rodríguez - Desarrollador Web y Android</title>
+  <title>Daniel Rodríguez - Habitación Interactiva</title>
   <meta name="description"
-    content="Portfolio de Daniel Rodríguez, desarrollador web y de aplicaciones móviles. Experiencia en Java, Laravel, PHP, Android Studio y más.">
-  <meta name="keywords"
-    content="Daniel Rodríguez, desarrollador web, Android, Java, Laravel, portfolio, DAW, DAM, GoToPádel, programador">
+    content="Portafolio interactivo de Daniel Rodríguez al estilo aventura gráfica clásica. Explora su despacho para descubrir sus proyectos de software y sistemas.">
+  <meta name="keywords" content="Daniel Rodríguez, portafolio, aventura gráfica, Monkey Island, Laravel, Spring Boot, Sysadmin">
   <meta name="author" content="Daniel Rodríguez Barranco">
-
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+  <!-- Google Fonts (Fira Code for HUD, Outfit for UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-98MD0RXFS9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-98MD0RXFS9');
-  </script>
 </head>
 
+<body class="game-body">
 
-<body class="index-page">
+  <!-- CAPA DE OSCURIDAD PARA CONCEPTO LUZ CÁLIDA / DÍA / NOCHE -->
+  <div id="ambient-overlay" class="ambient-overlay"></div>
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <!-- <div class="profile-img">
-      <img src="assets/img/fotoPerfil.jpg" alt="" class="img-fluid rounded-circle">
-    </div> -->
-
-    <a href="index.html" class="logo d-flex flex-column align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename mb-2 mt-5">Daniel Rodríguez</h1><span class="grey-text mb-2" data-i18n="site_role">Programador
-        Web y
-        Android</span>
-
-    </a>
-    <div class="social-links text-center">
-      <a href="mailto:drbarrancodev@gmail.com" class="email" target="_blank"><i class="bi bi-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/drbarranco/" class="linkedin" target="_blank"><i
-          class="bi bi-linkedin"></i></a>
-      <a href="https://github.com/drbarranco/" class="github" target="_blank">
-        <i class="bi bi-github"></i>
-      </a>
+  <!-- CONTENEDOR PRINCIPAL DEL JUEGO (VIEWPORT FULLSCREEN FIT 16:9) -->
+  <div class="game-viewport" id="game-viewport">
+    
+    <!-- HUD SUPERIOR: ACCIÓN ACTIVA -->
+    <div class="hud-action-bar">
+      <span class="hud-action-text" id="hud-action-text"></span>
     </div>
 
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active" data-i18n="nav_home"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#portfolio" data-i18n="nav_portfolio"><i class="bi bi-images navicon"></i> Proyectos</a></li>
-        <li><a href="#skills" data-i18n="nav_about"><i class="bi bi-layers navicon"></i> Tech Stack</a></li>
-        <li><a href="#resume" data-i18n="nav_resume"><i class="bi bi-file-earmark-text navicon"></i> Currículum</a></li>
-        <li><a href="#services" data-i18n="nav_services"><i class="bi bi-hdd-stack navicon"></i> Certificaciones</a>
-        </li>
-        <li><a href="#contact" data-i18n="nav_contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
+    <!-- BOTONES DE CONTROL SUPERIOR (HTML REAL) -->
+    <div class="top-controls">
+      <button class="top-btn" id="btn-light">
+        <i class="bi bi-sun"></i> <span data-i18n="btn_warm_light">Luz cálida</span>
+      </button>
+      <button class="top-btn" id="btn-ambient-sound">
+        <i class="bi bi-music-note-beamed"></i> <span data-i18n="btn_ambient">Ambiente</span>
+      </button>
+      <button class="top-btn" id="btn-menu-toggle">
+        <i class="bi bi-list"></i> <span data-i18n="btn_menu">Menú</span>
+      </button>
+    </div>
+
+    <!-- ESCENARIO DE LA HABITACIÓN (CON SOPORTE DE ZOOM) -->
+    <div class="room-wrapper" id="room-wrapper">
+      <img src="assets/img/retro_room.jpg" class="room-bg" alt="Despacho de Daniel">
+      
+      <!-- CAPA DE HOTSPOTS INTERACTIVOS (SVG EN 1024x576 CON AJUSTE DINÁMICO) -->
+      <svg class="hotspot-svg" viewBox="0 0 1024 576" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        
+        <!-- Puerta izquierda (Autodidacta) -->
+        <polygon id="hot-puerta" class="hotspot" points="0,90 80,90 80,480 0,480" data-label="es: → Leer cartel de la puerta | en: → Read sign on the door" />
+        
+        <!-- Pizarra de la pared izquierda ("PLAN DEL DÍA") -->
+        <polygon id="hot-pizarra" class="hotspot" points="100,150 200,150 200,440 100,440" data-label="es: → Examinar plan del día (Formación) | en: → Examine daily plan (Education)" />
+        
+        <!-- Máquina recreativa arcade (Bug Hunter) -->
+        <polygon id="hot-arcade" class="hotspot" points="180,380 300,380 300,576 180,576" data-label="es: → Jugar a la máquina arcade | en: → Play arcade machine" />
+
+        <!-- Ventana (Tenerife / Sunset) -->
+        <polygon id="hot-ventana" class="hotspot" points="750,80 1000,80 1000,520 750,520" data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
+        
+        <!-- Ordenador principal (TimeLink) -->
+        <polygon id="hot-pc" class="hotspot" points="380,330 660,330 660,510 380,510" data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
+        
+        <!-- Móvil (GoToPádel) -->
+        <polygon id="hot-movil" class="hotspot" points="590,525 650,525 650,565 590,565" data-label="es: → Inspeccionar smartphone (GoToPádel) | en: → Inspect mobile phone (GoToPádel)" />
+        
+        <!-- TPV antiguo (OKBackups) -->
+        <polygon id="hot-tpv" class="hotspot" points="730,455 900,455 900,576 730,576" data-label="es: → Diagnosticar TPV de comercio (OKBackups) | en: → Diagnose shop POS terminal (OKBackups)" />
+        
+        <!-- Taza de café -->
+        <polygon id="hot-taza" class="hotspot" points="80,495 150,495 150,576 80,576" data-label="es: → Tomar taza de café | en: → Take coffee cup" />
+        
+        <!-- Cuaderno de Ideas (Currículum) -->
+        <polygon id="hot-ideas" class="hotspot" points="105,505 280,505 280,576 105,576" data-label="es: → Abrir cuaderno de ideas (Currículum) | en: → Open ideas notebook (Resume)" />
+
+        <!-- Estantería de libros / manuales -->
+        <polygon id="hot-estanteria" class="hotspot" points="350,140 650,140 650,250 350,250" data-label="es: → Examinar archivador técnico (Tecnologías) | en: → Examine technical files (Tech Stack)" />
+        
+        <!-- Raspberry Pi / Servidores -->
+        <polygon id="hot-raspberry" class="hotspot" points="720,415 780,415 780,540 720,540" data-label="es: → Inspeccionar servidores de pruebas | en: → Inspect testing servers" />
+
+        <!-- Poster de Tenerife -->
+        <polygon id="hot-poster" class="hotspot" points="660,160 730,160 730,390 660,390" data-label="es: → Leer póster de Tenerife | en: → Look at Tenerife poster" />
+
+      </svg>
+    </div>
+
+    <!-- BOTONERA MENÚ INFERIOR (HTML REAL) -->
+    <div class="bottom-menu-bar">
+      <button class="menu-item" id="menu-cv">
+        <span class="menu-icon">💼</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_cv_title">Curriculum</span>
+          <span class="menu-sub" data-i18n="menu_cv_sub">PDF</span>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-exp">
+        <span class="menu-icon">💻</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_exp_title">Experiencia</span>
+          <span class="menu-sub" data-i18n="menu_exp_sub">Mi recorrido</span>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-proj">
+        <span class="menu-icon">📂</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_proj_title">Proyectos</span>
+          <span class="menu-sub" data-i18n="menu_proj_sub">Lo que he construido</span>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-tech">
+        <span class="menu-icon">🥞</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_tech_title">Tecnologías</span>
+          <span class="menu-sub" data-i18n="menu_tech_sub">Mi stack</span>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-edu">
+        <span class="menu-icon">📖</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_edu_title">Formación</span>
+          <span class="menu-sub" data-i18n="menu_edu_sub">Siempre aprendiendo</span>
+        </div>
+      </button>
+      <button class="menu-item" id="menu-chat">
+        <span class="menu-icon">☕</span>
+        <div class="menu-text">
+          <span class="menu-title" data-i18n="menu_chat_title">Hablemos</span>
+          <span class="menu-sub" data-i18n="menu_chat_sub">¿Tienes un reto?</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- GLOBOS DE TEXTO FLOTANTES (BOCADILLOS DE DIÁLOGO) -->
+    <div id="speech-bubble" class="speech-bubble d-none"></div>
+
+    <!-- BOTÓN RETRO DE VOLVER / ZOOM OUT -->
+    <button id="btn-zoom-out" class="btn-zoom-out d-none">[ ← VOLVER / RETURN ]</button>
+
+    <!-- PANEL DE ÁRBOL DE DIÁLOGOS DE PROYECTOS (ESTILO MONKEY ISLAND) -->
+    <div id="dialogue-panel" class="dialogue-panel d-none">
+      <div class="dialogue-header" id="dialogue-speaker">DANIEL_LOGS:</div>
+      <div class="dialogue-speech" id="dialogue-speech-text">...</div>
+      <ul class="dialogue-choices" id="dialogue-choices-list">
+        <!-- Opciones inyectadas dinámicamente -->
       </ul>
-    </nav>
-
-  </header>
-
-  <main class="main">
-
-
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <div class="container-lang">
-        <div>
-          <button id="lang-switch-es" class="lang-switch lang-switch-active" data-lang="es">
-            <img src="assets/img/flags/spain_flag.png" alt="Español"> Español
-          </button>
-        </div>
-        <div>
-          <button class="lang-switch" data-lang="en">
-            <img src="assets/img/flags/england_flag.png" alt="English"> English
-          </button>
-        </div>
-      </div>
-
-      <img id="img-background" src="assets/img/fondo_linkedin5.png" alt="" data-aos="fade-in" class=""
-        style="filter: opacity(0.2) grayscale(30%);">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Daniel Rodríguez Barranco</h2>
-        <p id="hero_subtitle" class="grey-text">
-          <span data-i18n="hero_subtitle"></span>
-          <span data-i18n="hero_typed_items" class="typed" data-typed-items="Multiplataforma, Web, Android"></span>
-          <span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span>
-        </p>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section dark-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up" data-aos-delay="1000">
-        <h2 data-i18n="projects_title">Proyectos</h2>
-        <p data-i18n="projects_description">
-          Proyectos académicos, personales y desarrollados durante mis prácticas, que incluyen aplicaciones móviles para
-          Android y aplicaciones web utilizando tecnologías modernas. Algunos están disponibles en línea a través de
-          enlaces a sus respectivos alojamientos.
-        </p>
-
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-          <!-- Filtros -->
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="1200">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-product">Web</li>
-            <li data-filter=".filter-app">Android</li>
-
-            <!-- <li data-filter=".filter-branding">Branding</li>
-            <li data-filter=".filter-books">Books</li> -->
-          </ul><!-- End Portfolio Filters -->
-
-          <div class="row row-cols-1 row-cols-md-2 g-4 isotope-container" data-aos="fade-up" data-aos-delay="1500">
-
-            <!-- TimeLink -->
-            <div class="col portfolio-item isotope-item filter-product">
-              <div class="portfolio-content h-100 d-flex flex-column equal-height">
-                <img src="assets/img/projects/Timelink1.PNG" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>TimeLink</h4>
-                  <p data-i18n="tlink_description">Aplicación web de control horario para empresas</p>
-
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <!-- Botón online -->
-                    <a href="https://timelink-bootstrap.onrender.com" title="Go Online" target="_blank"
-                      class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-globe fs-3 green-icon"></i>
-                        <span class="text-white small">Go Online</span>
-                      </div>
-                    </a>
-
-                    <!-- Botón detalles -->
-                    <a href="portfolio-details.html?id=timelink" title="Ver detalles"
-                      class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle blue-icon fs-3 fw-bolder"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-
-                </div>
-                <!-- Tecnologías usadas -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg"
-                      width="20" height="20" alt="Laravel">
-                    <span class="text-white small">Laravel</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="20"
-                      height="20" alt="PHP">
-                    <span class="text-white small">PHP</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="20"
-                      height="20" alt="MySQL">
-                    <span class="text-white small">MySQL</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-plain.svg"
-                      width="20" height="20" alt="Hibernate">
-                    <span class="text-white small">Hibernate</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="JPA">
-                    <span class="text-white small">JPA</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
-                      width="20" height="20" alt="Bootstrap">
-                    <span class="text-white small">Bootstrap</span>
-                  </div>
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/stripe.png" width="20" height="20"
-                      alt="Stripe">
-                    <span class="text-white small">Stripe</span>
-                  </div>
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="20"
-                      height="20" alt="Docker">
-                    <span class="text-white small">Docker</span>
-                  </div>
-
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      width="20" height="20" alt="JavaScript">
-                    <span class="text-white small">JavaScript</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-
-            <!-- GoToPádel Web -->
-            <div class="col portfolio-item isotope-item filter-product">
-              <div class="portfolio-content equal-height d-flex flex-column h-100">
-                <img src="assets/img/projects/padelweb10.PNG" class="img-fluid" alt="">
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4 class="opacity-100">GoToPádel Web</h4>
-                    <p data-i18n="padelweb_description">Aplicación web para la gestión de reservas de pistas de pádel
-                    </p>
-                  </div>
-
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <!-- Ver imagen -->
-                    <a href="https://padel.drbarranco.es/" title="Go Online" target="_blank"
-                      class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-globe fs-3 green-icon"></i>
-                        <span class="text-white small">Go Online</span>
-                      </div>
-                    </a>
-
-                    <!-- Detalles -->
-                    <a href="portfolio-details.html?id=padelweb" class="text-center text-decoration-none"
-                      title="Detalles">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle text-primary fs-3 blue-icon"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="20"
-                      height="20" alt="Spring Boot">
-                    <span class="text-white small">Spring Boot</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="20"
-                      height="20" alt="MySQL">
-                    <span class="text-white small">MySQL</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-plain.svg"
-                      width="20" height="20" alt="Hibernate">
-                    <span class="text-white small">Hibernate</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="JPA">
-                    <span class="text-white small">JPA</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      width="20" height="20" alt="JavaScript">
-                    <span class="text-white small">JavaScript</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="20"
-                      height="20" alt="HTML5">
-                    <span class="text-white small">HTML5</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20"
-                      height="20" alt="CSS3">
-                    <span class="text-white small">CSS3</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="20"
-                      height="20" alt="Node.js">
-                    <span class="text-white small">Node.js</span>
-                  </div>
-
-                </div>
-
-              </div>
-            </div><!-- End portfolio item -->
-
-            <!-- Weather Web App -->
-            <div class="col portfolio-item isotope-item filter-product">
-              <div class="portfolio-content equal-height d-flex flex-column h-100">
-                <img src="assets/img/projects/dwectarea6_1.PNG" class="img-fluid" alt="Weather App">
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>Weather App</h4>
-                    <p data-i18n="weather_description">Aplicación de previsión meteorológica por ciudades</p>
-                  </div>
-
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="https://github.com/drbarranco/weather" title="View on GitHub" target="_blank"
-                      class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-github fs-3 green-icon"></i>
-                        <span class="text-white small">GitHub</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=weather" class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle blue-icon fs-3 fw-bolder"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-
-                </div>
-                <!-- Tecnologías usadas Weather App -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="20"
-                      height="20" alt="HTML5">
-                    <span class="text-white small">HTML5</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20"
-                      height="20" alt="CSS3">
-                    <span class="text-white small">CSS3</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                      width="20" height="20" alt="JavaScript">
-                    <span class="text-white small">JavaScript</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img
-                      src="https://img.icons8.com/external-outline-juicy-fish/60/ffffff/external-api-coding-and-development-outline-outline-juicy-fish.png"
-                      width="20" height="20" alt="REST API">
-                    <span class="text-white small">REST API</span>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <!-- Currency Converter -->
-            <div class="col portfolio-item isotope-item filter-product">
-              <div class="portfolio-content equal-height d-flex flex-column h-100">
-                <img src="assets/img/projects/converter1.JPG" class="img-fluid" alt="">
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>Currency Converter</h4>
-                    <p data-i18n="tlink_description">Aplicación web de conversión de divisas</p>
-                  </div>
-
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="https://converter.drbarranco.es/" title="Go Online" target="_blank"
-                      class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-globe fs-3 green-icon"></i>
-                        <span class="text-white small">Go Online</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=converter" class="text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle blue-icon fs-3 fw-bolder"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas Currency Converter -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="20"
-                      height="20" alt="Spring Boot">
-                    <span class="text-white small">Spring Boot</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20"
-                      height="20" alt="React">
-                    <span class="text-white small">React</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
-                      width="20" height="20" alt="TypeScript">
-                    <span class="text-white small">TypeScript</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="20"
-                      height="20" alt="Tailwind CSS">
-                    <span class="text-white small">Tailwind</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img
-                      src="https://img.icons8.com/external-outline-juicy-fish/60/ffffff/external-api-coding-and-development-outline-outline-juicy-fish.png"
-                      width="20" height="20" alt="REST API">
-                    <span class="text-white small">REST API</span>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://vitejs.dev/logo.svg" width="20" height="20" alt="Vite">
-                    <span class="text-white small">Vite</span>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End portfolio item -->
-
-
-            <!-- GoToPádel App -->
-            <div class="col portfolio-item isotope-item filter-app">
-              <div class="portfolio-content equal-height d-flex flex-column h-100 bg-light py-3 overflow-y-auto">
-                <div class="d-flex justify-content-center align-items-center gap-5">
-                  <img src="assets/img/projects/gotopadel5.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                  <img src="assets/img/projects/gotopadel6.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                </div>
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>GoToPádel</h4>
-                    <p data-i18n="padel_description">Aplicación Android de organización de partidos de pádel</p>
-                  </div>
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="assets/img/projects/gotopadel5.PNG" data-gallery="portfolio-gotopadel"
-                      class="glightbox text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-zoom-in fs-3 green-icon"></i>
-                        <span class="text-white small">Zoom</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=gotopadel" class="text-center text-decoration-none"
-                      title="Detalles">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle text-primary fs-3 blue-icon"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas - GoToPádel App -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-
-                  <!-- Android -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
-                      width="20" height="20" alt="Android">
-                    <span class="text-white small">Android</span>
-                  </div>
-
-                  <!-- Java -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-
-                  <!-- SQLite -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="20"
-                      height="20" alt="SQLite">
-                    <span class="text-white small">SQLite</span>
-                  </div>
-
-                  <!-- REST API -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img
-                      src="https://img.icons8.com/external-outline-juicy-fish/60/ffffff/external-api-coding-and-development-outline-outline-juicy-fish.png"
-                      width="20" height="20" alt="REST API">
-                    <span class="text-white small">REST API</span>
-                  </div>
-
-                  <!-- Google Maps -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/color/48/google-maps-new.png" width="20" height="20"
-                      alt="Google Maps">
-                    <span class="text-white small">Maps API</span>
-                  </div>
-
-                  <!-- XML -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/fluency/48/xml-file.png" width="20" height="20" alt="XML">
-                    <span class="text-white small">XML</span>
-                  </div>
-
-                  <!-- Git -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20"
-                      height="20" alt="Git">
-                    <span class="text-white small">Git</span>
-                  </div>
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-junit-3521515-2945090.png" width="20"
-                      height="20" alt="JUnit">
-                    <span class="text-white small">JUnit</span>
-                  </div>
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://avatars.githubusercontent.com/u/17006514?s=200&v=4" width="20" height="20"
-                      alt="Mockito">
-                    <span class="text-white small">Mockito</span>
-                  </div>
-
-
-
-                </div>
-              </div>
-            </div>
-
-            <!-- Hamburguesería -->
-            <div class="col portfolio-item isotope-item filter-app">
-              <div class="portfolio-content equal-height d-flex flex-column h-100 bg-light py-3">
-                <div class="d-flex justify-content-center align-items-center gap-4" style="min-height: 300px;">
-                  <!-- <img src="assets/img/projects/burguer1.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt=""> -->
-                  <img src="assets/img/projects/burguer3.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                  <img src="assets/img/projects/burguer5.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                </div>
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>Burguers</h4>
-                    <p data-i18n="burguer_description">Aplicación móvil para realizar pedidos en una hamburguesería</p>
-                  </div>
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="assets/img/projects/burguer3.PNG" data-gallery="portfolio-burguer"
-                      class="glightbox text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-zoom-in fs-3 green-icon"></i>
-                        <span class="text-white small">Zoom</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=burguer" class="text-center text-decoration-none"
-                      title="Detalles">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle text-primary fs-3 blue-icon"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas - Burguers -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-
-                  <!-- Android -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
-                      width="20" height="20" alt="Android">
-                    <span class="text-white small">Android</span>
-                  </div>
-
-                  <!-- Java -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-
-                  <!-- XML -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/fluency/48/xml-file.png" width="20" height="20" alt="XML">
-                    <span class="text-white small">XML</span>
-                  </div>
-
-                  <!-- Git -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20"
-                      height="20" alt="Git">
-                    <span class="text-white small">Git</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-
-            <!-- Supermercado -->
-            <div class="col portfolio-item isotope-item filter-app">
-              <div class="portfolio-content equal-height d-flex flex-column h-100 bg-light py-3">
-                <div class="d-flex justify-content-center align-items-center gap-4" style="min-height: 300px;">
-                  <img src="assets/img/projects/super3.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                  <img src="assets/img/projects/super2.PNG" class="img-fluid"
-                    style="height: 300px; object-fit: contain;" alt="">
-                </div>
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>Supermarket</h4>
-                    <p data-i18n="super_description">Aplicación móvil de gestión de stock de un supermercado</p>
-                  </div>
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="assets/img/projects/super3.PNG" data-gallery="portfolio-super"
-                      class="glightbox text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-zoom-in fs-3 green-icon"></i>
-                        <span class="text-white small">Zoom</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=super" class="text-center text-decoration-none" title="Detalles">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle text-primary fs-3 blue-icon"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas - Burguers -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-
-                  <!-- Android -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
-                      width="20" height="20" alt="Android">
-                    <span class="text-white small">Android</span>
-                  </div>
-
-                  <!-- Java -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-
-                  <!-- SQLite -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" width="20"
-                      height="20" alt="SQLite">
-                    <span class="text-white small">SQLite</span>
-                  </div>
-
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/fluency/48/database.png" width="20" height="20" alt="JDBC">
-                    <span class="text-white small">JDBC</span>
-                  </div>
-
-                  <!-- XML -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/fluency/48/xml-file.png" width="20" height="20" alt="XML">
-                    <span class="text-white small">XML</span>
-                  </div>
-
-                  <!-- Git -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20"
-                      height="20" alt="Git">
-                    <span class="text-white small">Git</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Map Weather -->
-            <div class="col portfolio-item isotope-item filter-app">
-              <div class="portfolio-content equal-height d-flex flex-column h-100 bg-light py-3">
-                <div class="d-flex justify-content-center">
-                  <img src="assets/img/projects/pmdm6.PNG" class="img-fluid" style="height: 300px; object-fit: contain;"
-                    alt="">
-                </div>
-                <div class="portfolio-info d-flex flex-column h-100">
-                  <div>
-                    <h4>Map Weather</h4>
-                    <p data-i18n="maps_description">Aplicación móvil para la consulta del clima por ubicación</p>
-                  </div>
-                  <div class="d-flex justify-content-center gap-5 mt-5">
-                    <a href="assets/img/projects/pmdm6.PNG" data-gallery="portfolio-maps"
-                      class="glightbox text-center text-decoration-none">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-zoom-in fs-3 green-icon"></i>
-                        <span class="text-white small">Zoom</span>
-                      </div>
-                    </a>
-                    <a href="portfolio-details.html?id=maps" class="text-center text-decoration-none" title="Detalles">
-                      <div class="d-flex flex-column align-items-center">
-                        <i class="bi bi-info-circle text-primary fs-3 blue-icon"></i>
-                        <span class="text-white small">Info</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <!-- Tecnologías usadas - Map Weather -->
-                <div
-                  class="tech-stack d-flex flex-wrap justify-content-center w-100 gap-3 mt-auto bg-secondary p-2 rounded shadow-sm">
-
-                  <!-- Android -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
-                      width="20" height="20" alt="Android">
-                    <span class="text-white small">Android</span>
-                  </div>
-
-                  <!-- Java -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="20"
-                      height="20" alt="Java">
-                    <span class="text-white small">Java</span>
-                  </div>
-
-                  <!-- Google Maps -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/color/48/google-maps-new.png" width="20" height="20"
-                      alt="Google Maps">
-                    <span class="text-white small">Maps API</span>
-                  </div>
-
-                  <!-- XML -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://img.icons8.com/fluency/48/xml-file.png" width="20" height="20" alt="XML">
-                    <span class="text-white small">XML</span>
-                  </div>
-
-                  <!-- Git -->
-                  <div class="d-flex flex-column align-items-center">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20"
-                      height="20" alt="Git">
-                    <span class="text-white small">Git</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /Portfolio Section -->
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills section dark-background">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2 data-i18n="skills_title">Tecnologías</h2>
-        <p data-i18n="skills_description">Competencias técnicas que he desarrollado durante mi formación en DAW y DAM, y
-          que estoy consolidando con
-          práctica y aprendizaje continuo.</p>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row skills-content skills-animation">
-
-
-
-          <div class="row text-center gy-4">
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="60"
-                  height="60" alt="HTML5">
-                <p class="mt-2"><strong>HTML5</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="60"
-                  height="60" alt="CSS3">
-                <p class="mt-2"><strong>CSS3</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                  width="60" height="60" alt="JavaScript">
-                <p class="mt-2"><strong>JavaScript</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
-                  width="60" height="60" alt="Bootstrap">
-                <p class="mt-2"><strong>Bootstrap</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="60"
-                  height="60" alt="MySQL">
-                <p class="mt-2"><strong>MySQL / SQLite</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="60"
-                  height="60" alt="Java">
-                <p class="mt-2"><strong>Java</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="60"
-                  height="60" alt="Spring Boot">
-                <p class="mt-2"><strong>Spring Boot</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" width="60"
-                  height="60" alt="Android Studio">
-                <p class="mt-2"><strong>Android Studio</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="60"
-                  height="60" alt="PHP">
-                <p class="mt-2"><strong>PHP</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" width="60"
-                  height="60" alt="Laravel">
-                <p class="mt-2"><strong>Laravel</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="60"
-                  height="60" alt="Git">
-                <p class="mt-2"><strong>Git & GitHub</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="60"
-                  height="60" alt="Docker">
-                <p class="mt-2"><strong>Docker</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-                  width="60" height="60" alt="PostgreSQL">
-                <p class="mt-2"><strong>PostgreSQL</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="60"
-                  height="60" alt="React">
-                <p class="mt-2"><strong>React</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="60"
-                  height="60" alt="Tailwind CSS">
-                <p class="mt-2"><strong>Tailwind CSS</strong></p>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-6 col-lg-3">
-              <div class="d-flex flex-column align-items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" width="60"
-                  height="60" alt="Postman">
-                <p class="mt-2"><strong>Postman</strong></p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- Resume Section -->
-    <section id="resume" class="resume section dark-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2 data-i18n="resume_section_title">Currículum</h2>
-        <p data-i18n="resume_intro">Técnico Superior en Desarrollo de Aplicaciones Web (DAW) y Desarrollo de
-          Aplicaciones Multiplataforma (DAM).
-          Especializado en lenguajes como Java, PHP, HTML5, CSS3 y JavaScript, y en tecnologías como Laravel, Spring
-          Boot y desarrollo Android. Profesional responsable, organizado y adaptable, con capacidad para aprender
-          rápidamente y un fuerte compromiso con el aprendizaje continuo y la mejora de habilidades.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4 justify-content-center">
-          <div class="content" data-aos="fade-up">
-            <!-- <h2 data-i18n="about_subtitle">Desarrollador de Aplicaciones Web y Android</h2> -->
-            <div class="row mb-3">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_birth">Lugar de nacimiento:</strong>
-                    <span>Linares, Jaén, ES</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong data-i18n="about_phone">Teléfono:</strong>
-                    <a class="link-about" href="tel:+34622811670">+34 622 811 670</a>
-                  </li>
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_email">Email:</strong>
-                    <a class="link-about" href="mailto:drbarrancodev@gmail.com" class="email"
-                      target="_blank"><span>drbarrancodev@gmail.com</span></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong data-i18n="about_languages">Idiomas:</strong> <span
-                      data-i18n="about_languages_value">Español
-                      (nativo), Inglés (B2)</span></li>
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong>LinkedIn:</strong>
-                    <a class="link-about" href="https://www.linkedin.com/in/drbarranco/" target="_blank">
-                      linkedin.com/in/drbarranco
-                    </a>
-                  </li>
-
-                  <li>
-                    <i class="bi bi-chevron-right"></i>
-                    <strong>GitHub:</strong>
-                    <a class="link-about" href="https://github.com/drbarranco" target="_blank">
-                      github.com/drbarranco
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-
-            <h3 class="resume-title" data-i18n="resume_experience_title">Experiencia</h3>
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_experience_title">Desarrollador Full Stack</h4>
-              <h5 data-i18n="resume_experience_title">Enero 2024 - Abril 2024</h5>
-              <p><em>Newtron Informática, Granada, ES — Remoto (prácticas)</em></p>
-              <ul data-i18n="resume_experience_web_tasks">
-                <li>Desarrollo de una aplicación web de control horario de empleados.</li>
-                <li>Implementación backend con PHP y Laravel.</li>
-                <li>Frontend con HTML5, CSS3, JavaScript, Bootstrap y jQuery.</li>
-                <li>Integración de pagos y suscripciones con Stripe.</li>
-              </ul>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_experience_android_title">Desarrollador Frontend Android</h4>
-              <h5 data-i18n="resume_experience_android_dates">Diciembre 2023 - Abril 2024</h5>
-              <p><em>Hoteligy SL, Santa Cruz de Tenerife, ES — Presencial (prácticas)</em></p>
-              <ul data-i18n="resume_experience_android_tasks">
-                <li>Desarrollo de una aplicación móvil con Java para gestión hotelera.</li>
-                <li>Diseño de interfaces de usuario con XML.</li>
-                <li>Implementación de comunicación y gestión de datos con SQLite.</li>
-              </ul>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_experience_cibernet_title">Técnico Informático y Administrador de Red</h4>
-              <h5 data-i18n="resume_experience_cibernet_dates">2007 - 2010</h5>
-              <p><em data-i18n="resume_experience_cibernet_location">Cibernet, Linares (Jaén), ES — Negocio propio</em>
-              </p>
-              <ul>
-                <li data-i18n="resume_experience_cibernet_task1">Gestión y mantenimiento de una red local de ordenadores
-                  en un entorno de cibercafé.</li>
-                <li data-i18n="resume_experience_cibernet_task2">Instalación, configuración y reparación de equipos
-                  informáticos a nivel de hardware y software.</li>
-                <li data-i18n="resume_experience_cibernet_task3">Venta y montaje de ordenadores personalizados para
-                  clientes.</li>
-              </ul>
-            </div><!-- End Resume Item -->
-
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-
-            <h3 class="resume-title" data-i18n="resume_education_title">Formación</h3>
-            <div class="resume-item">
-              <h4 data-i18n="resume_edu_daw_title">CFGS - Desarrollo de Aplicaciones Web</h4>
-              <h5>2023 - 2025</h5>
-              <p><em>IES Aguadulce, Almería, España</em></p>
-              <p data-i18n="resume_edu_daw_desc">Adquirí competencias avanzadas en desarrollo web con tecnologías como
-                PHP, Laravel, HTML5, CSS3 y
-                JavaScript, así como en la gestión de bases de datos y la creación de interfaces responsivas.</p>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_edu_dam_title">CFGS - Desarrollo de Aplicaciones Multiplataforma</h4>
-              <h5>2021 - 2024</h5>
-              <p><em>IES Aguadulce, Almería, España</em></p>
-              <p data-i18n="resume_edu_dam_desc">Aprendí programación orientada a objetos en Java, Python y C#,
-                desarrollo de aplicaciones Android y
-                fundamentos de
-                bases de datos (SQLite, MySQL, PostgreSQL), además de principios de diseño de software y trabajo en
-                entornos
-                multiplataforma.</p>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_edu_micro_title">Curso - Técnico de Sistemas Microinformáticos</h4>
-              <h5>2003</h5>
-              <p><em>Maude Estudios de Informática, Jaén, ES</em></p>
-              <p data-i18n="resume_edu_micro_desc">
-                Curso centrado en el mantenimiento de equipos, configuración de redes, instalación
-                y administración básica de sistemas operativos, así como diagnóstico y resolución de incidencias
-                técnicas.
-              </p>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4 data-i18n="resume_edu_english_title">Course - English for IT</h4>
-              <h5>2025</h5>
-              <p><em>Cisco Systems</em></p>
-              <p data-i18n="resume_edu_english_desc">Formación en inglés técnico aplicada al ámbito de las TIC, enfocada
-                en mejorar la comunicación
-                profesional en entornos tecnológicos.</p>
-              </p>
-            </div><!-- End Resume Item -->
-
-          </div>
-        </div>
-        <a id="downloadCV" class="btn btn-secondary mt-3 me-3 border-info">
-          <span class="flag-icon-bg"></span>
-          Descargar CV (pdf)
-        </a>
-
-        <a id="downloadCV-en" class="btn btn-secondary mt-3 border-info">
-          <span class="flag-icon-en"></span>
-          Download CV (pdf)
-        </a>
-      </div>
-    </section><!-- End Resume Section -->
-
-
-
-    <!-- Certifications Section -->
-    <section id="services" class="services section dark-background">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2 data-i18n="certifications_title">Certificaciones</h2>
-        <p data-i18n="certifications_description">
-          Títulos y certificaciones obtenidas a través de cursos y evaluaciones técnicas en distintas áreas del
-          desarrollo y los
-          sistemas. Actualmente sigo ampliando mi formación para adquirir nuevas competencias y mantenerme actualizado
-          en el sector.
-        </p>
-
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-mortarboard"></i></div>
-            <div>
-              <h4 data-i18n="cert_dam_title" class="title">Desarrollo de Aplicaciones Multiplataforma</h4>
-              <a href="assets/img/certs/dam.jpg" class="glightbox">
-                <img src="assets/img/certs/dam.jpg" width="200px" height="120px" alt="Título DAM">
-              </a>
-              <p data-i18n="cert_dam_desc" class="description">
-                Ciclo superior centrado en el desarrollo de software para entornos móviles y de escritorio, con
-                tecnologías como Java, Android Studio y bases de datos SQL.
-              </p>
-            </div>
-          </div><!-- End Certification Item -->
-
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-mortarboard"></i></div>
-            <div>
-              <h4 data-i18n="cert_daw_title" class="title">Desarrollo de Aplicaciones Web</h4>
-              <a href="assets/img/certs/daw.jpg" class="glightbox">
-                <img src="assets/img/certs/daw.jpg" width="200px" height="120px" alt="Título DAW">
-              </a>
-              <p data-i18n="cert_daw_desc" class="description">
-                Formación especializada en el diseño y programación de aplicaciones web completas, abarcando frontend,
-                backend y gestión de bases de datos.
-              </p>
-            </div>
-          </div><!-- End Certification Item -->
-
-
-          <!-- Certification Item 6-->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-award"></i></div>
-            <div>
-              <h4 data-i18n="cert_micro_title" class="title">Sistemas Microinformáticos</h4>
-              <a href="assets/img/certs/micro.jpg" class="glightbox">
-                <img src="assets/img/certs/micro.jpg" width="200px" height="120px"
-                  alt="Certificado Cisco Networking Basics">
-              </a>
-
-              <p data-i18n="cert_micro_desc" class="description">
-                Formación de 500 horas en soporte técnico, redes locales, montaje y reparación de equipos, y
-                administración de SO Windows y Linux.
-              </p>
-
-            </div>
-          </div><!-- End Certification Item -->
-
-
-          <!-- Certification Item 2 -->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon flex-shrink-0"><i class="bi bi-journal-code"></i></div>
-            <div>
-              <h4 class="title">JavaScript</h4>
-              <a href="assets/img/certs/Cert_Javascript.PNG" class="glightbox">
-                <img src="assets/img/certs/Cert_Javascript.PNG" width="200px" alt="Certificado JavaScript Essentials">
-              </a>
-              <p data-i18n="cert_js_desc" class="description">Certificado sobre programación en JavaScript, incluyendo
-                DOM, eventos y
-                manipulación dinámica de contenido web.</p>
-            </div>
-          </div><!-- End Certification Item -->
-
-          <!-- Certification Item 3 -->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-journal-code"></i></div>
-            <div>
-              <h4 class="title">Java</h4>
-              <a href="assets/img/certs/Cert_Java.PNG" class="glightbox">
-                <img src="assets/img/certs/Cert_Java.PNG" width="200px" alt="Certificado Cisco Networking Basics">
-              </a>
-              <p data-i18n="cert_js_desc" class="description">Certificación en programación Java, abordando conceptos
-                como estructuras de
-                control, clases, objetos, herencia y colecciones.</p>
-            </div>
-          </div><!-- End Certification Item -->
-          <!-- Certification Item 4-->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-journal-code"></i></div>
-            <div>
-              <h4 class="title">SQL</h4>
-              <a href="assets/img/certs/Cert_SQL.PNG" class="glightbox">
-                <img src="assets/img/certs/Cert_SQL.PNG" width="200px" alt="Certificado Cisco Networking Basics">
-              </a>
-              <p data-i18n="cert_sql_desc" class="description">Certificado sobre bases de datos relacionales y lenguaje
-                SQL, incluyendo consultas,
-                filtrado, agrupación de datos y diseño de bases de datos.</p>
-            </div>
-          </div><!-- End Certification Item -->
-
-
-          <!-- Certification Item 1 -->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon flex-shrink-0"><i class="bi bi-journal-code"></i></div>
-            <div>
-              <h4 class="title">HTML / CSS</h4>
-              <a href="assets/img/certs/Cert_html_css.PNG" class="glightbox">
-                <img src="assets/img/certs/Cert_html_css.PNG" width="200px" alt="Certificado HTML y CSS">
-              </a>
-              <p data-i18n="cert_htmlcss_desc" class="description">Certificación en diseño y desarrollo de páginas web
-                estáticas utilizando HTML5 y
-                CSS3, con enfoque en prácticas modernas y diseño responsive.</p>
-            </div>
-          </div><!-- End Certification Item -->
-
-          <!-- Certification Item 5-->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-translate"></i></div>
-            <div>
-              <h4 class="title">Cisco English for IT</h4>
-              <a href="assets/img/certs/english.jpg" class="glightbox">
-                <img src="assets/img/certs/english.jpg" width="200px" height="120px"
-                  alt="Certificado Cisco Networking Basics">
-              </a>
-              <p data-i18n="cert_english_desc" class="description">Curso de Cisco enfocado en el desarrollo de
-                habilidades lingüísticas en inglés
-                aplicadas al entorno tecnológico y profesional de las TIC.</p>
-            </div>
-          </div><!-- End Certification Item -->
-
-          <!-- Certification Item 5-->
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0"><i class="bi bi-graph-up-arrow"></i></div>
-            <div>
-              <h4 data-i18n="cert_marketing_title" class="title">Marketing Online</h4>
-              <a href="assets/img/certs/Marketing.jpg" class="glightbox">
-                <img src="assets/img/certs/Marketing.jpg" width="200px" height="120px"
-                  alt="Certificado Cisco Networking Basics">
-              </a>
-              <p data-i18n="cert_marketing_desc" class="description">Curso centrado en el diseño, posicionamiento y
-                promoción de sitios web,
-                estrategias de marketing digital, SEO, analítica y presencia en redes sociales.</p>
-            </div>
-          </div><!-- End Certification Item -->
-        </div>
-      </div>
-    </section><!-- End Certifications Section -->
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section dark-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2 data-i18n="contact_title">Contacto</h2>
-
-        <p data-i18n="contact_description">
-          Si deseas más información sobre mi perfil, colaborar en algún proyecto o simplemente ponerte en contacto
-          conmigo, no dudes en enviarme un mensaje. Estoy abierto a nuevas oportunidades y siempre dispuesto a escuchar
-          propuestas.
-        </p>
-
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-5">
-
-            <div class="info-wrap d-flex flex-column align-self-center rounded">
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                <i class="bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3 data-i18n="contact_phone_title">Teléfono</h3>
-                  <p><a href="tel:+34622811670">+34 622 811 670</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email</h3>
-                  <p><a href="mailto:drbarrancodev@gmail.com">drbarrancodev@gmail.com</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
-                <i class="bi bi-github flex-shrink-0"></i>
-                <div>
-                  <h3>GitHub</h3>
-                  <p><a href="https://github.com/drbarranco" target="_blank">github.com/drbarranco</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="600">
-                <i class="bi bi-linkedin flex-shrink-0"></i>
-                <div>
-                  <h3>LinkedIn</h3>
-                  <p><a href="https://www.linkedin.com/in/drbarranco/" target="_blank">linkedin.com/in/drbarranco</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-            </div>
-
-          </div>
-          <!-- Contact Form -->
-          <div class="col-lg-7">
-            <form action="https://formspree.io/f/mwpodnbq" method="POST" class="php-email-form rounded"
-              data-aos="fade-up" data-aos-delay="200">
-              <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_next"
-                value="https://drbarranco78.github.io/Daniel_Rodriguez/?sent=true#contact">
-
-              <div class="row gy-4">
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2" data-i18n="contact_name_label">Tu nombre</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required>
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2" data-i18n="contact_email_label">Tu Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2" data-i18n="contact_subject_label">Asunto</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2" data-i18n="contact_message_label">Mensaje</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <button type="submit" data-i18n="contact_submit_button">Enviar Mensaje</button>
-                </div>
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
-
-          <div id="form-alert" class="alert alert-success text-center d-none">
-            ¡Gracias! Tu mensaje ha sido enviado correctamente.
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer position-relative dark-background">
-
-    <div class="container">
-      <!-- <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span>
-        </p>
-      </div> -->
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
 
-  </footer>
+    <!-- Selector de Idiomas -->
+    <div class="game-lang-selector">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span class="divider">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  </div>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- MODAL DE ACCESO RÁPIDO -->
+  <div class="modal-overlay d-none" id="modal-overlay">
+    <div class="modal-dossier">
+      <header class="modal-dossier-hdr">
+        <h2 data-i18n="quick_menu">Archivador Rápido / Dossier</h2>
+        <button class="modal-close" id="btn-close-modal">×</button>
+      </header>
+      <div class="modal-dossier-body">
+        
+        <section class="mb-4">
+          <h3 data-i18n="resume_section_title">Trayectoria Profesional</h3>
+          <p data-i18n="resume_intro">
+            Desarrollador Full-Stack y Android enfocado en construir software e infraestructura a prueba de fallos.
+          </p>
+          <div class="d-flex gap-3 mt-3">
+            <button class="btn-crt-download" id="downloadCV-modal">[ DESCARGAR CV_ES.PDF ]</button>
+            <button class="btn-crt-download" id="downloadCV-en-modal">[ DOWNLOAD CV_EN.PDF ]</button>
+          </div>
+        </section>
+
+        <section class="mb-4">
+          <h3 data-i18n="projects_title">Proyectos Destacados</h3>
+          <ul style="list-style: square; padding-left: 20px;">
+            <li><strong>TimeLink:</strong> SaaS Laravel de control horario y Stripe. <a href="portfolio-details.html?id=timelink" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
+            <li><strong>GoToPádel:</strong> Ecosistema Spring Boot API y Android App. <a href="portfolio-details.html?id=gotopadel" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
+            <li><strong>OKBackups:</strong> Agente de copias de seguridad de TPVs a la nube. <a href="portfolio-details.html?id=okbackups" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 data-i18n="nav_contact">Contacto</h3>
+          <p>
+            <strong>Email:</strong> drbarrancodev@gmail.com<br>
+            <strong>Teléfono:</strong> +34 622 811 670<br>
+            <strong>GitHub:</strong> <a href="https://github.com/drbarranco" target="_blank" style="color: var(--crt-glow);">github.com/drbarranco</a><br>
+            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/drbarranco/" target="_blank" style="color: var(--crt-glow);">linkedin.com/in/drbarranco</a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio elements para inmersión retro -->
+  <audio id="snd-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" preload="auto"></audio>
+  <audio id="snd-success" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-84.wav" preload="auto"></audio>
+  <audio id="snd-glitch" src="https://assets.mixkit.co/active_storage/sfx/2561/2561-84.wav" preload="auto"></audio>
+  <audio id="snd-zoom" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-84.wav" preload="auto"></audio>
+
+  <!-- Ambient audio loop -->
+  <audio id="snd-ambient" src="https://assets.mixkit.co/active_storage/sfx/2433/2433-84.wav" loop preload="auto"></audio>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-
-  <!-- Main JS File -->
+  <!-- Main Scripts -->
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/projects.js"></script>
-
-  <script>
-    const params2 = new URLSearchParams(window.location.search);
-    if (params2.get("sent") === "true") {
-      const alert = document.getElementById("form-alert");
-      if (alert) alert.classList.remove("d-none");
-    }
-  </script>
   <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
