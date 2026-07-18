@@ -579,8 +579,104 @@ body.ambient-night .ambient-overlay {
 /* Ocultar menú inferior y controles superiores en zoom para centrar foco */
 .game-viewport.zoomed-in .top-controls,
 .game-viewport.zoomed-in .bottom-menu-bar {
-  opacity: 0.1;
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/*=============================================================================
+# RESPONSIVIDAD Y OPTIMIZACIÓN EN TABLETS Y MÓVILES
+=============================================================================*/
+
+/* Media Query para Tabletas y pantallas medianas (max-width: 768px) */
+@media (max-width: 768px) {
+  .menu-item {
+    gap: 8px;
+    padding: 6px 10px;
+  }
+  .menu-icon {
+    font-size: 1.5rem;
+  }
+  .menu-title {
+    font-size: 0.85rem;
+  }
+  .menu-sub {
+    display: none; /* Ocultar subtítulos para ahorrar espacio horizontal */
+  }
+  .top-controls {
+    right: 110px;
+  }
+  .hud-action-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Media Query para Smartphones y pantallas pequeñas (max-width: 576px) */
+@media (max-width: 576px) {
+  .bottom-menu-bar {
+    padding: 6px 4px;
+    border-top: 1px solid rgba(255, 176, 0, 0.3);
+  }
+  .menu-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 2px;
+    flex: 1;
+    text-align: center;
+  }
+  .menu-icon {
+    font-size: 1.25rem;
+  }
+  .menu-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+  .top-controls {
+    top: 12px;
+    right: 80px;
+    gap: 6px;
+  }
+  .top-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+  .top-btn span {
+    display: none; /* Ocultar texto en móviles y mostrar solo el icono */
+  }
+  .game-lang-selector {
+    top: 17px;
+    right: 15px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  .hud-action-bar {
+    top: 15px;
+    width: 60%;
+    left: 10px;
+    text-align: left;
+  }
+  .hud-action-text {
+    font-size: 0.85rem;
+  }
+  .dialogue-panel {
+    padding: 12px 18px;
+  }
+  .dialogue-speech {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+  .dialogue-choices li {
+    font-size: 0.8rem;
+    padding: 8px 0;
+  }
+  .btn-zoom-out {
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
 }
 
