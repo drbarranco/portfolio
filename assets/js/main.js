@@ -27,14 +27,14 @@
   // Configuración de zoom por hotspot (escala y traslación para centrar en 16:9)
   // Basado en el viewBox SVG (1024x576). El centro es (512, 288).
   const zoomSettings = {
-    "hot-pc": { scale: 2.2, x: -8, y: 43 },
-    "hot-movil": { scale: 3.5, x: -113, y: -47 },
-    "hot-tpv": { scale: 2.2, x: -303, y: -27 },
-    "hot-ideas": { scale: 2.3, x: 332, y: -237 },
-    "hot-estanteria": { scale: 2.0, x: 12, y: 173 },
-    "hot-pizarra": { scale: 2.1, x: 362, y: 108 },
-    "hot-taza": { scale: 2.5, x: 397, y: -184 },
-    "hot-arcade": { scale: 2.0, x: 272, y: -62 }
+    "hot-pc": { scale: 2.2, x: -33, y: 95 },
+    "hot-movil": { scale: 3.5, x: -138, y: 2 },
+    "hot-tpv": { scale: 2.2, x: -336, y: 22 },
+    "hot-ideas": { scale: 2.3, x: 322, y: -208 },
+    "hot-estanteria": { scale: 2.0, x: 432, y: -63 },
+    "hot-pizarra": { scale: 2.1, x: 162, y: 127 },
+    "hot-taza": { scale: 2.5, x: 374, y: -155 },
+    "hot-arcade": { scale: 2.0, x: 330, y: 2 }
   };
 
   // Frases de humor (Easter eggs) para clics normales
@@ -970,7 +970,10 @@
       });
     }
 
-    // BOTONES DE MENÚ INFERIOR (HTML REAL)
+    // BOTONES DE MENÚ INFERIOR (HTML REAL) DESPLEGABLE
+    const btnToggleBottomMenu = document.getElementById("btn-toggle-bottom-menu");
+    const bottomMenuBar = document.querySelector(".bottom-menu-bar");
+
     const menuCv = document.getElementById("menu-cv");
     const menuExp = document.getElementById("menu-exp");
     const menuProj = document.getElementById("menu-proj");
@@ -978,8 +981,45 @@
     const menuEdu = document.getElementById("menu-edu");
     const menuChat = document.getElementById("menu-chat");
 
+    function closeBottomMenu() {
+      if (bottomMenuBar && bottomMenuBar.classList.contains("active")) {
+        bottomMenuBar.classList.remove("active");
+        const toggleIcon = btnToggleBottomMenu ? btnToggleBottomMenu.querySelector(".toggle-icon") : null;
+        const toggleText = btnToggleBottomMenu ? btnToggleBottomMenu.querySelector(".toggle-text") : null;
+        if (toggleIcon) toggleIcon.textContent = "☰";
+        if (toggleText) {
+          toggleText.setAttribute("data-i18n", "menu_toggle_open");
+          toggleText.textContent = translations[gameState.lang]["menu_toggle_open"];
+        }
+      }
+    }
+
+    if (btnToggleBottomMenu && bottomMenuBar) {
+      btnToggleBottomMenu.addEventListener("click", () => {
+        playSound("snd-click");
+        const isActive = bottomMenuBar.classList.toggle("active");
+        const toggleIcon = btnToggleBottomMenu.querySelector(".toggle-icon");
+        const toggleText = btnToggleBottomMenu.querySelector(".toggle-text");
+        
+        if (isActive) {
+          if (toggleIcon) toggleIcon.textContent = "✕";
+          if (toggleText) {
+            toggleText.setAttribute("data-i18n", "menu_toggle_close");
+            toggleText.textContent = translations[gameState.lang]["menu_toggle_close"];
+          }
+        } else {
+          if (toggleIcon) toggleIcon.textContent = "☰";
+          if (toggleText) {
+            toggleText.setAttribute("data-i18n", "menu_toggle_open");
+            toggleText.textContent = translations[gameState.lang]["menu_toggle_open"];
+          }
+        }
+      });
+    }
+
     if (menuCv) {
       menuCv.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => openDialoguePanel("curriculum"), 200);
       });
@@ -987,6 +1027,7 @@
 
     if (menuExp) {
       menuExp.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => openDialoguePanel("experiencia"), 200);
       });
@@ -994,6 +1035,7 @@
 
     if (menuProj) {
       menuProj.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => openDialoguePanel("timelink"), 200);
       });
@@ -1001,6 +1043,7 @@
 
     if (menuTech) {
       menuTech.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => applyZoom("hot-estanteria"), 200);
       });
@@ -1008,6 +1051,7 @@
 
     if (menuEdu) {
       menuEdu.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => applyZoom("hot-pizarra"), 200);
       });
@@ -1015,6 +1059,7 @@
 
     if (menuChat) {
       menuChat.addEventListener("click", () => {
+        closeBottomMenu();
         resetZoom();
         setTimeout(() => applyZoom("hot-taza"), 200);
       });
