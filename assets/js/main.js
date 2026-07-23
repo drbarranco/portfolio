@@ -12,7 +12,8 @@
     lang: localStorage.getItem("lang") || "es",
     activeZoom: null, // "hot-pc", "hot-movil", "hot-tpv", etc.
     activeDialogueProject: null,
-    dialogueStep: "root"
+    dialogueStep: "root",
+    plantClickCount: 0
   };
 
   // Sonidos
@@ -62,6 +63,15 @@
       "hot-poster": [
         "Un póster de Tenerife. La isla del Teide y el eterno verano.",
         "Me recuerda la caminata que me pegué para subirlo"
+      ],
+      "hot-planta": [
+        "Sorprendentemente sigue viva",
+        "Sí ahora la riego, espera que estoy haciendo un commit"
+      ],
+      "hot-pizza": [
+        "Object pizza = null;",
+        "Error 404: Pizza no encontrada. Solo quedan los bordes.",
+        "Variable local: pizza = null; depurando la vida..."
       ]
     },
     en: {
@@ -87,6 +97,15 @@
       "hot-poster": [
         "Tenerife poster. The island of Mount Teide and eternal summer.",
         "Reminds me of my roots and where I come from."
+      ],
+      "hot-planta": [
+        "Surprisingly, it's still alive",
+        "Yes, I'll water it now, wait, I'm making a commit"
+      ],
+      "hot-pizza": [
+        "Object pizza = null;",
+        "Error 404: Pizza not found. Only crusts left.",
+        "Local variable: pizza = null; debugging life..."
       ]
     }
   };

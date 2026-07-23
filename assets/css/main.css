@@ -244,9 +244,9 @@ body.ambient-night .ambient-overlay {
 /* Botón retro de Zoom-Out */
 .btn-zoom-out {
   position: absolute;
-  bottom: 30px;
-  right: 35px;
-  z-index: 30;
+  top: 20px;
+  left: 20px;
+  z-index: 110;
   background: rgba(10, 10, 15, 0.85);
   border: 1px dashed var(--crt-glow);
   color: var(--crt-glow);
@@ -746,10 +746,20 @@ body.ambient-night .ambient-overlay {
     padding: 8px 0;
   }
   .btn-zoom-out {
-    bottom: 20px;
-    right: 20px;
+    top: 12px;
+    left: 12px;
+    bottom: auto;
+    right: auto;
     font-size: 0.8rem;
     padding: 8px 12px;
+  }
+  .btn-toggle-bottom-menu {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+  }
+  .speech-bubble {
+    font-size: 0.9rem;
+    max-width: 180px;
   }
 }
 
