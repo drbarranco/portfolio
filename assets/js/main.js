@@ -8,12 +8,16 @@
   "use strict";
 
   // Estado del motor de juego
+  let initialLang = localStorage.getItem("lang") || "es";
+  if (initialLang !== "es" && initialLang !== "en") {
+    initialLang = "es";
+  }
   const gameState = {
-    lang: localStorage.getItem("lang") || "es",
+    lang: initialLang,
     activeZoom: null, // "hot-pc", "hot-movil", "hot-tpv", etc.
     activeDialogueProject: null,
     dialogueStep: "root",
-    plantClickCount: 0
+    clickIndices: {} // Registro de clicks secuenciales para cada hotspot
   };
 
   // Sonidos
@@ -71,7 +75,12 @@
       "hot-pizza": [
         "Object pizza = null;",
         "Error 404: Pizza no encontrada. Solo quedan los bordes.",
-        "Variable local: pizza = null; depurando la vida..."
+        "Variable local: pizza = null; depurando una cerveza..."
+      ],
+      "hot-c3po": [
+        "¿Buscando trabajo de programador, Dani? ¡Que la fuerza te acompañe!",
+        "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
+        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una."
       ]
     },
     en: {
@@ -106,6 +115,11 @@
         "Object pizza = null;",
         "Error 404: Pizza not found. Only crusts left.",
         "Local variable: pizza = null; debugging life..."
+      ],
+      "hot-c3po": [
+        "Looking for a programmer job, Dani? May the force be with you!",
+        "Fluent in over six million forms of communication, and I still don't understand this script!",
+        "The odds of compiling this commit on the first try are 3,720 to one!"
       ]
     }
   };
@@ -275,7 +289,8 @@
           choices: [
             { text: "1. Ciclo Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)", next: "dam" },
             { text: "2. Ciclo Técnico Superior en Desarrollo de Aplicaciones Web (DAW)", next: "daw" },
-            { text: "3. Inglés y certificaciones oficiales adicionales", next: "certs" },
+            { text: "3. Curso de Especialización en Inteligencia Artificial y Big Data (Máster de FP)", next: "ia" },
+            { text: "4. Inglés y certificaciones oficiales adicionales", next: "certs" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
         },
@@ -287,6 +302,12 @@
         },
         daw: {
           speech: "Técnico Superior en DAW (2022-2023). Especialidad en diseño y desarrollo de aplicaciones del lado del servidor (PHP/Laravel/Spring) y cliente (HTML/JS/Bootstrap/Tailwind).",
+          choices: [
+            { text: "[ <- Volver a la pizarra ]", next: "root" }
+          ]
+        },
+        ia: {
+          speech: "Curso de Especialización (Máster de FP) en Inteligencia Artificial y Big Data (Octubre 2025 - Abril 2026). Especialidad en modelos de Machine Learning y Deep Learning, analítica de datos a gran escala, Python y librerías científicas.",
           choices: [
             { text: "[ <- Volver a la pizarra ]", next: "root" }
           ]
@@ -524,7 +545,8 @@
           choices: [
             { text: "1. Higher Technical Degree in Multiplatform Application Development (DAM)", next: "dam" },
             { text: "2. Higher Technical Degree in Web Application Development (DAW)", next: "daw" },
-            { text: "3. English and additional official certifications", next: "certs" },
+            { text: "3. FP Specialization Course in Artificial Intelligence and Big Data (Master's level)", next: "ia" },
+            { text: "4. English and additional official certifications", next: "certs" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
         },
@@ -536,6 +558,12 @@
         },
         daw: {
           speech: "Higher Degree in DAW (2022-2023). Specialization in server-side technologies (PHP/Laravel/Spring) and client-side (HTML/JS/Bootstrap/Tailwind).",
+          choices: [
+            { text: "[ <- Back to whiteboard ]", next: "root" }
+          ]
+        },
+        ia: {
+          speech: "Specialization Course (FP Master's) in Artificial Intelligence and Big Data (October 2025 - April 2026). Specializing in Machine Learning and Deep Learning models, large-scale data analytics, Python, and scientific libraries.",
           choices: [
             { text: "[ <- Back to whiteboard ]", next: "root" }
           ]
@@ -642,7 +670,7 @@
     document.getElementById("hud-action-text").textContent = "";
 
     // Mostrar botón de volver
-    btnZoomOut.classList.remove("d-none");
+    btnZoomOut.classList.add("active");
 
     // Cargar diálogo interactivo correspondiente
     const projectKeys = {
@@ -678,7 +706,7 @@
     playSound("snd-zoom");
     roomWrapper.style.transform = "scale(1) translate(0, 0)";
     gameViewport.classList.remove("zoomed-in");
-    btnZoomOut.classList.add("d-none");
+    btnZoomOut.classList.remove("active");
     closeDialoguePanel();
   }
 
@@ -709,12 +737,12 @@
     };
 
     diagSpeaker.textContent = speakers[projKey] || "LOG //";
-    diagPanel.classList.remove("d-none");
+    diagPanel.classList.add("active");
     renderDialogueStep();
   }
 
   function closeDialoguePanel() {
-    if (diagPanel) diagPanel.classList.add("d-none");
+    if (diagPanel) diagPanel.classList.remove("active");
   }
 
   function renderDialogueStep() {
@@ -724,6 +752,9 @@
 
     const data = dialogueDB[lang][proj] && dialogueDB[lang][proj][step];
     if (!data) return;
+
+    // Limpiar opciones inmediatamente para evitar saltos y superposiciones de texto
+    if (diagChoices) diagChoices.innerHTML = "";
 
     diagSpeech.textContent = "";
     let i = 0;
@@ -783,7 +814,12 @@
     const list = speechBubbleDB[lang][hotspotId];
     if (!list) return;
 
-    const text = list[Math.floor(Math.random() * list.length)];
+    if (!gameState.clickIndices) {
+      gameState.clickIndices = {};
+    }
+    const currentIdx = gameState.clickIndices[hotspotId] || 0;
+    const text = list[currentIdx % list.length];
+    gameState.clickIndices[hotspotId] = currentIdx + 1;
 
     const gameViewport = document.getElementById("game-viewport");
     const rect = gameViewport.getBoundingClientRect();
@@ -880,6 +916,85 @@
   document.addEventListener("DOMContentLoaded", () => {
     
     switchLanguage(gameState.lang);
+
+    // ===========================================================================
+    // SECUENCIA DE INTRODUCCIÓN RETRO
+    // ===========================================================================
+    const introOverlay = document.getElementById("intro-overlay");
+    const introText = document.getElementById("intro-text");
+    const introSkipBtn = document.getElementById("intro-skip-btn");
+    let introTimeouts = [];
+
+    function clearIntroTimeouts() {
+      introTimeouts.forEach(t => clearTimeout(t));
+      introTimeouts = [];
+    }
+
+    function finishIntro() {
+      clearIntroTimeouts();
+      if (introOverlay) {
+        introOverlay.style.opacity = "0";
+        introOverlay.style.pointerEvents = "none";
+        setTimeout(() => {
+          introOverlay.style.display = "none";
+        }, 1000);
+      }
+    }
+
+    // Verificar si ya se ha visto la intro en esta sesión
+    if (sessionStorage.getItem("introSeen") === "true") {
+      if (introOverlay) {
+        introOverlay.style.opacity = "0";
+        introOverlay.style.pointerEvents = "none";
+        introOverlay.style.display = "none";
+      }
+    } else {
+      sessionStorage.setItem("introSeen", "true");
+      if (introOverlay && introText) {
+        // Inicializar textos de la intro traducidos
+        const lang = gameState.lang;
+        if (translations[lang]) {
+          introText.textContent = translations[lang]["intro_step_1"] || "Bienvenido...";
+          if (introSkipBtn) introSkipBtn.textContent = translations[lang]["intro_skip"] || "[ OMITIR ]";
+        }
+
+        // Paso 1: Mostrar primer texto
+        introTimeouts.push(setTimeout(() => {
+          introText.classList.add("visible");
+        }, 200));
+
+        // Paso 2: Ocultar primer texto
+        introTimeouts.push(setTimeout(() => {
+          introText.classList.remove("visible");
+        }, 2200));
+
+        // Paso 3: Cargar y mostrar segundo texto
+        introTimeouts.push(setTimeout(() => {
+          introText.setAttribute("data-i18n", "intro_step_2");
+          if (translations[lang]) {
+            introText.textContent = translations[lang]["intro_step_2"] || "Explora el despacho...";
+          }
+          introText.classList.add("visible");
+        }, 2800));
+
+        // Paso 4: Ocultar segundo texto
+        introTimeouts.push(setTimeout(() => {
+          introText.classList.remove("visible");
+        }, 4800));
+
+        // Paso 5: Ocultar pantalla de intro y revelar oficina
+        introTimeouts.push(setTimeout(() => {
+          finishIntro();
+        }, 5400));
+      }
+    }
+
+    if (introSkipBtn) {
+      introSkipBtn.addEventListener("click", () => {
+        playSound("snd-click");
+        finishIntro();
+      });
+    }
 
     const hudText = document.getElementById("hud-action-text");
     

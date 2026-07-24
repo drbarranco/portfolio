@@ -150,8 +150,8 @@ body.ambient-night .ambient-overlay {
 /* Balizas Pulsantes de Precisión (Sonar Holográfico de Aventura Gráfica) */
 .hotspot-beacon {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 15;
@@ -160,28 +160,32 @@ body.ambient-night .ambient-overlay {
   align-items: center;
 }
 
-/* Anillo estático sutil (sin punto central) */
+/* Primer anillo de sonar expansivo */
 .hotspot-beacon::before {
   content: '';
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--crt-blue);
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid var(--crt-blue);
   border-radius: 50%;
-  box-shadow: 0 0 6px var(--crt-blue-glow);
-  opacity: 0.7;
-  transition: all 0.3s ease;
+  box-shadow: 0 0 10px var(--crt-blue-glow);
+  animation: sonar-ping 3.2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Anillo sonar expansivo */
+/* Segundo anillo de sonar expansivo (desfasado en el tiempo para efecto doble onda) */
 .hotspot-beacon::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--crt-blue);
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid var(--crt-blue);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--crt-blue-glow);
-  animation: sonar-ping 2.2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 0 10px var(--crt-blue-glow);
+  animation: sonar-ping 3.2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation-delay: 1.6s; /* Desfase exacto a la mitad */
   opacity: 0;
   pointer-events: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -189,26 +193,29 @@ body.ambient-night .ambient-overlay {
 
 @keyframes sonar-ping {
   0% {
-    transform: scale(1.0);
+    transform: scale(0.6); /* Comienza ligeramente más cerrado */
     opacity: 0.9;
   }
   100% {
-    transform: scale(2.5);
+    transform: scale(3.0);
     opacity: 0;
   }
 }
 
-/* Hover State: Cambia a verde neón y pulsa más rápido */
+/* Hover State: Ambas ondas cambian a verde neón, engrosan la línea y aceleran el pulso */
 .hotspot-beacon:hover::before {
   border-color: var(--crt-green);
-  box-shadow: 0 0 10px var(--crt-green-glow);
-  transform: scale(1.2);
+  border-width: 3px;
+  box-shadow: 0 0 16px var(--crt-green-glow);
+  animation-duration: 1.6s;
 }
 
 .hotspot-beacon:hover::after {
   border-color: var(--crt-green);
-  box-shadow: 0 0 12px var(--crt-green-glow);
-  animation-duration: 1.1s;
+  border-width: 3px;
+  box-shadow: 0 0 16px var(--crt-green-glow);
+  animation-duration: 1.6s;
+  animation-delay: 0.8s; /* Ajuste del desfase para la nueva velocidad */
 }
 
 /* Ocultar balizas al hacer zoom para no obstruir pantallas detalladas */
@@ -242,6 +249,7 @@ body.ambient-night .ambient-overlay {
 }
 
 /* Botón retro de Zoom-Out */
+/* Botón retro de Zoom-Out */
 .btn-zoom-out {
   position: absolute;
   top: 20px;
@@ -258,7 +266,16 @@ body.ambient-night .ambient-overlay {
   text-shadow: 0 0 4px var(--crt-glow-dim);
   box-shadow: 0 5px 15px rgba(0,0,0,0.5);
   border-radius: 4px;
-  transition: var(--transition-fast);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-zoom-out.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .btn-zoom-out:hover {
@@ -306,12 +323,16 @@ body.ambient-night .ambient-overlay {
   z-index: 40;
   box-shadow: 0 -15px 30px rgba(0,0,0,0.8);
   font-family: var(--font-terminal);
-  animation: slideUp 0.4s ease;
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, visibility 0.4s ease;
 }
 
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+.dialogue-panel.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
 }
 
 .dialogue-header {
@@ -343,7 +364,13 @@ body.ambient-night .ambient-overlay {
   color: var(--crt-blue);
   cursor: pointer;
   font-size: 0.95rem;
-  transition: var(--transition-fast);
+  transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: fadeInOption 0.4s forwards ease;
+}
+
+@keyframes fadeInOption {
+  to { opacity: 1; }
 }
 
 .dialogue-choices li:hover {
@@ -494,6 +521,9 @@ body.ambient-night .ambient-overlay {
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 700;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .lang-btn {
@@ -525,6 +555,9 @@ body.ambient-night .ambient-overlay {
   display: flex;
   gap: 12px;
   z-index: 50;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .top-btn {
@@ -562,7 +595,9 @@ body.ambient-night .ambient-overlay {
   z-index: 50;
   box-shadow: 0 -10px 40px rgba(0,0,0,0.9);
   transform: translateY(100%); /* Oculto por defecto, desliza hacia abajo */
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .bottom-menu-bar.active {
@@ -649,13 +684,13 @@ body.ambient-night .ambient-overlay {
   color: var(--crt-glow);
 }
 
-/* Ocultar menú inferior y controles superiores en zoom para centrar foco */
+/* Ocultar menú inferior, controles superiores y selector de idiomas en zoom para centrar foco */
 .game-viewport.zoomed-in .top-controls,
-.game-viewport.zoomed-in .bottom-menu-bar {
+.game-viewport.zoomed-in .bottom-menu-bar,
+.game-viewport.zoomed-in .game-lang-selector {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 /*=============================================================================
@@ -760,6 +795,82 @@ body.ambient-night .ambient-overlay {
   .speech-bubble {
     font-size: 0.9rem;
     max-width: 180px;
+  }
+}
+
+/*=============================================================================
+# PANTALLA DE INTRODUCCIÓN RETRO
+=============================================================================*/
+.intro-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 1s ease, visibility 1s ease;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.intro-text-container {
+  max-width: 600px;
+  text-align: center;
+}
+
+.intro-text {
+  font-family: var(--font-terminal);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--crt-glow);
+  text-shadow: 0 0 10px var(--crt-glow);
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.intro-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-skip-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: transparent;
+  border: 1px dashed rgba(255, 176, 0, 0.4);
+  color: rgba(255, 176, 0, 0.6);
+  font-family: var(--font-terminal);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.intro-skip-btn:hover {
+  border-color: var(--crt-glow);
+  color: var(--crt-glow);
+  text-shadow: 0 0 5px var(--crt-glow);
+}
+
+/* Responsividad para la intro */
+@media (max-width: 576px) {
+  .intro-text {
+    font-size: 1.05rem;
+  }
+  .intro-skip-btn {
+    bottom: 15px;
+    right: 15px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
   }
 }
 

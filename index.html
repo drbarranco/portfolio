@@ -34,6 +34,14 @@
 
   <!-- CONTENEDOR PRINCIPAL DEL JUEGO (VIEWPORT FULLSCREEN FIT 16:9) -->
   <div class="game-viewport" id="game-viewport">
+
+    <!-- INTRO OVERLAY (PANTALLA DE INICIO CLÁSICA) -->
+    <div class="intro-overlay" id="intro-overlay">
+      <div class="intro-text-container">
+        <p class="intro-text" id="intro-text" data-i18n="intro_step_1">Bienvenido a mi despacho de desarrollo...</p>
+      </div>
+      <button class="intro-skip-btn" id="intro-skip-btn" data-i18n="intro_skip">[ OMITIR INTRO ]</button>
+    </div>
     
     <!-- HUD SUPERIOR: ACCIÓN ACTIVA -->
     <div class="hud-action-bar">
@@ -102,6 +110,9 @@
         <!-- Caja de pizza (Easter Egg) -->
         <polygon id="hot-pizza" class="hotspot" points="485,431 675,431 675,531 485,531" data-label="es: → Examinar caja de pizza | en: → Examine pizza box" />
 
+        <!-- Androide C-3PO (Easter Egg) -->
+        <polygon id="hot-c3po" class="hotspot" points="830,420 910,420 910,570 830,570" data-label="es: → Examinar androide de protocolo | en: → Examine protocol droid" />
+
       </svg>
 
       <!-- BALIZAS PULSANTES DE PRECISIÓN (ELEMENTOS HTML RELATIVOS) -->
@@ -110,15 +121,16 @@
       <div class="hotspot-beacon" style="left: 17.8%; top: 49.7%;" data-target="hot-arcade"></div>
       <div class="hotspot-beacon" style="left: 53.2%; top: 33.5%;" data-target="hot-pc"></div>
       <div class="hotspot-beacon" style="left: 63.5%; top: 49.7%;" data-target="hot-movil"></div>
-      <div class="hotspot-beacon" style="left: 82.8%; top: 46.2%;" data-target="hot-tpv"></div>
+      <div class="hotspot-beacon" style="left: 85.8%; top: 47.2%;" data-target="hot-tpv"></div>
       <div class="hotspot-beacon" style="left: 13.5%; top: 77.0%;" data-target="hot-taza"></div>
-      <div class="hotspot-beacon" style="left: 18.6%; top: 86.1%;" data-target="hot-ideas"></div>
+      <div class="hotspot-beacon" style="left: 18.6%; top: 93.1%;" data-target="hot-ideas"></div>
       <div class="hotspot-beacon" style="left: 7.8%; top: 61.0%;" data-target="hot-estanteria"></div>
       <div class="hotspot-beacon" style="left: 73.4%; top: 46.2%;" data-target="hot-raspberry"></div>
       <div class="hotspot-beacon" style="left: 85.9%; top: 29.7%;" data-target="hot-ventana"></div>
       <div class="hotspot-beacon" style="left: 26.6%; top: 21.9%;" data-target="hot-poster"></div>
       <div class="hotspot-beacon" style="left: 19.2%; top: 21.7%;" data-target="hot-planta"></div>
       <div class="hotspot-beacon" style="left: 56.6%; top: 83.5%;" data-target="hot-pizza"></div>
+      <div class="hotspot-beacon" style="left: 85.0%; top: 86.0%;" data-target="hot-c3po"></div>
     </div>
 
     <!-- BOTONERA MENÚ INFERIOR (HTML REAL) -->
@@ -177,10 +189,10 @@
     <div id="speech-bubble" class="speech-bubble d-none"></div>
 
     <!-- BOTÓN RETRO DE VOLVER / ZOOM OUT -->
-    <button id="btn-zoom-out" class="btn-zoom-out d-none">[ ← VOLVER / RETURN ]</button>
+    <button id="btn-zoom-out" class="btn-zoom-out">[ ← VOLVER / RETURN ]</button>
 
     <!-- PANEL DE ÁRBOL DE DIÁLOGOS DE PROYECTOS (ESTILO MONKEY ISLAND) -->
-    <div id="dialogue-panel" class="dialogue-panel d-none">
+    <div id="dialogue-panel" class="dialogue-panel">
       <div class="dialogue-header" id="dialogue-speaker">DANIEL_LOGS:</div>
       <div class="dialogue-speech" id="dialogue-speech-text">...</div>
       <ul class="dialogue-choices" id="dialogue-choices-list">
