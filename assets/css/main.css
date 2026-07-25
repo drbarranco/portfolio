@@ -228,24 +228,42 @@ body.ambient-night .ambient-overlay {
 # INTERFAZ HUD DE AVENTURA GRÁFICA (LUCASARTS STYLE)
 =============================================================================*/
 
-/* Barra de Acción Superior */
+/* Barra de Acción Superior (HUD Badge Retro) */
 .hud-action-bar {
   position: absolute;
-  top: 25px;
+  top: 20px;
   left: 0;
   width: 100%;
   text-align: center;
   z-index: 30;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
 }
 
 .hud-action-text {
+  display: inline-block;
   font-family: var(--font-terminal);
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: var(--crt-green);
-  text-shadow: 0 0 8px var(--crt-green-glow);
-  letter-spacing: 1px;
+  color: #39ff14; /* Verde Neón Clásico */
+  background: rgba(8, 12, 20, 0.94);
+  border: 1.5px solid #39ff14;
+  border-radius: 20px;
+  padding: 6px 20px;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 12px rgba(57, 255, 20, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hud-action-text:not(:empty) {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 /* Botón retro de Zoom-Out */
@@ -793,13 +811,18 @@ body.ambient-night .ambient-overlay {
     font-size: 0.7rem;
   }
   .hud-action-bar {
-    top: 15px;
-    width: 60%;
-    left: 10px;
-    text-align: left;
+    top: 12px;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .hud-action-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    padding: 4px 14px;
+    max-width: 80vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .dialogue-panel {
     padding: 12px 18px;
