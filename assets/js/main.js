@@ -122,6 +122,13 @@
       ],
       "hot-cajon": [
         "Cajones llenos de cables enredados, móviles viejos y cargadores que ya no sirven..."
+      ],
+      "hot-tux": [
+        "sudo su - root. Ya soy el amo del sistema.",
+        "chmod 777 todo. El servidor de producción puede esperar.",
+        "apt-get install cerveza. Paquete no encontrado. Compilando desde fuentes...",
+        "En Kali Linux entro como root por defecto. Hay que vivir peligrosamente.",
+        "Tux lleva desde 1991 guardando el kernel. Más leal que un golden retriever."
       ]
     },
     en: {
@@ -197,6 +204,13 @@
       ],
       "hot-cajon": [
         "Drawers full of tangled cables, old mobile phones, and chargers that don't work anymore..."
+      ],
+      "hot-tux": [
+        "sudo su - root. I am now the master of the system.",
+        "chmod 777 everything. Production server can wait.",
+        "apt-get install beer. Package not found. Compiling from source...",
+        "On Kali Linux I boot as root by default. Living dangerously.",
+        "Tux has been guarding the kernel since 1991. More loyal than a golden retriever."
       ]
     }
   };
