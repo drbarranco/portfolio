@@ -42,7 +42,8 @@
     "hot-estanteria": { scale: 2.0, x: 432, y: -63 },
     "hot-pizarra": { scale: 2.1, x: 162, y: 127 },
     "hot-taza": { scale: 2.5, x: 374, y: -155 },
-    "hot-arcade": { scale: 2.0, x: 330, y: 2 }
+    "hot-arcade": { scale: 2.0, x: 330, y: 2 },
+    "hot-cajon": { scale: 2.2, x: -243, y: -92 }
   };
 
   // Frases de humor (Easter eggs) para clics normales (5 frases secuenciales por hotspot)
@@ -118,6 +119,9 @@
         "Puede que Málaga",
         "Me pillaré un Binter, que te dan comida cerveza gratis.",
         "Está en desarrollo, le falta combustible para salir a producción."         
+      ],
+      "hot-cajon": [
+        "Cajones llenos de cables enredados, móviles viejos y cargadores que ya no sirven..."
       ]
     },
     en: {
@@ -190,6 +194,9 @@
         "This airplane runs on clean code, but it lacks fuel to launch to production.",
         "A toy biplane hanging from the ceiling. Sometimes it helps me clear my mind.",
         "Next direct flight heading towards my next professional challenge."
+      ],
+      "hot-cajon": [
+        "Drawers full of tangled cables, old mobile phones, and chargers that don't work anymore..."
       ]
     }
   };
@@ -450,6 +457,35 @@
             { text: "[ <- Volver a la recreativa ]", next: "root" }
           ]
         }
+      },
+      cajon: {
+        root: {
+          speech: "Rebuscas en los cajones llenos de chatarra tecnológica. ¿Qué estás buscando exactamente?",
+          choices: [
+            { text: "1. Un cable HDMI.", next: "cable" },
+            { text: "2. Un pendrive USB.", next: "pendrive" },
+            { text: "3. Una grapadora.", next: "grapadora" },
+            { text: "[ ← Cerrar los cajones ]", action: "exit" }
+          ]
+        },
+        cable: {
+          speech: "Rebuscas al fondo de la caja de cables... y sacas un cable VGA viejo, tres cables micro-USB enredados y un cable de red sin el conector RJ45. Del cable HDMI, ni rastro.",
+          choices: [
+            { text: "[ <- Seguir buscando ]", next: "root" }
+          ]
+        },
+        pendrive: {
+          speech: "Encuentras un pendrive de 2GB de publicidad. Al conectarlo en el PC, resulta que solo contiene una ISO de Ubuntu 14.04 y un archivo 'temporal.txt' completamente vacío.",
+          choices: [
+            { text: "[ <- Seguir buscando ]", next: "root" }
+          ]
+        },
+        grapadora: {
+          speech: "No hay ninguna grapadora aquí. Solo clips oxidados, gomas elásticas resecas que se rompen al tocarlas y un adaptador de corriente antiguo que hace un zumbido eléctrico sospechoso.",
+          choices: [
+            { text: "[ <- Seguir buscando ]", next: "root" }
+          ]
+        }
       }
     },
     en: {
@@ -706,6 +742,35 @@
             { text: "[ <- Back to cabinet ]", next: "root" }
           ]
         }
+      },
+      cajon: {
+        root: {
+          speech: "You search through the drawers full of tech clutter. What are you looking for exactly?",
+          choices: [
+            { text: "1. An HDMI cable.", next: "cable" },
+            { text: "2. A USB flash drive.", next: "pendrive" },
+            { text: "3. A stapler.", next: "grapadora" },
+            { text: "[ ← Close the drawers ]", action: "exit" }
+          ]
+        },
+        cable: {
+          speech: "You search at the bottom of the cable box... and pull out an old VGA cable, three tangled micro-USB wires, and an ethernet cable without an RJ45 connector. No sign of the HDMI cable.",
+          choices: [
+            { text: "[ <- Keep searching ]", next: "root" }
+          ]
+        },
+        pendrive: {
+          speech: "You find a promotional 2GB flash drive. When you plug it into the PC, it turns out to contain only an Ubuntu 14.04 ISO and a completely empty 'temporary.txt' file.",
+          choices: [
+            { text: "[ <- Keep searching ]", next: "root" }
+          ]
+        },
+        grapadora: {
+          speech: "There is no stapler here. Only rusty paperclips, dried-out rubber bands that snap when touched, and an old power adapter emitting a suspicious electric hum.",
+          choices: [
+            { text: "[ <- Keep searching ]", next: "root" }
+          ]
+        }
       }
     }
   };
@@ -751,7 +816,8 @@
       "hot-pizarra": "pizarra",
       "hot-taza": "hablemos",
       "hot-ideas": "curriculum",
-      "hot-arcade": "arcade"
+      "hot-arcade": "arcade",
+      "hot-cajon": "cajon"
     };
 
     const projKey = projectKeys[hotspotId];
@@ -803,7 +869,8 @@
       pizarra: "EDUCATION_BOARD //",
       hablemos: "CONTACT_INTERFACE //",
       experiencia: "WORK_HISTORY //",
-      arcade: "BUG_HUNTER_CABINET //"
+      arcade: "BUG_HUNTER_CABINET //",
+      cajon: "DESK_DRAWERS //"
     };
 
     diagSpeaker.textContent = speakers[projKey] || "LOG //";
@@ -1099,11 +1166,16 @@
         if (gameState.activeZoom) return; // Bloquear clics paralelos
 
         const hotId = this.getAttribute("id");
-        
-        if (zoomSettings[hotId]) {
-          applyZoom(hotId);
-        } else {
+        const currentIdx = gameState.clickIndices[hotId] || 0;
+
+        if (hotId === "hot-cajon" && currentIdx === 0) {
           triggerSpeechBubble(hotId, e.clientX, e.clientY);
+        } else {
+          if (zoomSettings[hotId]) {
+            applyZoom(hotId);
+          } else {
+            triggerSpeechBubble(hotId, e.clientX, e.clientY);
+          }
         }
       });
     });
@@ -1137,10 +1209,16 @@
         if (gameState.activeZoom) return;
         
         playSound("snd-click");
-        if (zoomSettings[targetId]) {
-          applyZoom(targetId);
-        } else {
+        const currentIdx = gameState.clickIndices[targetId] || 0;
+
+        if (targetId === "hot-cajon" && currentIdx === 0) {
           triggerSpeechBubble(targetId, e.clientX, e.clientY);
+        } else {
+          if (zoomSettings[targetId]) {
+            applyZoom(targetId);
+          } else {
+            triggerSpeechBubble(targetId, e.clientX, e.clientY);
+          }
         }
       });
     });
