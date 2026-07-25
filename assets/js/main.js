@@ -110,7 +110,7 @@
         "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
         "Las posibilidades de compilar este commit a la primera son de 3.720 contra una.",
         "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
-        "¡Por todos los cielos! ¡Un NullPointerException! ¡Estamos perdidos!"
+        "¡Por todos los cielos!\n¡Un NullPointerException! ¡Estamos perdidos!"
       ],
       "hot-avion": [
         "Próximo viaje: Granada",
@@ -133,7 +133,7 @@
       "hot-rollo": [
         "Mi lema: si funciona... no lo toques.",
         "¡¡NO LO TOQUES!!",
-        "Ala. Ya se ha roto. $ git pull origin main"
+        "Ala. Ya se ha roto. \n$ git pull origin main"
       ]
     },
     en: {

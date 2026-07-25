@@ -326,6 +326,7 @@ body.ambient-night .ambient-overlay {
   transform: translate(-50%, -115%);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 240, 255, 0.3);
   animation: floatDialogue 0.3s ease;
+  white-space: pre-line; /* Permite saltos de línea con \n en el texto */
 }
 
 /* Cola de flecha apuntando hacia el objeto */
