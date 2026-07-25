@@ -42,84 +42,122 @@
     "hot-arcade": { scale: 2.0, x: 330, y: 2 }
   };
 
-  // Frases de humor (Easter eggs) para clics normales
+  // Frases de humor (Easter eggs) para clics normales (5 frases secuenciales por hotspot)
   const speechBubbleDB = {
     es: {
       "hot-taza": [
         "Nivel de cafeína: peligrosamente bajo.",
         "Está caliente. Al menos no se ha congelado todavía.",
-        "Café frío, el mejor amigo del programador despistado."
+        "Café frío, el mejor amigo del programador despistado.",
+        "Ley de la termodinámica: el café se enfría a la velocidad a la que compila el código.",
+        "Un sorbo más y podré hablar con las máquinas directamente."
       ],
       "hot-ventana": [
         "Precioso atardecer en la costa. Se respira calma.",
         "Está atardeciendo. El clima ideal para picar código.",
-        "Me encantan las vistas de Tenerife desde la ventana."
+        "Me encantan las vistas de Tenerife desde la ventana.",
+        "¿Eso que se ve ahí fuera es 'la nube' de la que todo el mundo habla?",
+        "Dicen que hay un mundo exterior ahí fuera, pero la resolución de mi pantalla es mejor."
       ],
       "hot-raspberry": [
         "Un prototipo de sistemas. Si toco este cable se cae todo.",
         "Parpadea un LED rojo. Probablemente no sea nada grave... espero.",
-        "Administración de hardware real. Aquí empezó todo."
+        "Administración de hardware real. Aquí empezó todo.",
+        "¿Hueles eso? Es el dulce aroma de la potencia de cálculo a 80 grados.",
+        "Mi servidor casero. Aloja scripts de automatización y algún bot travieso."
       ],
       "hot-puerta": [
         "Cartel en la puerta: 'AUTODIDACTA EN CONSTRUCCIÓN DESDE SIEMPRE'.",
-        "La puerta está cerrada. Tengo que terminar este deploy primero."
+        "La puerta está cerrada. Tengo que terminar este deploy primero.",
+        "No hay salida hasta solucionar el bug de producción.",
+        "Detrás de esta puerta está el temido 'User Experience' en vivo.",
+        "La cerradura electrónica funciona con una Raspberry Pi. Muy seguro."
       ],
       "hot-poster": [
         "Un póster de Tenerife. La isla del Teide y el eterno verano.",
-        "Me recuerda la caminata que me pegué para subirlo"
+        "Me recuerda la caminata que me pegué para subir al Teide.",
+        "Muy bonito Tenerife, pero aquí no hay olivos para varear como en mi tierra, Linares.",
+        "Aunque el póster sea de Canarias, mi corazón se reparte entre Linares y Granada.",
+        "¿Sabías que el Teide es el tercer volcán más alto del mundo desde su base?"
       ],
       "hot-planta": [
-        "Sorprendentemente sigue viva",
-        "Sí ahora la riego, espera que estoy haciendo un commit"
+        "Sorprendentemente sigue viva.",
+        "Sí ahora la riego, espera que estoy haciendo un commit.",
+        "Le programé un sensor de humedad, pero olvidé conectarlo a la base de datos.",
+        "Se alimenta de luz artificial, café evaporado y quejas sobre JavaScript.",
+        "Hojas verdes, código verde... todo compila en armonía."
       ],
       "hot-pizza": [
         "Object pizza = null;",
         "Error 404: Pizza no encontrada. Solo quedan los bordes.",
-        "Variable local: pizza = null; depurando una cerveza..."
+        "Variable local: pizza = null; depurando una cerveza...",
+        "El combustible oficial del programador nocturno.",
+        "La piña en la pizza es una excepción no controlada (RuntimeException)."
       ],
       "hot-c3po": [
         "¿Buscando trabajo de programador, Dani? ¡Que la fuerza te acompañe!",
         "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
-        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una."
+        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una.",
+        "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
+        "¡Por todos los cielos! ¡Un NullPointerException! ¡Estamos perdidos!"
       ]
     },
     en: {
       "hot-taza": [
         "Caffeine level: dangerously low.",
         "It's hot. At least it hasn't frozen yet.",
-        "Cold coffee: the distracted programmer's signature drink."
+        "Cold coffee: the distracted programmer's signature drink.",
+        "Thermodynamics law: coffee cools down at the speed of compilation.",
+        "One more sip and I'll be speaking directly to the machine."
       ],
       "hot-ventana": [
         "Beautiful sunset on the coast. Pure peace.",
         "Sunset. The perfect time to code.",
-        "I love the Tenerife views from the window."
+        "I love the Tenerife views from the window.",
+        "Is that cloud out there the 'cloud' everyone is talking about?",
+        "They say there is a real world out there, but my screen resolution is better."
       ],
       "hot-raspberry": [
         "A systems prototype. If I touch this wire, everything crashes.",
         "A red LED is blinking. It's probably fine... hopefully.",
-        "Real systems automation. This is where it all started."
+        "Real systems automation. This is where it all started.",
+        "Do you smell that? The sweet scent of processing power running at 80°C.",
+        "My home server. Storing automation scripts and some mischievous bots."
       ],
       "hot-puerta": [
         "Sign on the door: 'SELF-TAUGHT DEVELOPER UNDER CONSTRUCTION SINCE DAY ONE'.",
-        "The door is locked. I must finish this deploy first."
+        "The door is locked. I must finish this deploy first.",
+        "No exit until the production bug is resolved.",
+        "Behind this door lies the feared live 'User Experience'.",
+        "The electronic lock runs on a Raspberry Pi. Highly secure."
       ],
       "hot-poster": [
         "Tenerife poster. The island of Mount Teide and eternal summer.",
-        "Reminds me of my roots and where I come from."
+        "Reminds me of the hike I did to climb to the top of Mount Teide.",
+        "Tenerife is beautiful, but there are no olive trees to harvest like back in my hometown, Linares.",
+        "Even though the poster is of the Canary Islands, my heart is split between Linares and Granada.",
+        "Did you know Mount Teide is the third tallest volcanic structure in the world?"
       ],
       "hot-planta": [
-        "Surprisingly, it's still alive",
-        "Yes, I'll water it now, wait, I'm making a commit"
+        "Surprisingly, it's still alive.",
+        "Yes, I'll water it now, wait, I'm making a commit.",
+        "I programmed a soil moisture sensor, but forgot to hook it to the database.",
+        "It feeds on artificial light, evaporated coffee, and JavaScript complaints.",
+        "Green leaves, green code... everything compiles in harmony."
       ],
       "hot-pizza": [
         "Object pizza = null;",
         "Error 404: Pizza not found. Only crusts left.",
-        "Local variable: pizza = null; debugging life..."
+        "Local variable: pizza = null; debugging a beer...",
+        "The official fuel of the midnight developer.",
+        "Pineapple on pizza is an unhandled RuntimeException."
       ],
       "hot-c3po": [
         "Looking for a programmer job, Dani? May the force be with you!",
         "Fluent in over six million forms of communication, and I still don't understand this script!",
-        "The odds of compiling this commit on the first try are 3,720 to one!"
+        "The odds of compiling this commit on the first try are 3,720 to one!",
+        "R2-D2 insists we should use Python, but I am more of a traditional Java droid.",
+        "Oh my! A NullPointerException! We are doomed!"
       ]
     }
   };
