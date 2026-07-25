@@ -714,8 +714,13 @@
     gameState.activeZoom = hotspotId;
     playSound("snd-zoom");
 
+    // Detectar pantallas horizontales/tablets para elevar el encuadre por encima del panel de diálogos inferior
+    const isLandscapeShort = window.matchMedia("(orientation: landscape) and (max-height: 760px)").matches ||
+                             (window.innerWidth > window.innerHeight && window.innerHeight < 760);
+    const extraYOffset = isLandscapeShort ? -45 : 0;
+
     // Aplicar transformación y añadir clase zoomed-in para atenuar menús HTML
-    roomWrapper.style.transform = `scale(${config.scale}) translate(${config.x}px, ${config.y}px)`;
+    roomWrapper.style.transform = `scale(${config.scale}) translate(${config.x}px, ${config.y + extraYOffset}px)`;
     gameViewport.classList.add("zoomed-in");
     
     // Ocultar HUD general
