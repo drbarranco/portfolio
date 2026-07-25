@@ -17,8 +17,11 @@
     activeZoom: null, // "hot-pc", "hot-movil", "hot-tpv", etc.
     activeDialogueProject: null,
     dialogueStep: "root",
-    clickIndices: {} // Registro de clicks secuenciales para cada hotspot
+    clickIndices: {}, // Registro de clicks secuenciales para cada hotspot
+    activeBubble: false // Flag para rastrear si un bocadillo de diálogo flotante está activo
   };
+
+  let hudText = null;
 
   // Sonidos
   function playSound(soundId) {
@@ -74,17 +77,17 @@
         "Mi servidor casero. Aloja scripts de automatización y algún bot travieso."
       ],
       "hot-puerta": [
-        "Cartel en la puerta: 'AUTODIDACTA EN CONSTRUCCIÓN DESDE SIEMPRE'.",
-        "La puerta está cerrada. Tengo que terminar este deploy primero.",
-        "No hay salida hasta solucionar el bug de producción.",
-        "Detrás de esta puerta está el temido 'User Experience' en vivo.",
-        "La cerradura electrónica funciona con una Raspberry Pi. Muy seguro."
+        "Es mi archivo 'vida.log'. El bucle principal de mi rutina.",
+        "'estudiar, trabajar, café, depurar, repetir...' Un bucle while infinito.",
+        "El log indica que hoy he consumido más cafeína de lo recomendado por la CPU.",
+        "Aquí registro mis hitos y lecciones como desarrollador autodidacta.",
+        "vida.log: Sin errores graves detectados en el hilo de ejecución principal."
       ],
       "hot-poster": [
         "Un póster de Tenerife. La isla del Teide y el eterno verano.",
         "Me recuerda la caminata que me pegué para subir al Teide.",
-        "Muy bonito Tenerife, pero aquí no hay olivos para varear como en mi tierra, Linares.",
-        "Aunque el póster sea de Canarias, mi corazón se reparte entre Linares y Granada.",
+        "Muy bonito Tenerife, sólo faltaría que pusieran buenas tapas como en mi tierra",
+        "La montaña más alta de España (3718 m) junto al océano más grande del mundo. Un lugar para inspirarse.",
         "¿Sabías que el Teide es el tercer volcán más alto del mundo desde su base?"
       ],
       "hot-planta": [
@@ -107,6 +110,14 @@
         "Las posibilidades de compilar este commit a la primera son de 3.720 contra una.",
         "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
         "¡Por todos los cielos! ¡Un NullPointerException! ¡Estamos perdidos!"
+      ],
+      "hot-avion": [
+        "Próximo viaje: Granada",
+        "O quizá Donostia ?",
+        "Y Córdoba ? ",
+        "Puede que Málaga",
+        "Me pillaré un Binter, que te dan comida cerveza gratis.",
+        "Está en desarrollo, le falta combustible para salir a producción."         
       ]
     },
     en: {
@@ -139,11 +150,11 @@
         "My home server. Storing automation scripts and some mischievous bots."
       ],
       "hot-puerta": [
-        "Sign on the door: 'SELF-TAUGHT DEVELOPER UNDER CONSTRUCTION SINCE DAY ONE'.",
-        "The door is locked. I must finish this deploy first.",
-        "No exit until the production bug is resolved.",
-        "Behind this door lies the feared live 'User Experience'.",
-        "The electronic lock runs on a Raspberry Pi. Highly secure."
+        "It's my 'life.log' file. My routine's main loop.",
+        "'study, work, coffee, debug, repeat...' An infinite while loop.",
+        "The log shows I consumed more caffeine today than recommended by the CPU.",
+        "This is where I log my milestones and lessons as a self-taught developer.",
+        "life.log: No fatal errors detected in the main execution thread."
       ],
       "hot-poster": [
         "Tenerife poster. The island of Mount Teide and eternal summer.",
@@ -172,6 +183,13 @@
         "The odds of compiling this commit on the first try are 3,720 to one!",
         "R2-D2 insists we should use Python, but I am more of a traditional Java droid.",
         "Oh my! A NullPointerException! We are doomed!"
+      ],
+      "hot-avion": [
+        "Next destinations on my itinerary: Granada, San Sebastián, Málaga, Almería...",
+        "I hope I can catch a Binter flight, at least they give you free food and a beer.",
+        "This airplane runs on clean code, but it lacks fuel to launch to production.",
+        "A toy biplane hanging from the ceiling. Sometimes it helps me clear my mind.",
+        "Next direct flight heading towards my next professional challenge."
       ]
     }
   };
@@ -884,6 +902,12 @@
     speechBubble.textContent = "";
     speechBubble.classList.remove("d-none");
 
+    // Ocultar el HUD superior de forma inmediata al mostrar la frase
+    if (hudText) {
+      hudText.textContent = "";
+    }
+    gameState.activeBubble = true;
+
     playSound("snd-click");
 
     let i = 0;
@@ -898,6 +922,7 @@
         
         window.bubbleTimeout = setTimeout(() => {
           speechBubble.classList.add("d-none");
+          gameState.activeBubble = false;
         }, 3500);
       }
     }, 15);
@@ -1048,12 +1073,12 @@
       });
     }
 
-    const hudText = document.getElementById("hud-action-text");
+    hudText = document.getElementById("hud-action-text");
     
     document.querySelectorAll(".hotspot").forEach(hot => {
       // Mouse Enter
       hot.addEventListener("mouseenter", function () {
-        if (gameState.activeZoom) return;
+        if (gameState.activeZoom || gameState.activeBubble) return;
         const rawLabel = this.getAttribute("data-label");
         const parts = rawLabel.split(" | ");
         const labels = {};
@@ -1092,7 +1117,7 @@
 
       // Sincronizar hover con barra de acción superior
       beacon.addEventListener("mouseenter", () => {
-        if (gameState.activeZoom) return;
+        if (gameState.activeZoom || gameState.activeBubble) return;
         const rawLabel = targetHotspot.getAttribute("data-label");
         const parts = rawLabel.split(" | ");
         const labels = {};
