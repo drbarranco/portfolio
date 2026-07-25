@@ -52,6 +52,13 @@
         "Ley de la termodinámica: el café se enfría a la velocidad a la que compila el código.",
         "Un sorbo más y podré hablar con las máquinas directamente."
       ],
+      "hot-taza-mesa": [
+        "Café de la tarde. Recién servido y humeante.",
+        "La cafeína principal para aguantar la sesión de depuración.",
+        "Si la taza está cerca del teclado, el riesgo de accidente se multiplica por dos.",
+        "Café recién hecho. El verdadero combustible del backend.",
+        "Temperatura óptima para picar código."
+      ],
       "hot-ventana": [
         "Precioso atardecer en la costa. Se respira calma.",
         "Está atardeciendo. El clima ideal para picar código.",
@@ -109,6 +116,13 @@
         "Cold coffee: the distracted programmer's signature drink.",
         "Thermodynamics law: coffee cools down at the speed of compilation.",
         "One more sip and I'll be speaking directly to the machine."
+      ],
+      "hot-taza-mesa": [
+        "Afternoon coffee. Freshly poured and steaming.",
+        "Main caffeine supply to handle the debugging session.",
+        "If the cup is near the keyboard, disaster risk doubles.",
+        "Freshly brewed coffee. The true backend fuel.",
+        "Optimal temperature for coding."
       ],
       "hot-ventana": [
         "Beautiful sunset on the coast. Pure peace.",
