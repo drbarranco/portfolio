@@ -7,7 +7,8 @@
   <title>Daniel Rodríguez - Habitación Interactiva</title>
   <meta name="description"
     content="Portafolio interactivo de Daniel Rodríguez al estilo aventura gráfica clásica. Explora su despacho para descubrir sus proyectos de software y sistemas.">
-  <meta name="keywords" content="Daniel Rodríguez, portafolio, aventura gráfica, Monkey Island, Laravel, Spring Boot, Sysadmin">
+  <meta name="keywords"
+    content="Daniel Rodríguez, portafolio, aventura gráfica, Monkey Island, Laravel, Spring Boot, Sysadmin">
   <meta name="author" content="Daniel Rodríguez Barranco">
 
   <!-- Favicons -->
@@ -17,7 +18,9 @@
   <!-- Google Fonts (Fira Code for HUD, Outfit for UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Outfit:wght@400;700;900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,16 +33,17 @@
   # SISTEMAS DE ANALÍTICAS Y CONTROL DE TRÁFICO
   =========================================================================== -->
   <!-- Simple Analytics (100% respetuoso con la privacidad, detecta el dominio automáticamente) -->
-  
-  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt=""
+      referrerpolicy="no-referrer-when-downgrade" /></noscript>
 
   <!-- Microsoft Clarity (Grabaciones de sesión y mapas de calor 100% gratuitos) -->
   <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window,document,"clarity","script","YOUR_CLARITY_PROJECT_ID");
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "xs0l3xqg0r");
   </script>
 </head>
 
@@ -58,7 +62,7 @@
       </div>
       <button class="intro-skip-btn" id="intro-skip-btn" data-i18n="intro_skip">[ OMITIR INTRO ]</button>
     </div>
-    
+
     <!-- HUD SUPERIOR: ACCIÓN ACTIVA -->
     <div class="hud-action-bar">
       <span class="hud-action-text" id="hud-action-text"></span>
@@ -80,57 +84,73 @@
     <!-- ESCENARIO DE LA HABITACIÓN (CON SOPORTE DE ZOOM Y BALIZAS DE PRECISIÓN) -->
     <div class="room-wrapper" id="room-wrapper">
       <img src="assets/img/retro_room.jpg" class="room-bg" alt="Despacho de Daniel">
-      
+
       <!-- CAPA DE HOTSPOTS INTERACTIVOS (SVG EN 1024x576 CON AJUSTE DINÁMICO) -->
       <svg class="hotspot-svg" viewBox="0 0 1024 576" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        
+
         <!-- Puerta izquierda (Autodidacta) -->
-        <polygon id="hot-puerta" class="hotspot" points="0,41 80,41 80,251 0,251" data-label="es: → Leer cartel de la puerta | en: → Read sign on the door" />
-        
+        <polygon id="hot-puerta" class="hotspot" points="0,41 80,41 80,251 0,251"
+          data-label="es: → Leer cartel de la puerta | en: → Read sign on the door" />
+
         <!-- Pizarra de la pared izquierda ("PLAN DEL DÍA") -->
-        <polygon id="hot-pizarra" class="hotspot" points="310,81 390,81 390,241 310,241" data-label="es: → Examinar plan del día (Formación) | en: → Examine daily plan (Education)" />
-        
+        <polygon id="hot-pizarra" class="hotspot" points="310,81 390,81 390,241 310,241"
+          data-label="es: → Examinar plan del día (Formación) | en: → Examine daily plan (Education)" />
+
         <!-- Máquina recreativa arcade (Bug Hunter) -->
-        <polygon id="hot-arcade" class="hotspot" points="130,221 235,221 235,351 130,351" data-label="es: → Jugar a la máquina arcade | en: → Play arcade machine" />
+        <polygon id="hot-arcade" class="hotspot" points="130,221 235,221 235,351 130,351"
+          data-label="es: → Jugar a la máquina arcade | en: → Play arcade machine" />
 
         <!-- Ventana (Tenerife / Sunset) -->
-        <polygon id="hot-ventana" class="hotspot" points="760,51 1000,51 1000,291 760,291" data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
-        
+        <polygon id="hot-ventana" class="hotspot" points="760,51 1000,51 1000,291 760,291"
+          data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
+
         <!-- Ordenador principal (TimeLink) -->
-        <polygon id="hot-pc" class="hotspot" points="380,146 710,146 710,241 380,241" data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
-        
+        <polygon id="hot-pc" class="hotspot" points="380,146 710,146 710,241 380,241"
+          data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
+
         <!-- Móvil (GoToPádel) -->
-        <polygon id="hot-movil" class="hotspot" points="615,261 685,261 685,311 615,311" data-label="es: → Inspeccionar smartphone (GoToPádel) | en: → Inspect mobile phone (GoToPádel)" />
-        
+        <polygon id="hot-movil" class="hotspot" points="615,261 685,261 685,311 615,311"
+          data-label="es: → Inspeccionar smartphone (GoToPádel) | en: → Inspect mobile phone (GoToPádel)" />
+
         <!-- TPV antiguo (OKBackups) -->
-        <polygon id="hot-tpv" class="hotspot" points="770,221 925,221 925,311 770,311" data-label="es: → Diagnosticar TPV de comercio (OKBackups) | en: → Diagnose shop POS terminal (OKBackups)" />
-        
+        <polygon id="hot-tpv" class="hotspot" points="770,221 925,221 925,311 770,311"
+          data-label="es: → Diagnosticar TPV de comercio (OKBackups) | en: → Diagnose shop POS terminal (OKBackups)" />
+
         <!-- Taza de café primer plano (Contacto) -->
-        <polygon id="hot-taza" class="hotspot" points="95,406 180,406 180,481 95,481" data-label="es: → Tomar taza de café | en: → Take coffee cup" />
-        
+        <polygon id="hot-taza" class="hotspot" points="95,406 180,406 180,481 95,481"
+          data-label="es: → Tomar taza de café | en: → Take coffee cup" />
+
         <!-- Taza de café del escritorio (Easter Egg) -->
-        <polygon id="hot-taza-mesa" class="hotspot" points="430,350 480,350 480,420 430,420" data-label="es: → Otro café ??? | en: → Examine desk coffee cup" />
-        
+        <polygon id="hot-taza-mesa" class="hotspot" points="430,350 480,350 480,420 430,420"
+          data-label="es: → Otro café ??? | en: → Examine desk coffee cup" />
+
         <!-- Cuaderno de Ideas (Currículum) -->
-        <polygon id="hot-ideas" class="hotspot" points="110,446 270,446 270,547 110,547" data-label="es: → Abrir cuaderno de ideas (Currículum) | en: → Open ideas notebook (Resume)" />
+        <polygon id="hot-ideas" class="hotspot" points="110,446 270,446 270,547 110,547"
+          data-label="es: → Abrir cuaderno de ideas (Currículum) | en: → Open ideas notebook (Resume)" />
 
         <!-- Estantería de libros / manuales -->
-        <polygon id="hot-estanteria" class="hotspot" points="10,271 150,271 150,431 10,431" data-label="es: → Examinar archivador técnico (Tecnologías) | en: → Examine technical files (Tech Stack)" />
-        
+        <polygon id="hot-estanteria" class="hotspot" points="10,271 150,271 150,431 10,431"
+          data-label="es: → Examinar archivador técnico (Tecnologías) | en: → Examine technical files (Tech Stack)" />
+
         <!-- Raspberry Pi / Servidores -->
-        <polygon id="hot-raspberry" class="hotspot" points="705,221 800,221 800,311 705,311" data-label="es: → Inspeccionar servidores de pruebas | en: → Inspect testing servers" />
+        <polygon id="hot-raspberry" class="hotspot" points="705,221 800,221 800,311 705,311"
+          data-label="es: → Inspeccionar servidores de pruebas | en: → Inspect testing servers" />
 
         <!-- Poster de Tenerife -->
-        <polygon id="hot-poster" class="hotspot" points="240,71 305,71 305,181 240,181" data-label="es: → Leer póster de Tenerife | en: → Look at Tenerife poster" />
+        <polygon id="hot-poster" class="hotspot" points="240,71 305,71 305,181 240,181"
+          data-label="es: → Leer póster de Tenerife | en: → Look at Tenerife poster" />
 
         <!-- Planta colgante de la repisa izquierda (Easter Egg) -->
-        <polygon id="hot-planta" class="hotspot" points="160,40 235,40 235,210 160,210" data-label="es: → Examinar planta colgante | en: → Examine hanging plant" />
+        <polygon id="hot-planta" class="hotspot" points="160,40 235,40 235,210 160,210"
+          data-label="es: → Examinar planta colgante | en: → Examine hanging plant" />
 
         <!-- Caja de pizza (Easter Egg) -->
-        <polygon id="hot-pizza" class="hotspot" points="485,431 675,431 675,531 485,531" data-label="es: → Examinar caja de pizza | en: → Examine pizza box" />
+        <polygon id="hot-pizza" class="hotspot" points="485,431 675,431 675,531 485,531"
+          data-label="es: → Examinar caja de pizza | en: → Examine pizza box" />
 
         <!-- Androide C-3PO (Easter Egg) -->
-        <polygon id="hot-c3po" class="hotspot" points="830,420 910,420 910,570 830,570" data-label="es: → Examinar C3PO | en: → Examine protocol droid" />
+        <polygon id="hot-c3po" class="hotspot" points="830,420 910,420 910,570 830,570"
+          data-label="es: → Examinar C3PO | en: → Examine protocol droid" />
 
       </svg>
 
@@ -237,7 +257,7 @@
         <button class="modal-close" id="btn-close-modal">×</button>
       </header>
       <div class="modal-dossier-body">
-        
+
         <section class="mb-4">
           <h3 data-i18n="resume_section_title">Trayectoria Profesional</h3>
           <p data-i18n="resume_intro">
@@ -252,9 +272,15 @@
         <section class="mb-4">
           <h3 data-i18n="projects_title">Proyectos Destacados</h3>
           <ul style="list-style: square; padding-left: 20px;">
-            <li><strong>TimeLink:</strong> SaaS Laravel de control horario y Stripe. <a href="portfolio-details.html?id=timelink" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
-            <li><strong>GoToPádel:</strong> Ecosistema Spring Boot API y Android App. <a href="portfolio-details.html?id=gotopadel" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
-            <li><strong>OKBackups:</strong> Agente de copias de seguridad de TPVs a la nube. <a href="portfolio-details.html?id=okbackups" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a></li>
+            <li><strong>TimeLink:</strong> SaaS Laravel de control horario y Stripe. <a
+                href="portfolio-details.html?id=timelink" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>
+            </li>
+            <li><strong>GoToPádel:</strong> Ecosistema Spring Boot API y Android App. <a
+                href="portfolio-details.html?id=gotopadel" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>
+            </li>
+            <li><strong>OKBackups:</strong> Agente de copias de seguridad de TPVs a la nube. <a
+                href="portfolio-details.html?id=okbackups" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>
+            </li>
           </ul>
         </section>
 
@@ -263,8 +289,10 @@
           <p>
             <strong>Email:</strong> drbarrancodev@gmail.com<br>
             <strong>Teléfono:</strong> +34 622 811 670<br>
-            <strong>GitHub:</strong> <a href="https://github.com/drbarranco" target="_blank" style="color: var(--crt-glow);">github.com/drbarranco</a><br>
-            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/drbarranco/" target="_blank" style="color: var(--crt-glow);">linkedin.com/in/drbarranco</a>
+            <strong>GitHub:</strong> <a href="https://github.com/drbarranco" target="_blank"
+              style="color: var(--crt-glow);">github.com/drbarranco</a><br>
+            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/drbarranco/" target="_blank"
+              style="color: var(--crt-glow);">linkedin.com/in/drbarranco</a>
           </p>
         </section>
 
@@ -279,7 +307,8 @@
   <audio id="snd-zoom" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-84.wav" preload="auto"></audio>
 
   <!-- Ambient audio loop -->
-  <audio id="snd-ambient" src="https://assets.mixkit.co/active_storage/sfx/2433/2433-84.wav" loop preload="auto"></audio>
+  <audio id="snd-ambient" src="https://assets.mixkit.co/active_storage/sfx/2433/2433-84.wav" loop
+    preload="auto"></audio>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -288,7 +317,8 @@
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/projects.js"></script>
   <script src="assets/js/main.js"></script>
-  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js" data-collect="all" data-ignore-dnt="true"></script>
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js" data-collect="all"
+    data-ignore-dnt="true"></script>
 
 </body>
 
