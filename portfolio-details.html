@@ -25,6 +25,22 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- ===========================================================================
+  # SISTEMAS DE ANALÍTICAS Y CONTROL DE TRÁFICO
+  =========================================================================== -->
+  <!-- Simple Analytics (100% respetuoso con la privacidad, detecta el dominio automáticamente) -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+
+  <!-- Microsoft Clarity (Grabaciones de sesión y mapas de calor 100% gratuitos) -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window,document,"clarity","script","YOUR_CLARITY_PROJECT_ID");
+  </script>
   
   <style>
     /* Estilos específicos para la página de detalles CRT */
@@ -47,8 +63,136 @@
     @media (max-width: 991px) {
       .details-workspace {
         grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: visible;
+      }
+      .details-container {
+        height: auto;
+        overflow-y: visible;
       }
     }
+    
+    /* HUD Header */
+    .hud-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border: 1.5px solid rgba(255, 176, 0, 0.25);
+      border-radius: 8px;
+      background: rgba(13, 10, 8, 0.85);
+      margin-bottom: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+    .hud-title {
+      font-family: var(--font-terminal);
+      color: var(--crt-glow);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-shadow: 0 0 8px var(--crt-glow-dim);
+      letter-spacing: 1px;
+    }
+    
+    /* HUD Footer */
+    .hud-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      border: 1.5px solid rgba(255, 176, 0, 0.25);
+      border-radius: 8px;
+      background: rgba(13, 10, 8, 0.85);
+      margin-top: 10px;
+      font-family: var(--font-terminal);
+      font-size: 0.75rem;
+      color: rgba(255, 176, 0, 0.6);
+      text-shadow: 0 0 4px var(--crt-glow-dim);
+    }
+    
+    /* HUD Sidebar & Cards */
+    .hud-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .hud-card {
+      background: rgba(13, 10, 8, 0.9);
+      border: 1.5px solid rgba(255, 176, 0, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .hud-card-header {
+      background: rgba(255, 176, 0, 0.08);
+      border-bottom: 1.5px solid rgba(255, 176, 0, 0.3);
+      padding: 10px 15px;
+      font-family: var(--font-terminal);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--crt-glow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 5px var(--crt-glow-dim);
+      text-transform: uppercase;
+    }
+    .hud-card-body {
+      padding: 15px;
+      color: #fff;
+    }
+    .info-list li {
+      font-family: var(--font-terminal);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #f3f4f6;
+    }
+    .info-list li strong {
+      color: var(--crt-glow);
+      text-shadow: 0 0 3px var(--crt-glow-dim);
+    }
+    
+    /* HUD Terminal Container & Body */
+    .hud-terminal-container {
+      background: rgba(5, 5, 8, 0.95);
+      border: 2px solid rgba(0, 229, 255, 0.35);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15), inset 0 0 15px rgba(0, 0, 0, 0.95);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .terminal-body {
+      padding: 20px;
+      font-family: var(--font-terminal);
+      overflow-y: auto;
+    }
+    .term-log {
+      margin-bottom: 15px;
+      color: #e5e7eb;
+      font-family: var(--font-terminal);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .term-log.header {
+      font-weight: 700;
+      color: var(--crt-blue);
+      border-bottom: 1px dashed rgba(0, 229, 255, 0.25);
+      padding-bottom: 6px;
+      margin-top: 25px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      text-shadow: 0 0 6px var(--crt-blue-glow);
+    }
+    .term-log.header:first-of-type {
+      margin-top: 0;
+      color: var(--crt-green);
+      text-shadow: 0 0 6px var(--crt-green-glow);
+      border-bottom: 1px solid rgba(57, 255, 20, 0.3);
+    }
+
     .btn-crt-nav {
       background: transparent;
       border: 1px dashed var(--crt-glow);
@@ -73,25 +217,28 @@
       margin-top: 15px;
     }
     .gallery-img {
-      border: 1px solid var(--crt-border);
+      border: 1.5px solid rgba(255, 176, 0, 0.25);
       border-radius: 6px;
       overflow: hidden;
       cursor: pointer;
       transition: var(--transition-fast);
       aspect-ratio: 16/10;
+      display: block;
     }
     .gallery-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(1) sepia(0.5) contrast(1.2);
+      filter: none;
+      transition: opacity 0.2s ease;
     }
     .gallery-img:hover {
       border-color: var(--crt-glow);
+      box-shadow: 0 0 8px rgba(255, 176, 0, 0.3);
       transform: scale(1.03);
     }
     .gallery-img:hover img {
-      filter: none;
+      opacity: 0.85;
     }
   </style>
 </head>
