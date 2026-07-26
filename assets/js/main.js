@@ -43,7 +43,8 @@
     "hot-pizarra": { scale: 2.1, x: 162, y: 127 },
     "hot-taza": { scale: 2.5, x: 374, y: -155 },
     "hot-arcade": { scale: 2.0, x: 330, y: 2 },
-    "hot-cajon": { scale: 2.2, x: -243, y: -92 }
+    "hot-cajon": { scale: 2.2, x: -243, y: -92 },
+    "hot-mailreply": { scale: 2.2, x: 242, y: 13 }
   };
 
   // Frases de humor (Easter eggs) para clics normales (5 frases secuenciales por hotspot)
@@ -263,7 +264,8 @@
           choices: [
             { text: "[ Auditar TimeLink SaaS ]", next: "root" },
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
-            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" }
+            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -302,7 +304,8 @@
           choices: [
             { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
             { text: "[ Auditar GoToPádel App ]", next: "root" },
-            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" }
+            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -341,7 +344,8 @@
           choices: [
             { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
-            { text: "[ Auditar OKBackups Systems ]", next: "root" }
+            { text: "[ Auditar OKBackups Systems ]", next: "root" },
+            { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -510,6 +514,46 @@
             { text: "[ <- Seguir buscando ]", next: "root" }
           ]
         }
+      },
+      mailreply: {
+        root: {
+          speech: "Microservicio: 'MailReply AI' (Spring Boot 3 + ChatGPT API + Gmail OAuth2). ¿Qué deseas explorar?",
+          choices: [
+            { text: "1. ¿Qué problema resuelve este microservicio?", next: "problem" },
+            { text: "2. Explícame la arquitectura técnica y la integración con Gmail OAuth2.", next: "architecture" },
+            { text: "3. ¿Cómo funciona la generación de respuestas con IA (ChatGPT API)?", next: "ai" },
+            { text: "4. [Abrir repositorio de código en GitHub]", action: "link", url: "https://github.com/drbarranco/mail-reply" },
+            { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
+            { text: "[ ← Volver al despacho ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "MailReply automatiza la respuesta a correos electrónicos repetitivos de clientes y soporte. Lee buzones en tiempo real mediante la API de Gmail, aplica reglas de remitentes autorizados y responde usando IA sin intervención humana.",
+          choices: [
+            { text: "[ <- Volver a MailReply ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Construido en Java 21 con Spring Boot 3.5 y Spring Data JPA sobre PostgreSQL. Autenticación OAuth2 con la API de Google Gmail v1, procesado en segundo plano con tareas programadas (@Scheduled) y panel de control en React 19 + TailwindCSS.",
+          choices: [
+            { text: "[ <- Volver a MailReply ]", next: "root" }
+          ]
+        },
+        ai: {
+          speech: "Extrae el cuerpo y remitente del correo no leído, verifica que esté en la lista blanca de remitentes (allowedSenders) y envía el contexto a la API de ChatGPT para generar una respuesta personalizada y profesional antes de marcar el correo como leído.",
+          choices: [
+            { text: "[ <- Volver a MailReply ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Selecciona el proyecto que deseas auditar en la terminal:",
+          choices: [
+            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Auditar MailReply AI ]", next: "root" }
+          ]
+        }
       }
     },
     en: {
@@ -548,7 +592,8 @@
           choices: [
             { text: "[ Audit TimeLink SaaS ]", next: "root" },
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
-            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" }
+            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -587,7 +632,8 @@
           choices: [
             { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
             { text: "[ Audit GoToPádel App ]", next: "root" },
-            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" }
+            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -626,7 +672,8 @@
           choices: [
             { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
-            { text: "[ Audit OKBackups Systems ]", next: "root" }
+            { text: "[ Audit OKBackups Systems ]", next: "root" },
+            { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
           ]
         }
       },
@@ -795,6 +842,46 @@
             { text: "[ <- Keep searching ]", next: "root" }
           ]
         }
+      },
+      mailreply: {
+        root: {
+          speech: "Microservice: 'MailReply AI' (Spring Boot 3 + ChatGPT API + Gmail OAuth2). What do you want to explore?",
+          choices: [
+            { text: "1. What problem does this microservice solve?", next: "problem" },
+            { text: "2. Tell me about the technical architecture & Gmail OAuth2 integration.", next: "architecture" },
+            { text: "3. How does AI response generation work (ChatGPT API)?", next: "ai" },
+            { text: "4. [Open source code repository on GitHub]", action: "link", url: "https://github.com/drbarranco/mail-reply" },
+            { text: "5. Switch to another software project.", next: "switch_proj" },
+            { text: "[ ← Back to room ]", action: "exit" }
+          ]
+        },
+        problem: {
+          speech: "MailReply automates responses to repetitive customer support and inquiry emails. It reads inboxes in real time via Gmail API, applies whitelisting rules, and generates AI responses without human intervention.",
+          choices: [
+            { text: "[ <- Back to MailReply ]", next: "root" }
+          ]
+        },
+        architecture: {
+          speech: "Built in Java 21 with Spring Boot 3.5 and Spring Data JPA on PostgreSQL. OAuth2 authentication with Google Gmail API v1, scheduled background execution (@Scheduled), and React 19 + TailwindCSS management dashboard.",
+          choices: [
+            { text: "[ <- Back to MailReply ]", next: "root" }
+          ]
+        },
+        ai: {
+          speech: "Extracts body and sender of unread emails, verifies allowedSenders whitelist, and sends context to ChatGPT API to generate a personalized professional response before marking the email as read.",
+          choices: [
+            { text: "[ <- Back to MailReply ]", next: "root" }
+          ]
+        },
+        switch_proj: {
+          speech: "Select the software project you want to audit in the terminal:",
+          choices: [
+            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
+            { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
+            { text: "[ Audit MailReply AI ]", next: "root" }
+          ]
+        }
       }
     }
   };
@@ -841,7 +928,8 @@
       "hot-taza": "hablemos",
       "hot-ideas": "curriculum",
       "hot-arcade": "arcade",
-      "hot-cajon": "cajon"
+      "hot-cajon": "cajon",
+      "hot-mailreply": "mailreply"
     };
 
     const projKey = projectKeys[hotspotId];
@@ -894,7 +982,8 @@
       hablemos: "CONTACT_INTERFACE //",
       experiencia: "WORK_HISTORY //",
       arcade: "BUG_HUNTER_CABINET //",
-      cajon: "DESK_DRAWERS //"
+      cajon: "DESK_DRAWERS //",
+      mailreply: "SYSTEM_STATUS_MAILREPLY //"
     };
 
     diagSpeaker.textContent = speakers[projKey] || "LOG //";

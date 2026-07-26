@@ -88,5 +88,31 @@ const projects = {
     images: [
       "assets/img/fondo-codigo.jpg",
     ]
+  },
+  mailreply: {
+    title: "MailReply AI",
+    category: "Microservicio Backend & IA (Spring Boot 3 & ChatGPT API)",
+    categoryEn: "Backend Microservice & AI (Spring Boot 3 & ChatGPT API)",
+    client: "Proyecto Personal / Automatización Email",
+    clientEn: "Personal Project / Email Automation",
+    startDate: "01/05/2025",
+    endDate: "En desarrollo activo",
+    repo: "https://github.com/drbarranco/mail-reply",
+    url: "https://github.com/drbarranco/mail-reply",
+    description: "Microservicio backend con Spring Boot 3 y Java 21 para la automatización de respuestas por correo electrónico utilizando la API de ChatGPT (OpenAI) e integración nativa con la API de Gmail vía OAuth2.",
+    descriptionEn: "Backend microservice with Spring Boot 3 and Java 21 for automated email responses using OpenAI's ChatGPT API and native Gmail API integration via OAuth2.",
+    problem: "Las empresas y profesionales reciben diariamente decenas de correos repetitivos de soporte, consultas de clientes o solicitudes de información que consumen horas de trabajo manual. Se necesitaba una solución automatizada capaz de leer correos entrantes, verificar remitentes autorizados y generar respuestas contextuales e inteligentes con IA en tiempo real.",
+    problemEn: "Businesses and professionals receive dozens of repetitive support, customer inquiry, or information request emails daily, consuming hours of manual work. An automated solution was needed to read incoming emails, verify allowed senders, and generate contextual, intelligent AI responses in real-time.",
+    architecture: "El backend está desarrollado en Java 21 con Spring Boot 3.5 y Spring Data JPA conectándose a una base de datos PostgreSQL. La autenticación con la API v1 de Google Gmail se gestiona vía OAuth2 (almacenando tokens de acceso y refresco en DB). Utiliza la API de ChatGPT para el procesamiento de lenguaje natural y generación de respuestas, con ejecución programada en segundo plano (@Scheduled) y filtrado por lista blanca de remitentes autorizados (allowedSenders). El dashboard de administración está construido en React 19 con Vite, TailwindCSS y Axios.",
+    architectureEn: "The backend is built in Java 21 with Spring Boot 3.5 and Spring Data JPA connected to a PostgreSQL database. Authentication with Google Gmail API v1 is handled via OAuth2 (storing access and refresh tokens in DB). It integrates OpenAI's ChatGPT API for natural language processing and reply generation, with scheduled background polling (@Scheduled) and allowed senders whitelist filtering. The admin frontend is built with React 19, Vite, TailwindCSS, and Axios.",
+    database: "Modelo relacional en PostgreSQL optimizado para multi-usuario:\n\n- **MailConfig**: Almacena `id`, `email`, `allowedSenders` (lista blanca de remitentes permitidos), `intervalMinutes`, `message` (plantilla/prompt de instrucciones para la IA) y `autoReply` (booleano de activación).\n- **UserToken**: Guarda los credenciales OAuth2 de Google (`email`, `accessToken`, `refreshToken`, `expiresAt`) para ejecutar llamadas a la API de Gmail en nombre del usuario de forma autónoma.",
+    databaseEn: "PostgreSQL relational schema optimized for multi-user config:\n\n- **MailConfig**: Stores `id`, `email`, `allowedSenders` (whitelist), `intervalMinutes`, `message` (prompt template for AI) and `autoReply` (toggle boolean).\n- **UserToken**: Stores Google OAuth2 credentials (`email`, `accessToken`, `refreshToken`, `expiresAt`) to execute Gmail API calls on behalf of the user autonomously.",
+    api: "El microservicio expone endpoints RESTful para la configuración y control. Ejemplo de payload JSON enviado a `POST /mail/configure`:\n\n```json\n{\n  \"email\": \"usuario@ejemplo.com\",\n  \"allowedSenders\": [\"cliente@empresa.com\", \"soporte@proveedor.com\"],\n  \"intervalMinutes\": 5,\n  \"message\": \"Genera una respuesta profesional confirmando recepción e indicando que el equipo lo revisará en breve.\",\n  \"autoReply\": true\n}\n```",
+    apiEn: "The microservice exposes RESTful endpoints for config and status. Sample JSON payload sent to `POST /mail/configure`:\n\n```json\n{\n  \"email\": \"user@example.com\",\n  \"allowedSenders\": [\"client@company.com\", \"support@provider.com\"],\n  \"intervalMinutes\": 5,\n  \"message\": \"Generate a professional response acknowledging receipt and indicating the team will review it shortly.\",\n  \"autoReply\": true\n}\n```",
+    challenges: "1. **Gestión de Sesión OAuth2 y Tokens**: Renovar de forma transparente los tokens de acceso caducados de Google Gmail API sin interrumpir los procesos en segundo plano. \n2. **Seguridad y Filtrado de Remitentes**: Implementar reglas estrictas de filtrado (Allowed Senders Whitelist) para evitar responder accidentalmente a spam, listas de correo masivas o bucles infinitos de auto-respuesta.",
+    challengesEn: "1. **OAuth2 Token Refresh & Background Polling**: Securely refreshing expired Google Gmail API access tokens without disrupting background batch execution. \n2. **Sender Whitelisting & Loop Prevention**: Implementing strict allowed-sender rules to prevent replying to spam, automated mailing lists, or infinite auto-reply loops.",
+    images: [
+      "assets/img/fondo-codigo.jpg",
+    ]
   }
 };
