@@ -323,7 +323,7 @@
             { text: "1. ¿Qué problema resuelve este agente?", next: "problem" },
             { text: "2. Explícame la arquitectura y empaquetado.", next: "architecture" },
             { text: "3. ¿Cuáles fueron los mayores desafíos de red?", next: "challenges" },
-            { text: "4. [Ver repositorio de código en GitHub]", action: "link", url: "https://github.com/drbarranco/okbackups" },
+            { text: "4. [Acceder al repositorio de código]", next: "private_repo" },
             { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
@@ -353,6 +353,13 @@
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Auditar OKBackups Systems ]", next: "root" },
             { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
+          ]
+        },
+        private_repo: {
+          speech: "🔒 Este repositorio es privado. La aplicación está en producción para mi empresa actual. Si quieres saber más del proyecto, ¡escríbeme!",
+          choices: [
+            { text: "[ ✉ Contactar con Daniel ]", action: "switch", project: "hablemos" },
+            { text: "[ <- Volver al TPV ]", next: "root" }
           ]
         }
       },
@@ -501,7 +508,7 @@
             { text: "1. ¿Qué problema resuelve este microservicio?", next: "problem" },
             { text: "2. Explícame la arquitectura técnica y la integración con Gmail OAuth2.", next: "architecture" },
             { text: "3. ¿Cómo funciona la generación de respuestas con IA (ChatGPT API)?", next: "ai" },
-            { text: "4. [Abrir repositorio de código en GitHub]", action: "link", url: "https://github.com/drbarranco/mail-reply" },
+            { text: "4. [Acceder al repositorio de código]", next: "private_repo" },
             { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
@@ -531,6 +538,13 @@
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Auditar MailReply AI ]", next: "root" }
+          ]
+        },
+        private_repo: {
+          speech: "🔒 Este repositorio es privado. El proyecto está en desarrollo activo y aún no está disponible públicamente. Si quieres saber más, ¡escríbeme!",
+          choices: [
+            { text: "[ ✉ Contactar con Daniel ]", action: "switch", project: "hablemos" },
+            { text: "[ <- Volver a MailReply ]", next: "root" }
           ]
         }
       }
@@ -623,7 +637,7 @@
             { text: "1. What problem does this agent solve?", next: "problem" },
             { text: "2. Tell me about the architecture and packaging.", next: "architecture" },
             { text: "3. What were the main network challenges?", next: "challenges" },
-            { text: "4. [View source code on GitHub]", action: "link", url: "https://github.com/drbarranco/okbackups" },
+            { text: "4. [Access source code repository]", next: "private_repo" },
             { text: "5. Switch to another software project.", next: "switch_proj" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
@@ -653,6 +667,13 @@
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Audit OKBackups Systems ]", next: "root" },
             { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
+          ]
+        },
+        private_repo: {
+          speech: "🔒 This repository is private. The app is deployed in production for my current employer. If you want to know more about the project, feel free to reach out!",
+          choices: [
+            { text: "[ ✉ Contact Daniel ]", action: "switch", project: "hablemos" },
+            { text: "[ <- Back to POS ]", next: "root" }
           ]
         }
       },
@@ -801,7 +822,7 @@
             { text: "1. What problem does this microservice solve?", next: "problem" },
             { text: "2. Tell me about the technical architecture & Gmail OAuth2 integration.", next: "architecture" },
             { text: "3. How does AI response generation work (ChatGPT API)?", next: "ai" },
-            { text: "4. [Open source code repository on GitHub]", action: "link", url: "https://github.com/drbarranco/mail-reply" },
+            { text: "4. [Access source code repository]", next: "private_repo" },
             { text: "5. Switch to another software project.", next: "switch_proj" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
@@ -831,6 +852,13 @@
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Audit MailReply AI ]", next: "root" }
+          ]
+        },
+        private_repo: {
+          speech: "🔒 This repository is private. The project is in active development and not yet publicly available. If you'd like to know more, feel free to reach out!",
+          choices: [
+            { text: "[ ✉ Contact Daniel ]", action: "switch", project: "hablemos" },
+            { text: "[ <- Back to MailReply ]", next: "root" }
           ]
         }
       }
@@ -1202,6 +1230,18 @@
       });
     }
 
+    // Si se viene desde portfolio-details.html tras pulsar "contáctame" en repo privado
+    if (sessionStorage.getItem("openContact") === "true") {
+      sessionStorage.removeItem("openContact");
+      // Esperar a que el despacho esté visible antes de hacer zoom
+      setTimeout(() => {
+        applyZoom("hot-taza");
+        setTimeout(() => {
+          openDialoguePanel("hablemos");
+        }, 600);
+      }, 400);
+    }
+
     hudText = document.getElementById("hud-action-text");
     
     document.querySelectorAll(".hotspot").forEach(hot => {
@@ -1293,6 +1333,7 @@
       btnAmbientSound.addEventListener("click", function() {
         const ambient = document.getElementById("snd-ambient");
         if (ambient) {
+          ambient.volume = 0.4;
           if (ambient.paused) {
             ambient.play().catch(() => {});
             this.classList.add("playing");

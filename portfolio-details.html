@@ -366,7 +366,14 @@
       if (project.url) {
         metaHTML += `<li><strong>[ONLINE_URL]:</strong> <a href="${project.url}" target="_blank" style="color: var(--crt-glow);">${project.url}</a></li>`;
       }
-      if (project.repo) {
+      if (project.privateRepo) {
+        const privLabel   = isES ? "[SOURCE_CODE]:" : "[SOURCE_CODE]:";
+        const privMsg     = isES
+          ? "Este repositorio es privado ya que la aplicación está desplegada en producción para mi empresa actual. Si quieres saber más del proyecto, "
+          : "This repository is private as the application is deployed in production for my current employer. If you'd like to know more about it, ";
+        const privContact = isES ? "contáctame." : "get in touch.";
+        metaHTML += `<li><strong>${privLabel}</strong> 🔒 ${privMsg}<a href="#" class="contact-private-link" style="color: var(--crt-glow); text-decoration: underline; cursor: pointer;">${privContact}</a></li>`;
+      } else if (project.repo) {
         metaHTML += `<li><strong>[SOURCE_CODE]:</strong> <a href="${project.repo}" target="_blank" style="color: var(--crt-glow);">${project.repo}</a></li>`;
       }
       metaList.innerHTML = metaHTML;
@@ -419,6 +426,15 @@
         <div class="term-log header" style="color: var(--crt-glow);">${chalTitle}</div>
         <div class="term-log" style="white-space: pre-wrap;">${chalText}</div>
       `;
+    });
+
+    // Listener para enlace de repo privado: redirige a index.html y abre contacto
+    document.addEventListener("click", function(e) {
+      if (e.target.classList.contains("contact-private-link")) {
+        e.preventDefault();
+        sessionStorage.setItem("openContact", "true");
+        window.location.href = "index.html";
+      }
     });
   </script>
   <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js" data-collect="all"

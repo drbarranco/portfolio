@@ -73,6 +73,7 @@ const projects = {
     startDate: "10/05/2025",
     endDate: "20/06/2025",
     repo: "https://github.com/drbarranco/okbackups",
+    privateRepo: true,
     description: "Agente de escritorio Windows y servidor Flask para la automatización de copias de seguridad de bases de datos locales (TPVs) a la nube de forma segura y desasistida.",
     descriptionEn: "Windows desktop agent and Flask server for automated database backups from local POS systems to the cloud, securely and unattended.",
     problem: "Los pequeños comercios y restaurantes con TPVs locales carecían de copias de seguridad remotas debido al coste y complejidad técnica. Un fallo de hardware o corte eléctrico provocaba pérdidas masivas de facturación. Se necesitaba un agente silencioso que extrajera, comprimiera y subiera bases de datos pesadas sin ralentizar la red comercial.",
@@ -86,7 +87,7 @@ const projects = {
     challenges: "1. **Empaquetado y Servicio en Windows**: Asegurar la compatibilidad sin obligar al cliente a instalar Python. Resuelto compilando con PyInstaller e instalando el ejecutable como servicio nativo de Windows. \n2. **Estabilidad de Carga y Ancho de Banda**: Para evitar saturar el internet del negocio, se programó la ejecución fuera del horario comercial y se diseñó un algoritmo de reintentos exponencial con Backoff ante pérdidas de paquetes durante la subida.",
     challengesEn: "1. **Windows Packaging & Services**: Ensuring database driver compatibility without requiring python runtime. Resolved by bundling binaries with PyInstaller and running the app as a native Windows Service. \n2. **Bandwidth & Network Resilience**: To avoid saturating commercial bandwidth, backups are scheduled off-hours and built with an exponential backoff retry algorithm to resume uploads upon packet drops.",
     images: [
-      "assets/img/fondo-codigo.jpg",
+      "assets/img/projects/okbackups.PNG",
     ]
   },
   mailreply: {
@@ -98,7 +99,7 @@ const projects = {
     startDate: "01/05/2025",
     endDate: "En desarrollo activo",
     repo: "https://github.com/drbarranco/mail-reply",
-    url: "https://github.com/drbarranco/mail-reply",
+    privateRepo: true,
     description: "Microservicio backend con Spring Boot 3 y Java 21 para la automatización de respuestas por correo electrónico utilizando la API de ChatGPT (OpenAI) e integración nativa con la API de Gmail vía OAuth2.",
     descriptionEn: "Backend microservice with Spring Boot 3 and Java 21 for automated email responses using OpenAI's ChatGPT API and native Gmail API integration via OAuth2.",
     problem: "Las empresas y profesionales reciben diariamente decenas de correos repetitivos de soporte, consultas de clientes o solicitudes de información que consumen horas de trabajo manual. Se necesitaba una solución automatizada capaz de leer correos entrantes, verificar remitentes autorizados y generar respuestas contextuales e inteligentes con IA en tiempo real.",
