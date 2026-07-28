@@ -43,7 +43,6 @@
     "hot-pizarra": { scale: 2.1, x: 162, y: 127 },
     "hot-taza": { scale: 2.5, x: 374, y: -155 },
     "hot-arcade": { scale: 2.0, x: 330, y: 2 },
-    "hot-cajon": { scale: 2.2, x: -243, y: -92 },
     "hot-mailreply": { scale: 2.2, x: 242, y: 13 }
   };
 
@@ -122,7 +121,11 @@
         "Está en desarrollo, le falta combustible para salir a producción."         
       ],
       "hot-cajon": [
-        "Cajones llenos de cables enredados, móviles viejos y cargadores que ya no sirven..."
+        "Cajones llenos de cables enredados, móviles viejos y cargadores de Nokia.",
+        "¿Buscas un cable HDMI? Al fondo a la derecha, debajo de tres adaptadores VGA.",
+        "Vete tú a saber qué hay aquí dentro... creo que acabo de tocar un cable euroconector de 1998.",
+        "Ley de los cajones: si necesitas un cable específico, tendrás todos los existentes excepto ese.",
+        "Aquí dentro hay más adaptadores micro-USB que en una tienda de electrónica de segunda mano."
       ],
       "hot-tux": [
         "sudo su - root. Ya soy el amo del sistema.",
@@ -209,7 +212,11 @@
         "Next direct flight heading towards my next professional challenge."
       ],
       "hot-cajon": [
-        "Drawers full of tangled cables, old mobile phones, and chargers that don't work anymore..."
+        "Drawers full of tangled cables, old mobile phones, and ancient Nokia chargers.",
+        "Looking for an HDMI cable? Way in the back on the right, under three VGA adapters.",
+        "Who knows what's in here... I think I just touched a SCART cable from 1998.",
+        "Law of drawers: if you need a specific cable, you will have every existing cable except that one.",
+        "There are more micro-USB adapters in here than in a second-hand tech shop."
       ],
       "hot-tux": [
         "sudo su - root. I am now the master of the system.",
@@ -486,35 +493,7 @@
           ]
         }
       },
-      cajon: {
-        root: {
-          speech: "Rebuscas en los cajones llenos de chatarra tecnológica. ¿Qué estás buscando exactamente?",
-          choices: [
-            { text: "1. Un cable HDMI.", next: "cable" },
-            { text: "2. Un pendrive USB.", next: "pendrive" },
-            { text: "3. Una grapadora.", next: "grapadora" },
-            { text: "[ ← Cerrar los cajones ]", action: "exit" }
-          ]
-        },
-        cable: {
-          speech: "Rebuscas al fondo de la caja de cables... y sacas un cable VGA viejo, tres cables micro-USB enredados y un cable de red sin el conector RJ45. Del cable HDMI, ni rastro.",
-          choices: [
-            { text: "[ <- Seguir buscando ]", next: "root" }
-          ]
-        },
-        pendrive: {
-          speech: "Encuentras un pendrive de 2GB de publicidad. Al conectarlo en el PC, resulta que solo contiene una ISO de Ubuntu 14.04 y un archivo 'temporal.txt' completamente vacío.",
-          choices: [
-            { text: "[ <- Seguir buscando ]", next: "root" }
-          ]
-        },
-        grapadora: {
-          speech: "No hay ninguna grapadora aquí. Solo clips oxidados, gomas elásticas resecas que se rompen al tocarlas y un adaptador de corriente antiguo que hace un zumbido eléctrico sospechoso.",
-          choices: [
-            { text: "[ <- Seguir buscando ]", next: "root" }
-          ]
-        }
-      },
+
       mailreply: {
         root: {
           speech: "Microservicio: 'MailReply AI' (Spring Boot 3 + ChatGPT API + Gmail OAuth2). ¿Qué deseas explorar?",
@@ -814,35 +793,7 @@
           ]
         }
       },
-      cajon: {
-        root: {
-          speech: "You search through the drawers full of tech clutter. What are you looking for exactly?",
-          choices: [
-            { text: "1. An HDMI cable.", next: "cable" },
-            { text: "2. A USB flash drive.", next: "pendrive" },
-            { text: "3. A stapler.", next: "grapadora" },
-            { text: "[ ← Close the drawers ]", action: "exit" }
-          ]
-        },
-        cable: {
-          speech: "You search at the bottom of the cable box... and pull out an old VGA cable, three tangled micro-USB wires, and an ethernet cable without an RJ45 connector. No sign of the HDMI cable.",
-          choices: [
-            { text: "[ <- Keep searching ]", next: "root" }
-          ]
-        },
-        pendrive: {
-          speech: "You find a promotional 2GB flash drive. When you plug it into the PC, it turns out to contain only an Ubuntu 14.04 ISO and a completely empty 'temporary.txt' file.",
-          choices: [
-            { text: "[ <- Keep searching ]", next: "root" }
-          ]
-        },
-        grapadora: {
-          speech: "There is no stapler here. Only rusty paperclips, dried-out rubber bands that snap when touched, and an old power adapter emitting a suspicious electric hum.",
-          choices: [
-            { text: "[ <- Keep searching ]", next: "root" }
-          ]
-        }
-      },
+
       mailreply: {
         root: {
           speech: "Microservice: 'MailReply AI' (Spring Boot 3 + ChatGPT API + Gmail OAuth2). What do you want to explore?",
@@ -928,7 +879,6 @@
       "hot-taza": "hablemos",
       "hot-ideas": "curriculum",
       "hot-arcade": "arcade",
-      "hot-cajon": "cajon",
       "hot-mailreply": "mailreply"
     };
 
@@ -982,7 +932,6 @@
       hablemos: "CONTACT_INTERFACE //",
       experiencia: "WORK_HISTORY //",
       arcade: "BUG_HUNTER_CABINET //",
-      cajon: "DESK_DRAWERS //",
       mailreply: "SYSTEM_STATUS_MAILREPLY //"
     };
 
@@ -1281,14 +1230,10 @@
         const hotId = this.getAttribute("id");
         const currentIdx = gameState.clickIndices[hotId] || 0;
 
-        if (hotId === "hot-cajon" && currentIdx === 0) {
-          triggerSpeechBubble(hotId, e.clientX, e.clientY);
+        if (zoomSettings[hotId]) {
+          applyZoom(hotId);
         } else {
-          if (zoomSettings[hotId]) {
-            applyZoom(hotId);
-          } else {
-            triggerSpeechBubble(hotId, e.clientX, e.clientY);
-          }
+          triggerSpeechBubble(hotId, e.clientX, e.clientY);
         }
       });
     });
@@ -1324,14 +1269,10 @@
         playSound("snd-click");
         const currentIdx = gameState.clickIndices[targetId] || 0;
 
-        if (targetId === "hot-cajon" && currentIdx === 0) {
-          triggerSpeechBubble(targetId, e.clientX, e.clientY);
+        if (zoomSettings[targetId]) {
+          applyZoom(targetId);
         } else {
-          if (zoomSettings[targetId]) {
-            applyZoom(targetId);
-          } else {
-            triggerSpeechBubble(targetId, e.clientX, e.clientY);
-          }
+          triggerSpeechBubble(targetId, e.clientX, e.clientY);
         }
       });
     });
