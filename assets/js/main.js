@@ -75,7 +75,7 @@
         "Parpadea un LED rojo. Probablemente no sea nada grave... espero.",
         "Administración de hardware real. Aquí empezó todo.",
         "¿Hueles eso? Es el dulce aroma de la potencia de cálculo a 80 grados.",
-        "Mi servidor casero. Aloja scripts de automatización y algún bot travieso."
+        "Cluster de un nodo. Técnicamente es Hadoop. Por las noches digiere datasets de Kaggle."
       ],
       "hot-puerta": [
         "Es mi archivo 'vida.log'. El bucle principal de mi rutina.",
@@ -106,7 +106,7 @@
         "La piña en la pizza es una excepción no controlada (RuntimeException)."
       ],
       "hot-c3po": [
-        "¿Buscando trabajo de programador, Dani? ¡Que la fuerza te acompañe!",
+        "Esta noche he quedado con Claude y Gemini para echarme unos tokens en Antigravity y contarles mis batallas de compilación.",
         "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
         "Las posibilidades de compilar este commit a la primera son de 3.720 contra una.",
         "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
@@ -114,10 +114,9 @@
       ],
       "hot-avion": [
         "Próximo viaje: Granada",
-        "O quizá Donostia ?",
+        "O quizá Donosti ?",
         "Y Córdoba ? ",
-        "Puede que Málaga",
-        "Me pillaré un Binter, que te dan comida cerveza gratis.",
+        "Puede que Málaga",        
         "Está en desarrollo, le falta combustible para salir a producción."         
       ],
       "hot-cajon": [
@@ -167,7 +166,7 @@
         "A red LED is blinking. It's probably fine... hopefully.",
         "Real systems automation. This is where it all started.",
         "Do you smell that? The sweet scent of processing power running at 80°C.",
-        "My home server. Storing automation scripts and some mischievous bots."
+        "Single-node cluster. Technically it's Hadoop. Chews through Kaggle datasets at night."
       ],
       "hot-puerta": [
         "It's my 'life.log' file. My routine's main loop.",
@@ -198,7 +197,7 @@
         "Pineapple on pizza is an unhandled RuntimeException."
       ],
       "hot-c3po": [
-        "Looking for a programmer job, Dani? May the force be with you!",
+        "Tonight I'm meeting Claude and Gemini for a few tokens on Antigravity to swap compilation war stories.",
         "Fluent in over six million forms of communication, and I still don't understand this script!",
         "The odds of compiling this commit on the first try are 3,720 to one!",
         "R2-D2 insists we should use Python, but I am more of a traditional Java droid.",
