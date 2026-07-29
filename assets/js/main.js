@@ -122,9 +122,9 @@
       "hot-cajon": [
         "Cajones llenos de cables enredados, móviles viejos y cargadores de Nokia.",
         "¿Buscas un cable HDMI? Al fondo a la derecha, debajo de tres adaptadores VGA.",
-        "Vete tú a saber qué hay aquí dentro... creo que acabo de tocar un cable euroconector de 1998.",
+        "Vete tú a saber qué hay aquí dentro... creo que acabo de tocar un euroconector de 1998.",
         "Ley de los cajones: si necesitas un cable específico, tendrás todos los existentes excepto ese.",
-        "Aquí dentro hay más adaptadores micro-USB que en una tienda de electrónica de segunda mano."
+        "He encontrado un pendrive de 512 MB con un README.txt que dice 'IMPORTANTE - NO BORRAR'. Lo he borrado."
       ],
       "hot-tux": [
         "sudo su - root. Ya soy el amo del sistema.",
@@ -215,7 +215,7 @@
         "Looking for an HDMI cable? Way in the back on the right, under three VGA adapters.",
         "Who knows what's in here... I think I just touched a SCART cable from 1998.",
         "Law of drawers: if you need a specific cable, you will have every existing cable except that one.",
-        "There are more micro-USB adapters in here than in a second-hand tech shop."
+        "Found a 512 MB pendrive with a README.txt that says 'IMPORTANT - DO NOT DELETE'. I deleted it."
       ],
       "hot-tux": [
         "sudo su - root. I am now the master of the system.",
