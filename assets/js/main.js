@@ -757,7 +757,7 @@
           choices: [
             { text: "📧 Send email (drbarrancodev@gmail.com)", action: "link", url: "mailto:drbarrancodev@gmail.com" },
             { text: "🔗 Visit LinkedIn profile", action: "link", url: "https://www.linkedin.com/in/drbarranco/" },
-            { text: "🐙 Browse source code on GitHub", action: "link", url: "https://github.com/drbarranco" },
+            //{ text: "🐙 Browse source code on GitHub", action: "link", url: "https://github.com/drbarranco" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
         }
@@ -873,6 +873,20 @@
   // SISTEMA DE ZOOM & ENFOQUE
   // ===========================================================================
 
+  // Función para adaptar la intensidad del zoom según la pantalla (Tablets y Móviles)
+  function getResponsiveZoomScale(baseScale) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    if (w <= 600 || h <= 500) {
+      return 1 + (baseScale - 1) * 0.40; // Reducción de escala para smartphones
+    }
+    if (w <= 1024 || h <= 768) {
+      return 1 + (baseScale - 1) * 0.60; // Reducción de escala para tablets
+    }
+    return baseScale;
+  }
+
   function applyZoom(hotspotId) {
     const roomWrapper = document.getElementById("room-wrapper");
     const gameViewport = document.getElementById("game-viewport");
@@ -886,8 +900,14 @@
     gameState.activeZoom = hotspotId;
     playSound("snd-zoom");
 
-    // Aplicar transformación y añadir clase zoomed-in para atenuar menús HTML
-    roomWrapper.style.transform = `scale(${config.scale}) translate(${config.x}px, ${config.y}px)`;
+    // Calcular escala y desplazamiento adaptados al tamaño de pantalla
+    const scaleFactor = getResponsiveZoomScale(config.scale);
+    const ratio = config.scale > 1 ? (scaleFactor - 1) / (config.scale - 1) : 1;
+    const adjustedX = Math.round(config.x * ratio);
+    const adjustedY = Math.round(config.y * ratio);
+
+    // Aplicar transformación y añadir clase zoomed-in
+    roomWrapper.style.transform = `scale(${scaleFactor}) translate(${adjustedX}px, ${adjustedY}px)`;
     gameViewport.classList.add("zoomed-in");
     
     // Ocultar HUD general
@@ -1498,11 +1518,12 @@
       });
     }
 
-    if (btnTutSkip) {
-      btnTutSkip.addEventListener("click", () => {
-        closeTutorial();
-      });
-    }
+    // Recalcular zoom responsivo en cambio de tamaño o giro de pantalla
+    window.addEventListener("resize", () => {
+      if (gameState.activeZoom) {
+        applyZoom(gameState.activeZoom);
+      }
+    });
 
     if (btnLight) {
       btnLight.addEventListener("click", () => {
