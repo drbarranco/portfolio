@@ -1131,34 +1131,53 @@
 
   const tutorialSteps = [
     {
-      handPos: { top: "33%", left: "54%" },
-      handIcon: "👉",
-      textEs: "¡Bienvenido al despacho interactivo! Este portafolio funciona como una <strong>aventura gráfica retro</strong>. Cada objeto con una <strong>baliza de sonar o brillo</strong> es interactivo.",
+      hands: [
+        { top: "33.5%", left: "53.2%", icon: "👉" }
+      ],
+      textEs: "¡Bienvenido al despacho interactivo! Este portfolio funciona como una <strong>aventura gráfica retro</strong>. Cada objeto con una <strong>baliza de sonar o brillo</strong> es interactivo.",
       textEn: "Welcome to the interactive office! This portfolio works like a <strong>retro graphic adventure</strong>. Every object with a <strong>sonar beacon or glow</strong> is interactive."
     },
     {
-      handPos: { top: "32%", left: "52%" },
-      handIcon: "💻",
+      hands: [
+        { top: "33.5%", left: "53.2%", icon: "💻" }, // PC
+        { top: "47.2%", left: "85.8%", icon: "🖥️" }, // TPV
+        { top: "49.7%", left: "63.5%", icon: "📱" }, // Móvil
+        { top: "52.7%", left: "28.4%", icon: "📩" }  // MailReply
+      ],
       textEs: "En los equipos (<strong>PC, TPV, Móvil y MailReply</strong>) podrás auditar mis proyectos reales de software, arquitecturas backend, APIs y repositorios en GitHub.",
       textEn: "On the screens (<strong>PC, POS, Mobile, and MailReply</strong>) you can audit my real software projects, backend architectures, APIs, and GitHub repos."
     },
     {
-      handPos: { top: "25%", left: "34%" },
-      handIcon: "📚",
-      textEs: "En la <strong>Pizarra</strong> y en la <strong>Estantería</strong> encontrarás mi trayectoria profesional, mi stack tecnológico completo y la opción de <strong>descargar mi CV en PDF</strong>.",
+      hands: [
+        { top: "28.0%", left: "34.2%", icon: "📚" }, // Pizarra
+        { top: "61.0%", left: "7.8%", icon: "📁" },  // Estantería
+        { top: "93.1%", left: "18.6%", icon: "💼" }  // Dossier CV
+      ],
+      textEs: "En la <strong>Pizarra</strong> y en la <strong>Estantería</strong> encontrarás mi trayectoria profesional, mi stack tecnológico completo y la opción de <strong>descargar mi CV en PDF</strong> en el <strong>Cuarderno</strong>",
       textEn: "On the <strong>Blackboard</strong> and <strong>Shelves</strong> you will find my professional background, full technical stack, and the option to <strong>download my CV as PDF</strong>."
     },
     {
-      handPos: { top: "72%", left: "14%" },
-      handIcon: "☕",
-      textEs: "Toca la <strong>taza de café</strong> para enviarme un mensaje directo. ¡Y explora el resto de decoración (<strong>Tux, C-3PO, el avión...</strong>) para descubrir guiños y secretos ocultos!",
-      textEn: "Click the <strong>coffee mug</strong> to send me a direct message. And explore the rest of the objects (<strong>Tux, C-3PO, the airplane...</strong>) to discover hidden easter eggs!"
+      hands: [
+        { top: "77.0%", left: "13.5%", icon: "☕" }  // Taza
+      ],
+      textEs: "Toca la <strong>taza de café</strong> para abrir la consola de contacto y enviarme un mensaje directo.",
+      textEn: "Click the <strong>coffee mug</strong> to open the contact interface and send me a direct message."
+    },
+    {
+      hands: [
+        { top: "86.0%", left: "77.0%", icon: "🤖" }, // C-3PO
+        { top: "42.0%", left: "3.5%", icon: "🐧" },  // Tux
+        { top: "15.5%", left: "41.5%", icon: "✈️" }, // Avión
+        { top: "83.5%", left: "56.6%", icon: "🍕" }  // Pizza
+      ],
+      textEs: "El resto de objetos (<strong>Tux, C-3PO, el avión, la pizza...</strong>) son puro atrezzo decorativo. No abren proyectos, sino que dirán tonterías, frases geek y algún chascarrillo",
+      textEn: "The rest of the objects (<strong>Tux, C-3PO, the airplane, pizza...</strong>) are just prop items. They don't open projects; they say geeky jokes and fun nonsense when clicked."
     }
   ];
 
   function renderTutorialStep() {
     const tutOverlay = document.getElementById("tutorial-overlay");
-    const tutHand = document.getElementById("tutorial-hand");
+    const handContainer = document.getElementById("tutorial-hand-container");
     const tutBody = document.getElementById("tut-body-text");
     const tutBadge = document.getElementById("tut-step-badge");
     const btnPrev = document.getElementById("tut-btn-prev");
@@ -1174,13 +1193,22 @@
     if (tutBadge) tutBadge.textContent = `${currentTutorialStep + 1} / ${tutorialSteps.length}`;
     tutBody.innerHTML = isEn ? stepData.textEn : stepData.textEs;
 
-    // Posicionar el guante blanco animado exactamente sobre el objetivo
-    if (tutHand) {
-      tutHand.classList.remove("d-none");
-      tutHand.style.top = stepData.handPos.top;
-      tutHand.style.left = stepData.handPos.left;
-      const handIcon = tutHand.querySelector(".hand-icon");
-      if (handIcon) handIcon.textContent = stepData.handIcon || "👉";
+    // Renderizar guantes/punteros animados sobre todos los objetos mencionados en el paso
+    if (handContainer) {
+      handContainer.innerHTML = "";
+      if (stepData.hands && stepData.hands.length > 0) {
+        stepData.hands.forEach(h => {
+          const handDiv = document.createElement("div");
+          handDiv.className = "tutorial-hand";
+          handDiv.style.top = h.top;
+          handDiv.style.left = h.left;
+          handDiv.innerHTML = `
+            <span class="hand-icon">${h.icon || "👉"}</span>
+            <div class="hand-pulse"></div>
+          `;
+          handContainer.appendChild(handDiv);
+        });
+      }
     }
 
     // Botones de navegación
@@ -1212,9 +1240,9 @@
 
   function closeTutorial() {
     const tutOverlay = document.getElementById("tutorial-overlay");
-    const tutHand = document.getElementById("tutorial-hand");
+    const handContainer = document.getElementById("tutorial-hand-container");
     if (tutOverlay) tutOverlay.classList.add("d-none");
-    if (tutHand) tutHand.classList.add("d-none");
+    if (handContainer) handContainer.innerHTML = "";
     sessionStorage.setItem("tutorialSeen", "true");
     playSound("snd-click");
   }
@@ -1277,7 +1305,10 @@
         introOverlay.style.pointerEvents = "none";
         setTimeout(() => {
           introOverlay.style.display = "none";
-        }, 1000);
+          if (sessionStorage.getItem("tutorialSeen") !== "true") {
+            startTutorial();
+          }
+        }, 800);
       }
     }
 
@@ -1287,6 +1318,11 @@
         introOverlay.style.opacity = "0";
         introOverlay.style.pointerEvents = "none";
         introOverlay.style.display = "none";
+      }
+      if (sessionStorage.getItem("tutorialSeen") !== "true") {
+        setTimeout(() => {
+          startTutorial();
+        }, 400);
       }
     } else {
       sessionStorage.setItem("introSeen", "true");
