@@ -67,23 +67,24 @@ body.game-body {
   align-items: center;
 }
 
-/* Contenedor del escenario y zoom de cámara */
+/* Habilitar scroll en tablets y móviles cuando hay zoom o paneles activos */
+@media (max-width: 1366px), (max-height: 900px) {
+  .game-viewport.zoomed-in {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Contenedor del escenario y zoom de cámara (Ajuste 16:9 universal para cualquier pantalla) */
 .room-wrapper {
   position: relative;
-  width: 100vw;
-  height: calc(100vw * 9 / 16); /* Relación de aspecto 16:9 exacta para pantallas estrechas */
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
   transform-origin: center center;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 1.4s ease-in-out;
   will-change: transform;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.95);
   border-radius: 4px;
-}
-
-@media (min-aspect-ratio: 16/9) {
-  .room-wrapper {
-    height: 100vh;
-    width: calc(100vh * 16 / 9); /* Relación de aspecto 16:9 exacta para pantallas anchas */
-  }
 }
 
 .room-bg {

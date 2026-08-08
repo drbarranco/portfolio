@@ -873,7 +873,7 @@
   // SISTEMA DE ZOOM & ENFOQUE
   // ===========================================================================
 
-  // Función para adaptar la intensidad del zoom en Tablets y Móviles sin desbordamientos
+  // Función para adaptar la intensidad y elevación del zoom en Tablets y Móviles sin desbordamientos
   function getResponsiveZoom(hotspotId) {
     const config = zoomSettings[hotspotId];
     if (!config) return { scale: 1, x: 0, y: 0 };
@@ -881,24 +881,27 @@
     const w = window.innerWidth;
     const h = window.innerHeight;
 
-    // Detectar pantallas táctiles, tablets (hasta 1366px) o dimensiones reducidas
+    // Detectar pantallas táctiles, tablets (hasta 1366px como Xiaomi Pad 5) o dimensiones reducidas
     const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     const isTablet = w <= 1366 || isTouchDevice;
     const isMobile = w <= 600 || h <= 500;
 
     let targetScale = config.scale;
+    let offsetY = 0;
 
     if (isMobile) {
-      // Teléfonos móviles: tope máximo estricto de zoom de 1.25x
+      // Teléfonos móviles: tope máximo estricto de zoom de 1.25x y desplazamiento hacia arriba
       targetScale = Math.min(1 + (config.scale - 1) * 0.22, 1.25);
+      offsetY = -55;
     } else if (isTablet) {
-      // Tablets (iPad, Galaxy Tab, Surface, etc.): tope máximo estricto de zoom de 1.38x
-      targetScale = Math.min(1 + (config.scale - 1) * 0.35, 1.38);
+      // Tablets (Xiaomi Pad 5, iPad, Galaxy Tab, etc.): tope estricto de 1.35x y elevación hacia arriba
+      targetScale = Math.min(1 + (config.scale - 1) * 0.35, 1.35);
+      offsetY = -40; // Eleva el escenario para despejar el panel de diálogo inferior
     }
 
     const ratio = config.scale > 1 ? (targetScale - 1) / (config.scale - 1) : 1;
     const targetX = Math.round(config.x * ratio);
-    const targetY = Math.round(config.y * ratio);
+    const targetY = Math.round(config.y * ratio) + offsetY;
 
     return { scale: targetScale, x: targetX, y: targetY };
   }
