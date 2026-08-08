@@ -67,24 +67,46 @@ body.game-body {
   align-items: center;
 }
 
-/* Habilitar scroll en tablets y móviles cuando hay zoom o paneles activos */
-@media (max-width: 1366px), (max-height: 900px) {
-  .game-viewport.zoomed-in {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* Contenedor del escenario y zoom de cámara (Ajuste 16:9 universal para cualquier pantalla) */
+/* Contenedor del escenario y zoom de cámara (Escritorio Completo 100%) */
 .room-wrapper {
   position: relative;
-  width: min(100vw, calc(100vh * 16 / 9));
-  height: min(100vh, calc(100vw * 9 / 16));
+  width: 100vw;
+  height: calc(100vw * 9 / 16);
   transform-origin: center center;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 1.4s ease-in-out;
   will-change: transform;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.95);
   border-radius: 4px;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .room-wrapper {
+    height: 100vh;
+    width: calc(100vh * 16 / 9);
+  }
+}
+
+/* Ajustes exclusivos para Tablets y Móviles */
+@media (max-width: 1366px), (max-height: 900px) {
+  .game-viewport {
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .room-wrapper {
+    flex-shrink: 0;
+    width: min(100vw, calc((100vh - 70px) * 16 / 9));
+    height: min(calc(100vh - 70px), calc(100vw * 9 / 16));
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }
 
 .room-bg {
