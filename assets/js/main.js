@@ -72,10 +72,10 @@
       ],
       "hot-raspberry": [
         "Un prototipo de sistemas. Si toco este cable se cae todo.",
+        "Cluster de un nodo. Técnicamente es Hadoop. Por las noches digiere datasets de Kaggle.",
         "Parpadea un LED rojo. Probablemente no sea nada grave... espero.",
         "Administración de hardware real. Aquí empezó todo.",
-        "¿Hueles eso? Es el dulce aroma de la potencia de cálculo a 80 grados.",
-        "Cluster de un nodo. Técnicamente es Hadoop. Por las noches digiere datasets de Kaggle."
+        "¿Hueles eso? Es el dulce aroma de la potencia de cálculo a 80 grados."        
       ],
       "hot-puerta": [
         "Es mi archivo 'vida.log'. El bucle principal de mi rutina.",
@@ -99,25 +99,25 @@
         "Hojas verdes, código verde... todo compila en armonía."
       ],
       "hot-pizza": [
-        "Object pizza = null;",
         "Error 404: Pizza no encontrada. Solo quedan los bordes.",
+        "Object pizza = null;",  
+        "La piña en la pizza es una excepción no controlada (RuntimeException).",      
         "Variable local: pizza = null; depurando una cerveza...",
-        "El combustible oficial del programador nocturno.",
-        "La piña en la pizza es una excepción no controlada (RuntimeException)."
+        "El combustible oficial del programador nocturno."        
       ],
       "hot-c3po": [
-        "Esta noche he quedado con Claude y Gemini para echarme unos tokens en Antigravity y contarles mis batallas de compilación.",
+        "Esta noche me voy con Claude y Gemini a echarnos unos tokens y contarles mis batallas de compilación.",
         "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
-        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una.",
+        "¡Por todos los cielos!\n¡NullPointerException! ¡Estamos perdidos!",
         "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
-        "¡Por todos los cielos!\n¡Un NullPointerException! ¡Estamos perdidos!"
+        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una."               
       ],
       "hot-avion": [
-        "Próximo viaje: Granada",
-        "O quizá Donosti ?",
-        "Y Córdoba ? ",
-        "Puede que Málaga",        
-        "Está en desarrollo, le falta combustible para salir a producción."         
+        "Listos para el despegue hacia la nube. Sin escalas y con cero downtime.",
+        "Checklist de pre-vuelo: tests unitarios pasados, contenedores listos y café en la taza.",
+        "Volando alto sobre la nube. O sobre servidores en producción, según cómo lo mires.",
+        "Atravesando turbulencias. Nada que un buen sistema de reintentos y rollback no pueda solucionar.",
+        "Velocidad de crucero alcanzada. Siguiente escala: tu equipo de desarrollo."
       ],
       "hot-cajon": [
         "Cajones llenos de cables enredados, móviles viejos y cargadores de Nokia.",
@@ -127,16 +127,16 @@
         "He encontrado un pendrive de 512 MB con un README.txt que dice 'IMPORTANTE - NO BORRAR'. Lo he borrado."
       ],
       "hot-tux": [
+        "Tux lleva desde 1991 guardando el kernel. Más leal que un golden retriever.",
         "sudo su - root. Ya soy el amo del sistema.",
-        "chmod 777 todo. El servidor de producción puede esperar.",
         "apt-get install cerveza. Paquete no encontrado. Compilando desde fuentes...",
-        "En Kali Linux entro como root por defecto. Hay que vivir peligrosamente.",
-        "Tux lleva desde 1991 guardando el kernel. Más leal que un golden retriever."
+        "chmod 777 todo. El servidor de producción puede esperar.",        
+        "En Kali entro como root por defecto. Hay que vivir peligrosamente."        
       ],
       "hot-rollo": [
-        "Mi lema: si funciona... no lo toques.",
+        "Si funciona, mejor no tocarlo." ,
         "¡¡NO LO TOQUES!!",
-        "Ala. Ya se ha roto. \n$ git pull origin main"
+        "Ala. Ya se ha roto. \n$ git restore ."
       ]
     },
     en: {
@@ -204,11 +204,11 @@
         "Oh my! A NullPointerException! We are doomed!"
       ],
       "hot-avion": [
-        "Next destinations on my itinerary: Granada, San Sebastián, Málaga, Almería...",
-        "I hope I can catch a Binter flight, at least they give you free food and a beer.",
-        "This airplane runs on clean code, but it lacks fuel to launch to production.",
-        "A toy biplane hanging from the ceiling. Sometimes it helps me clear my mind.",
-        "Next direct flight heading towards my next professional challenge."
+        "Ready for takeoff to the cloud. Non-stop flight with zero downtime.",
+        "Pre-flight checklist: unit tests passed, containers ready, and coffee in the mug.",
+        "Flying high above the cloud. Or production servers, depending on how you look at it.",
+        "Navigating turbulence. Nothing a solid retry policy and rollback plan can't fix.",
+        "Cruising altitude reached. Next stop: your engineering team."
       ],
       "hot-cajon": [
         "Drawers full of tangled cables, old mobile phones, and ancient Nokia chargers.",
@@ -1054,7 +1054,14 @@
     const y = clientY - rect.top;
 
     speechBubble.style.left = `${x}px`;
-    speechBubble.style.top = `${y - 15}px`;
+    speechBubble.style.top = `${y}px`;
+
+    if (y < 150 || hotspotId === "hot-avion") {
+      speechBubble.classList.add("below");
+    } else {
+      speechBubble.classList.remove("below");
+    }
+
     speechBubble.textContent = "";
     speechBubble.classList.remove("d-none");
 
@@ -1118,6 +1125,101 @@
   }
 
   // ===========================================================================
+  // MINITUTORIAL INTERACTIVO ESTILO VIDEOJUEGO (RETRO GUIDED TOUR)
+  // ===========================================================================
+  let currentTutorialStep = 0;
+
+  const tutorialSteps = [
+    {
+      handPos: { top: "33%", left: "54%" },
+      handIcon: "👉",
+      textEs: "¡Bienvenido al despacho interactivo! Este portafolio funciona como una <strong>aventura gráfica retro</strong>. Cada objeto con una <strong>baliza de sonar o brillo</strong> es interactivo.",
+      textEn: "Welcome to the interactive office! This portfolio works like a <strong>retro graphic adventure</strong>. Every object with a <strong>sonar beacon or glow</strong> is interactive."
+    },
+    {
+      handPos: { top: "32%", left: "52%" },
+      handIcon: "💻",
+      textEs: "En los equipos (<strong>PC, TPV, Móvil y MailReply</strong>) podrás auditar mis proyectos reales de software, arquitecturas backend, APIs y repositorios en GitHub.",
+      textEn: "On the screens (<strong>PC, POS, Mobile, and MailReply</strong>) you can audit my real software projects, backend architectures, APIs, and GitHub repos."
+    },
+    {
+      handPos: { top: "25%", left: "34%" },
+      handIcon: "📚",
+      textEs: "En la <strong>Pizarra</strong> y en la <strong>Estantería</strong> encontrarás mi trayectoria profesional, mi stack tecnológico completo y la opción de <strong>descargar mi CV en PDF</strong>.",
+      textEn: "On the <strong>Blackboard</strong> and <strong>Shelves</strong> you will find my professional background, full technical stack, and the option to <strong>download my CV as PDF</strong>."
+    },
+    {
+      handPos: { top: "72%", left: "14%" },
+      handIcon: "☕",
+      textEs: "Toca la <strong>taza de café</strong> para enviarme un mensaje directo. ¡Y explora el resto de decoración (<strong>Tux, C-3PO, el avión...</strong>) para descubrir guiños y secretos ocultos!",
+      textEn: "Click the <strong>coffee mug</strong> to send me a direct message. And explore the rest of the objects (<strong>Tux, C-3PO, the airplane...</strong>) to discover hidden easter eggs!"
+    }
+  ];
+
+  function renderTutorialStep() {
+    const tutOverlay = document.getElementById("tutorial-overlay");
+    const tutHand = document.getElementById("tutorial-hand");
+    const tutBody = document.getElementById("tut-body-text");
+    const tutBadge = document.getElementById("tut-step-badge");
+    const btnPrev = document.getElementById("tut-btn-prev");
+    const btnNext = document.getElementById("tut-btn-next");
+    const btnSkip = document.getElementById("tut-btn-skip");
+
+    if (!tutOverlay || !tutBody) return;
+
+    const stepData = tutorialSteps[currentTutorialStep];
+    const isEn = gameState.lang === "en";
+
+    // Actualizar contador y cuerpo del texto
+    if (tutBadge) tutBadge.textContent = `${currentTutorialStep + 1} / ${tutorialSteps.length}`;
+    tutBody.innerHTML = isEn ? stepData.textEn : stepData.textEs;
+
+    // Posicionar el guante blanco animado exactamente sobre el objetivo
+    if (tutHand) {
+      tutHand.classList.remove("d-none");
+      tutHand.style.top = stepData.handPos.top;
+      tutHand.style.left = stepData.handPos.left;
+      const handIcon = tutHand.querySelector(".hand-icon");
+      if (handIcon) handIcon.textContent = stepData.handIcon || "👉";
+    }
+
+    // Botones de navegación
+    if (btnPrev) {
+      btnPrev.style.display = currentTutorialStep > 0 ? "inline-block" : "none";
+      btnPrev.textContent = translations[gameState.lang]["tut_prev"] || "[ < Anterior ]";
+    }
+    if (btnSkip) {
+      btnSkip.textContent = translations[gameState.lang]["tut_skip"] || "[ Omitir ]";
+    }
+    if (btnNext) {
+      if (currentTutorialStep === tutorialSteps.length - 1) {
+        btnNext.textContent = translations[gameState.lang]["tut_finish"] || "[ ¡Entendido! ]";
+      } else {
+        btnNext.textContent = translations[gameState.lang]["tut_next"] || "[ Siguiente > ]";
+      }
+    }
+  }
+
+  function startTutorial() {
+    currentTutorialStep = 0;
+    const tutOverlay = document.getElementById("tutorial-overlay");
+    if (tutOverlay) {
+      tutOverlay.classList.remove("d-none");
+      renderTutorialStep();
+      playSound("snd-zoom");
+    }
+  }
+
+  function closeTutorial() {
+    const tutOverlay = document.getElementById("tutorial-overlay");
+    const tutHand = document.getElementById("tutorial-hand");
+    if (tutOverlay) tutOverlay.classList.add("d-none");
+    if (tutHand) tutHand.classList.add("d-none");
+    sessionStorage.setItem("tutorialSeen", "true");
+    playSound("snd-click");
+  }
+
+  // ===========================================================================
   // IDIOMAS & MODALES
   // ===========================================================================
 
@@ -1139,6 +1241,11 @@
 
     if (gameState.activeDialogueProject) {
       renderDialogueStep();
+    }
+
+    const tutOverlay = document.getElementById("tutorial-overlay");
+    if (tutOverlay && !tutOverlay.classList.contains("d-none")) {
+      renderTutorialStep();
     }
   }
 
@@ -1320,6 +1427,46 @@
     const btnLight = document.getElementById("btn-light");
     const btnAmbientSound = document.getElementById("btn-ambient-sound");
     const btnMenuToggle = document.getElementById("btn-menu-toggle");
+    const btnTutorial = document.getElementById("btn-tutorial");
+
+    if (btnTutorial) {
+      btnTutorial.addEventListener("click", () => {
+        playSound("snd-click");
+        startTutorial();
+      });
+    }
+
+    const btnTutNext = document.getElementById("tut-btn-next");
+    const btnTutPrev = document.getElementById("tut-btn-prev");
+    const btnTutSkip = document.getElementById("tut-btn-skip");
+
+    if (btnTutNext) {
+      btnTutNext.addEventListener("click", () => {
+        playSound("snd-click");
+        if (currentTutorialStep < tutorialSteps.length - 1) {
+          currentTutorialStep++;
+          renderTutorialStep();
+        } else {
+          closeTutorial();
+        }
+      });
+    }
+
+    if (btnTutPrev) {
+      btnTutPrev.addEventListener("click", () => {
+        playSound("snd-click");
+        if (currentTutorialStep > 0) {
+          currentTutorialStep--;
+          renderTutorialStep();
+        }
+      });
+    }
+
+    if (btnTutSkip) {
+      btnTutSkip.addEventListener("click", () => {
+        closeTutorial();
+      });
+    }
 
     if (btnLight) {
       btnLight.addEventListener("click", () => {

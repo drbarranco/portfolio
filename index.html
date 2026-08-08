@@ -70,6 +70,9 @@
 
     <!-- BOTONES DE CONTROL SUPERIOR (HTML REAL) -->
     <div class="top-controls">
+      <button class="top-btn" id="btn-tutorial">
+        <i class="bi bi-question-circle"></i> <span data-i18n="btn_tutorial">Tutorial</span>
+      </button>
       <button class="top-btn" id="btn-light">
         <i class="bi bi-sun"></i> <span data-i18n="btn_warm_light">Luz cálida</span>
       </button>
@@ -196,6 +199,12 @@
       <div class="hotspot-beacon" style="left: 3.5%; top: 42.0%;" data-target="hot-tux"></div>
       <div class="hotspot-beacon" style="left: 40.5%; top: 91.0%;" data-target="hot-rollo"></div>
       <div class="hotspot-beacon" style="left: 28.4%; top: 52.7%;" data-target="hot-mailreply"></div>
+
+      <!-- GUANTE BLANCO DEL TUTORIAL INTERACTIVO -->
+      <div id="tutorial-hand" class="tutorial-hand d-none">
+        <span class="hand-icon">👉</span>
+        <div class="hand-pulse"></div>
+      </div>
     </div>
 
     <!-- BOTONERA MENÚ INFERIOR (HTML REAL) -->
@@ -270,6 +279,26 @@
       <button class="lang-btn active" data-lang="es">ES</button>
       <span class="divider">|</span>
       <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <!-- MINITUTORIAL INTERACTIVO DE NAVEGACIÓN (GUÍA ESTILO VIDEOJUEGO) -->
+    <div id="tutorial-overlay" class="tutorial-overlay d-none">
+      <div class="tutorial-box">
+        <div class="tutorial-hdr">
+          <span class="tutorial-title"><i class="bi bi-controller"></i> <span id="tut-hdr-title">GUÍA INTERACTIVA</span></span>
+          <span class="tutorial-step" id="tut-step-badge">1 / 4</span>
+        </div>
+        <div class="tutorial-body" id="tut-body-text">
+          <!-- Texto del paso -->
+        </div>
+        <div class="tutorial-footer">
+          <button class="tut-btn tut-btn-skip" id="tut-btn-skip" data-i18n="tut_skip">[ Omitir ]</button>
+          <div class="tut-nav">
+            <button class="tut-btn" id="tut-btn-prev" data-i18n="tut_prev" style="display:none;">[ &lt; Anterior ]</button>
+            <button class="tut-btn tut-btn-next" id="tut-btn-next" data-i18n="tut_next">[ Siguiente &gt; ]</button>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

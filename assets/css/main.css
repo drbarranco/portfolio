@@ -73,7 +73,7 @@ body.game-body {
   width: 100vw;
   height: calc(100vw * 9 / 16); /* Relación de aspecto 16:9 exacta para pantallas estrechas */
   transform-origin: center center;
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 1.4s ease-in-out;
   will-change: transform;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.95);
   border-radius: 4px;
@@ -101,24 +101,38 @@ body.game-body {
   -webkit-backface-visibility: hidden;
 }
 
-/* Capa de iluminación ambiental día/noche */
+/* Capa de iluminación ambiental — luz cálida de lámpara */
 .ambient-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(5, 5, 25, 0.55);
-  mix-blend-mode: multiply;
+  /* Gradiente radial que simula un foco de luz cálida desde el centro-superior */
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 10%,
+    rgba(255, 147, 41, 0.18) 0%,
+    rgba(220, 100, 20, 0.28) 40%,
+    rgba(120, 40, 0, 0.55) 100%
+  );
+  mix-blend-mode: soft-light;
   z-index: 9990;
   pointer-events: none;
-  transition: opacity 1.2s ease-in-out;
+  transition: opacity 1.4s ease-in-out;
   opacity: 0;
 }
 
 body.ambient-night .ambient-overlay {
   opacity: 1;
 }
+
+/* Filtro cálido sobre la habitación al activar la luz */
+body.ambient-night .room-wrapper {
+  filter: sepia(0.35) saturate(1.2) brightness(0.88);
+  transition: filter 1.4s ease-in-out;
+}
+
+
 
 /*=============================================================================
 # SVG CAPA DE HOTSPOTS INTERACTIVOS
@@ -360,6 +374,31 @@ body.ambient-night .ambient-overlay {
 @keyframes floatDialogue {
   from { opacity: 0; transform: translate(-50%, -105%); }
   to { opacity: 1; transform: translate(-50%, -115%); }
+}
+
+/* Cuando el hotspot está en la parte superior de la pantalla, posiciona el bocadillo abajo con la flecha hacia arriba */
+.speech-bubble.below {
+  transform: translate(-50%, 25px);
+  animation: floatDialogueBelow 0.3s ease;
+}
+
+.speech-bubble.below::after {
+  bottom: auto;
+  top: -9px;
+  border-top: none;
+  border-bottom: 9px solid #00f0ff;
+}
+
+.speech-bubble.below::before {
+  bottom: auto;
+  top: -7px;
+  border-top: none;
+  border-bottom: 8px solid rgba(8, 12, 20, 0.95);
+}
+
+@keyframes floatDialogueBelow {
+  from { opacity: 0; transform: translate(-50%, 35px); }
+  to { opacity: 1; transform: translate(-50%, 25px); }
 }
 
 /* Panel de Opciones de Conversación de Proyectos */
@@ -988,6 +1027,167 @@ body.ambient-night .ambient-overlay {
     font-size: 0.82rem;
     padding: 2px 0;
   }
+}
+
+/*=============================================================================
+# MINITUTORIAL INTERACTIVO ESTILO VIDEOJUEGO (RETRO GUIDED TOUR)
+=============================================================================*/
+
+.tutorial-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9980;
+  pointer-events: none; /* Permite ver e interactuar sin capas oscuras ni desenfoque */
+  background: transparent; /* Sin fondo oscuro tapando el despacho */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 25px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Guante / Puntero blanco animado apuntando a los elementos */
+.tutorial-hand {
+  position: absolute;
+  z-index: 9995;
+  pointer-events: none;
+  font-size: 2.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(2px 4px 0px #000);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: handBounce 1.2s infinite ease-in-out;
+}
+
+.tutorial-hand .hand-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 45px;
+  height: 45px;
+  border: 2px solid var(--crt-glow);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sonar-ping 1.5s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: none;
+}
+
+@keyframes handBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.1); }
+}
+
+/* Caja de diálogo del tutorial */
+.tutorial-box {
+  position: relative;
+  z-index: 9990;
+  pointer-events: auto;
+  width: 90%;
+  max-width: 580px;
+  background: rgba(8, 12, 20, 0.96);
+  border: 2px solid var(--crt-glow);
+  box-shadow: 0 0 25px var(--crt-glow-dim), 0 12px 35px rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--font-terminal);
+  color: #fff;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tutorial-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--crt-glow-dim);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.tutorial-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--crt-glow);
+  letter-spacing: 1px;
+}
+
+.tutorial-step {
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--crt-glow);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.tutorial-body {
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: #e0e0e0;
+  margin-bottom: 16px;
+  min-height: 52px;
+}
+
+.tutorial-body strong {
+  color: var(--crt-blue);
+  font-weight: 700;
+}
+
+.tutorial-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tut-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.tut-btn {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1.5px solid var(--crt-blue);
+  color: var(--crt-blue);
+  font-family: var(--font-terminal);
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tut-btn:hover {
+  background: var(--crt-blue);
+  color: #000;
+  box-shadow: 0 0 12px var(--crt-blue-glow);
+}
+
+.tut-btn-next {
+  background: var(--crt-glow);
+  border-color: var(--crt-glow);
+  color: #000;
+}
+
+.tut-btn-next:hover {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.tut-btn-skip {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #aaa;
+}
+
+.tut-btn-skip:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-color: #fff;
 }
 
 /*=============================================================================
