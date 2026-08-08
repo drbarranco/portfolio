@@ -873,18 +873,34 @@
   // SISTEMA DE ZOOM & ENFOQUE
   // ===========================================================================
 
-  // Función para adaptar la intensidad del zoom según la pantalla (Tablets y Móviles)
-  function getResponsiveZoomScale(baseScale) {
+  // Función para adaptar la intensidad del zoom en Tablets y Móviles sin desbordamientos
+  function getResponsiveZoom(hotspotId) {
+    const config = zoomSettings[hotspotId];
+    if (!config) return { scale: 1, x: 0, y: 0 };
+
     const w = window.innerWidth;
     const h = window.innerHeight;
 
-    if (w <= 600 || h <= 500) {
-      return 1 + (baseScale - 1) * 0.40; // Reducción de escala para smartphones
+    // Detectar pantallas táctiles, tablets (hasta 1366px) o dimensiones reducidas
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isTablet = w <= 1366 || isTouchDevice;
+    const isMobile = w <= 600 || h <= 500;
+
+    let targetScale = config.scale;
+
+    if (isMobile) {
+      // Teléfonos móviles: tope máximo estricto de zoom de 1.25x
+      targetScale = Math.min(1 + (config.scale - 1) * 0.22, 1.25);
+    } else if (isTablet) {
+      // Tablets (iPad, Galaxy Tab, Surface, etc.): tope máximo estricto de zoom de 1.38x
+      targetScale = Math.min(1 + (config.scale - 1) * 0.35, 1.38);
     }
-    if (w <= 1024 || h <= 768) {
-      return 1 + (baseScale - 1) * 0.60; // Reducción de escala para tablets
-    }
-    return baseScale;
+
+    const ratio = config.scale > 1 ? (targetScale - 1) / (config.scale - 1) : 1;
+    const targetX = Math.round(config.x * ratio);
+    const targetY = Math.round(config.y * ratio);
+
+    return { scale: targetScale, x: targetX, y: targetY };
   }
 
   function applyZoom(hotspotId) {
@@ -894,24 +910,19 @@
 
     if (!roomWrapper || !btnZoomOut || !gameViewport) return;
 
-    const config = zoomSettings[hotspotId];
-    if (!config) return;
-
     gameState.activeZoom = hotspotId;
     playSound("snd-zoom");
 
-    // Calcular escala y desplazamiento adaptados al tamaño de pantalla
-    const scaleFactor = getResponsiveZoomScale(config.scale);
-    const ratio = config.scale > 1 ? (scaleFactor - 1) / (config.scale - 1) : 1;
-    const adjustedX = Math.round(config.x * ratio);
-    const adjustedY = Math.round(config.y * ratio);
+    // Calcular escala y traslación responsivas ajustadas
+    const zoom = getResponsiveZoom(hotspotId);
 
     // Aplicar transformación y añadir clase zoomed-in
-    roomWrapper.style.transform = `scale(${scaleFactor}) translate(${adjustedX}px, ${adjustedY}px)`;
+    roomWrapper.style.transform = `scale(${zoom.scale}) translate(${zoom.x}px, ${zoom.y}px)`;
     gameViewport.classList.add("zoomed-in");
     
     // Ocultar HUD general
-    document.getElementById("hud-action-text").textContent = "";
+    const hudActionText = document.getElementById("hud-action-text");
+    if (hudActionText) hudActionText.textContent = "";
 
     // Mostrar botón de volver
     btnZoomOut.classList.add("active");
@@ -933,7 +944,7 @@
     if (projKey) {
       setTimeout(() => {
         openDialoguePanel(projKey);
-      }, 500);
+      }, 400);
     }
   }
 
