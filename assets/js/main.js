@@ -163,10 +163,10 @@
       ],
       "hot-raspberry": [
         "A systems prototype. If I touch this wire, everything crashes.",
+        "Single-node cluster. Technically it's Hadoop. Chews through Kaggle datasets at night.",
         "A red LED is blinking. It's probably fine... hopefully.",
-        "Real systems automation. This is where it all started.",
-        "Do you smell that? The sweet scent of processing power running at 80°C.",
-        "Single-node cluster. Technically it's Hadoop. Chews through Kaggle datasets at night."
+        "Real hardware administration. This is where it all started.",
+        "Do you smell that? The sweet scent of processing power running at 80°C."
       ],
       "hot-puerta": [
         "It's my 'life.log' file. My routine's main loop.",
@@ -178,9 +178,9 @@
       "hot-poster": [
         "Tenerife poster. The island of Mount Teide and eternal summer.",
         "Reminds me of the hike I did to climb to the top of Mount Teide.",
-        "Tenerife is beautiful, but there are no olive trees to harvest like back in my hometown, Linares.",
-        "Even though the poster is of the Canary Islands, my heart is split between Linares and Granada.",
-        "Did you know Mount Teide is the third tallest volcanic structure in the world?"
+        "Tenerife is beautiful, all it needs is serving great tapas like back in my hometown.",
+        "Spain's highest mountain (3718 m) right next to the world's largest ocean. An inspiring place.",
+        "Did you know Mount Teide is the third tallest volcanic structure in the world from its base?"
       ],
       "hot-planta": [
         "Surprisingly, it's still alive.",
@@ -190,18 +190,18 @@
         "Green leaves, green code... everything compiles in harmony."
       ],
       "hot-pizza": [
-        "Object pizza = null;",
         "Error 404: Pizza not found. Only crusts left.",
+        "Object pizza = null;",
+        "Pineapple on pizza is an unhandled RuntimeException.",
         "Local variable: pizza = null; debugging a beer...",
-        "The official fuel of the midnight developer.",
-        "Pineapple on pizza is an unhandled RuntimeException."
+        "The official fuel of the midnight developer."
       ],
       "hot-c3po": [
-        "Tonight I'm meeting Claude and Gemini for a few tokens on Antigravity to swap compilation war stories.",
+        "Tonight I'm meeting Claude and Gemini for a few tokens to swap compilation war stories.",
         "Fluent in over six million forms of communication, and I still don't understand this script!",
-        "The odds of compiling this commit on the first try are 3,720 to one!",
+        "Oh my heavens!\nNullPointerException! We are doomed!",
         "R2-D2 insists we should use Python, but I am more of a traditional Java droid.",
-        "Oh my! A NullPointerException! We are doomed!"
+        "The odds of compiling this commit on the first try are 3,720 to one!"
       ],
       "hot-avion": [
         "Ready for takeoff to the cloud. Non-stop flight with zero downtime.",
@@ -218,16 +218,16 @@
         "Found a 512 MB pendrive with a README.txt that says 'IMPORTANT - DO NOT DELETE'. I deleted it."
       ],
       "hot-tux": [
+        "Tux has been guarding the kernel since 1991. More loyal than a golden retriever.",
         "sudo su - root. I am now the master of the system.",
-        "chmod 777 everything. Production server can wait.",
         "apt-get install beer. Package not found. Compiling from source...",
-        "On Kali Linux I boot as root by default. Living dangerously.",
-        "Tux has been guarding the kernel since 1991. More loyal than a golden retriever."
+        "chmod 777 everything. Production server can wait.",
+        "On Kali Linux I boot as root by default. Living dangerously."
       ],
       "hot-rollo": [
-        "My motto: if it works... don't touch it.",
+        "If it works, better not touch it.",
         "DON'T TOUCH IT!!",
-        "Great. Now it's broken. $ git pull origin main"
+        "Great. Now it's broken. \n$ git restore ."
       ]
     }
   };
@@ -1154,7 +1154,7 @@
         { top: "93.1%", left: "18.6%", icon: "💼" }  // Dossier CV
       ],
       textEs: "En la <strong>Pizarra</strong> y en la <strong>Estantería</strong> encontrarás mi trayectoria profesional, mi stack tecnológico completo y la opción de <strong>descargar mi CV en PDF</strong> en el <strong>Cuarderno</strong>",
-      textEn: "On the <strong>Blackboard</strong> and <strong>Shelves</strong> you will find my professional background, full technical stack, and the option to <strong>download my CV as PDF</strong>."
+      textEn: "On the <strong>Blackboard</strong> and <strong>Shelves</strong> you will find my professional background, full technical stack, and the option to <strong>download my CV as PDF</strong> in the <strong>Notebook</strong>"
     },
     {
       hands: [
