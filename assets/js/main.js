@@ -443,7 +443,7 @@
           choices: [
             { text: "📧 Enviar correo electrónico (drbarrancodev@gmail.com)", action: "link", url: "mailto:drbarrancodev@gmail.com" },
             { text: "🔗 Visitar perfil de LinkedIn", action: "link", url: "https://www.linkedin.com/in/drbarranco/" },
-            { text: "🐙 Examinar código en GitHub", action: "link", url: "https://github.com/drbarranco" },
+            //{ text: "🐙 Examinar código en GitHub", action: "link", url: "https://github.com/drbarranco" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
         }
@@ -1134,8 +1134,8 @@
       hands: [
         { top: "33.5%", left: "53.2%", icon: "👉" }
       ],
-      textEs: "¡Bienvenido al despacho interactivo! Este portfolio funciona como una <strong>aventura gráfica retro</strong>. Cada objeto con una <strong>baliza de sonar o brillo</strong> es interactivo.",
-      textEn: "Welcome to the interactive office! This portfolio works like a <strong>retro graphic adventure</strong>. Every object with a <strong>sonar beacon or glow</strong> is interactive."
+      textEs: "¡Bienvenido! Estás en mi <strong>despacho virtual de desarrollo</strong>. Para descubrir mi trabajo, simplemente explora y haz clic en los objetos con <strong>baliza de sonar o destello</strong>.",
+      textEn: "Welcome! You are in my <strong>virtual development office</strong>. To discover my work, simply explore and click on any object with a <strong>sonar beacon or glow</strong>."
     },
     {
       hands: [
@@ -1170,7 +1170,7 @@
         { top: "15.5%", left: "41.5%", icon: "✈️" }, // Avión
         { top: "83.5%", left: "56.6%", icon: "🍕" }  // Pizza
       ],
-      textEs: "El resto de objetos (<strong>Tux, C-3PO, el avión, la pizza...</strong>) son puro atrezzo decorativo. No abren proyectos, sino que dirán tonterías, frases geek y algún chascarrillo",
+      textEs: "El resto de objetos (<strong>Tux, C-3PO, el avión, la pizza...</strong>) son puro atrezzo decorativo. No abren proyectos, sino que dirán tonterías, frases geek y alguna frikada random.",
       textEn: "The rest of the objects (<strong>Tux, C-3PO, the airplane, pizza...</strong>) are just prop items. They don't open projects; they say geeky jokes and fun nonsense when clicked."
     }
   ];
