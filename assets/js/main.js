@@ -1529,6 +1529,12 @@
       });
     }
 
+    if (btnTutSkip) {
+      btnTutSkip.addEventListener("click", () => {
+        closeTutorial();
+      });
+    }
+
     // Recalcular zoom responsivo en cambio de tamaño o giro de pantalla
     window.addEventListener("resize", () => {
       if (gameState.activeZoom) {
@@ -1537,8 +1543,14 @@
     });
 
     if (btnLight) {
-      btnLight.addEventListener("click", () => {
-        document.body.classList.toggle("ambient-night");
+      btnLight.addEventListener("click", function() {
+        const isWarm = document.body.classList.toggle("ambient-night");
+        if (isWarm) {
+          this.classList.add("active");
+        } else {
+          this.classList.remove("active");
+        }
+        this.blur();
         playSound("snd-click");
       });
     }
