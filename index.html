@@ -86,7 +86,7 @@
 
     <!-- ESCENARIO DE LA HABITACIÓN (CON SOPORTE DE ZOOM Y BALIZAS DE PRECISIÓN) -->
     <div class="room-wrapper" id="room-wrapper">
-      <img src="assets/img/retro_room.jpg" class="room-bg" alt="Despacho de Daniel">
+      <img src="assets/img/retro_room.jpg" class="room-bg" alt="Despacho de Daniel" draggable="false">
 
       <!-- CAPA DE HOTSPOTS INTERACTIVOS (SVG EN 1024x576 CON AJUSTE DINÁMICO) -->
       <svg class="hotspot-svg" viewBox="0 0 1024 576" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,9 +107,9 @@
         <polygon id="hot-ventana" class="hotspot" points="760,51 1000,51 1000,291 760,291"
           data-label="es: → Contemplar vistas de la costa | en: → Admire coast views" />
 
-        <!-- Ordenador principal (TimeLink) -->
+        <!-- Ordenador principal (OkTimeDesk) -->
         <polygon id="hot-pc" class="hotspot" points="380,146 710,146 710,241 380,241"
-          data-label="es: → Auditar pantallas de desarrollo (TimeLink) | en: → Audit developer monitors (TimeLink)" />
+          data-label="es: → Auditar pantallas de desarrollo (OkTimeDesk) | en: → Audit developer monitors (OkTimeDesk)" />
 
         <!-- Móvil (GoToPádel) -->
         <polygon id="hot-movil" class="hotspot" points="615,261 685,261 685,311 615,311"
@@ -178,7 +178,6 @@
       </svg>
 
       <!-- BALIZAS PULSANTES DE PRECISIÓN (ELEMENTOS HTML RELATIVOS) -->
-      <div class="hotspot-beacon" style="left: 3.9%; top: 25.4%;" data-target="hot-puerta"></div>
       <div class="hotspot-beacon" style="left: 34.2%; top: 28.0%;" data-target="hot-pizarra"></div>
       <div class="hotspot-beacon" style="left: 17.8%; top: 49.7%;" data-target="hot-arcade"></div>
       <div class="hotspot-beacon" style="left: 53.2%; top: 33.5%;" data-target="hot-pc"></div>
@@ -194,7 +193,6 @@
       <div class="hotspot-beacon" style="left: 19.2%; top: 18.0%;" data-target="hot-planta"></div>
       <div class="hotspot-beacon" style="left: 56.6%; top: 83.5%;" data-target="hot-pizza"></div>
       <div class="hotspot-beacon" style="left: 77.0%; top: 86.0%;" data-target="hot-c3po"></div>
-      <div class="hotspot-beacon" style="left: 41.5%; top: 15.5%;" data-target="hot-avion"></div>
       <div class="hotspot-beacon" style="left: 64.7%; top: 72.0%;" data-target="hot-cajon"></div>
       <div class="hotspot-beacon" style="left: 3.5%; top: 42.0%;" data-target="hot-tux"></div>
       <div class="hotspot-beacon" style="left: 40.5%; top: 91.0%;" data-target="hot-rollo"></div>
@@ -323,8 +321,8 @@
         <section class="mb-4">
           <h3 data-i18n="projects_title">Proyectos Destacados</h3>
           <ul style="list-style: square; padding-left: 20px;">
-            <li><strong>TimeLink:</strong> SaaS Laravel de control horario y Stripe. <a
-                href="portfolio-details.html?id=timelink" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>
+            <li><strong>OkTimeDesk:</strong> App de escritorio (Tauri v2 + Supabase) de control horario y presencia. <a
+                href="portfolio-details.html?id=oktimedesk" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>
             </li>
             <li><strong>GoToPádel:</strong> Ecosistema Spring Boot API y Android App. <a
                 href="portfolio-details.html?id=gotopadel" style="color: var(--crt-glow);">[ Ver Caso de Estudio ]</a>

@@ -49,185 +49,97 @@
   // Frases de humor (Easter eggs) para clics normales (5 frases secuenciales por hotspot)
   const speechBubbleDB = {
     es: {
-      "hot-taza": [
-        "Nivel de cafeína: peligrosamente bajo.",
-        "Está caliente. Al menos no se ha congelado todavía.",
-        "Café frío, el mejor amigo del programador despistado.",
-        "Ley de la termodinámica: el café se enfría a la velocidad a la que compila el código.",
-        "Un sorbo más y podré hablar con las máquinas directamente."
-      ],
       "hot-taza-mesa": [
-        "Café de la tarde. Recién servido y humeante.",
-        "La cafeína principal para aguantar la sesión de depuración.",
-        "Si la taza está cerca del teclado, el riesgo de accidente se multiplica por dos.",
-        "Café recién hecho. El verdadero combustible del backend.",
-        "Temperatura óptima para picar código."
+        "Mantener fuera del alcance del ratón",
+        "3 líneas de código = café frío"
       ],
       "hot-ventana": [
-        "Precioso atardecer en la costa. Se respira calma.",
-        "Está atardeciendo. El clima ideal para picar código.",
-        "Me encantan las vistas de Tenerife desde la ventana.",
-        "¿Eso que se ve ahí fuera es 'la nube' de la que todo el mundo habla?",
-        "Dicen que hay un mundo exterior ahí fuera, pero la resolución de mi pantalla es mejor."
+        "¿Eso de ahí fuera es 'la nube' de la que todo el mundo habla?",
+        "Vistas increíbles, pero el código no se va a picar solo"
       ],
       "hot-raspberry": [
-        "Un prototipo de sistemas. Si toco este cable se cae todo.",
-        "Cluster de un nodo. Técnicamente es Hadoop. Por las noches digiere datasets de Kaggle.",
-        "Parpadea un LED rojo. Probablemente no sea nada grave... espero.",
-        "Administración de hardware real. Aquí empezó todo.",
-        "¿Hueles eso? Es el dulce aroma de la potencia de cálculo a 80 grados."        
-      ],
-      "hot-puerta": [
-        "Es mi archivo 'vida.log'. El bucle principal de mi rutina.",
-        "'estudiar, trabajar, café, depurar, repetir...' Un bucle while infinito.",
-        "El log indica que hoy he consumido más cafeína de lo recomendado por la CPU.",
-        "Aquí registro mis hitos y lecciones como desarrollador autodidacta.",
-        "vida.log: Sin errores graves detectados en el hilo de ejecución principal."
+        "Un cluster con Hadoop, por las noches digiere datasets de Kaggle",
+        "Parpadea un led rojo, seguro que no es nada grave, espero..."
       ],
       "hot-poster": [
-        "Un póster de Tenerife. La isla del Teide y el eterno verano.",
-        "Me recuerda la caminata que me pegué para subir al Teide.",
-        "Muy bonito Tenerife, sólo faltaría que pusieran buenas tapas como en mi tierra",
-        "La montaña más alta de España (3718 m) junto al océano más grande del mundo. Un lugar para inspirarse.",
-        "¿Sabías que el Teide es el tercer volcán más alto del mundo desde su base?"
+        "Tenerife, el Teide y el océano: un lugar para inspirarse",
+        "Bonito lugar para vivir, lo malo que no ponen tapas",
+        "Llegar a la cumbre o depurar una RuntimeException: no sé qué cansa más"
       ],
       "hot-planta": [
-        "Sorprendentemente sigue viva.",
-        "Sí ahora la riego, espera que estoy haciendo un commit.",
-        "Le programé un sensor de humedad, pero olvidé conectarlo a la base de datos.",
-        "Se alimenta de luz artificial, café evaporado y quejas sobre JavaScript.",
-        "Hojas verdes, código verde... todo compila en armonía."
+        "Sorprendentemente sigue viva",
+        "Se alimenta de luz artificial y quejas sobre JavaScript"
       ],
       "hot-pizza": [
-        "Error 404: Pizza no encontrada. Solo quedan los bordes.",
-        "Object pizza = null;",  
-        "La piña en la pizza es una excepción no controlada (RuntimeException).",      
-        "Variable local: pizza = null; depurando una cerveza...",
-        "El combustible oficial del programador nocturno."        
+        "Error 404: Pizza no encontrada. Solo quedan los bordes",
+        "La piña en la pizza es una excepción no controlada (RuntimeException)",
+        "Object pizza = null; depurando una cerveza..."
       ],
       "hot-c3po": [
-        "Esta noche me voy con Claude y Gemini a echarnos unos tokens y contarles mis batallas de compilación.",
-        "Fluido en más de seis millones de formas de comunicación, ¡y sigo sin entender este script!",
+        "¿R2-D2? Se fue por ahí con Claude a echar unos tokens",
         "¡Por todos los cielos!\n¡NullPointerException! ¡Estamos perdidos!",
-        "R2-D2 insiste en que deberíamos usar Python, pero yo soy más de Java tradicional.",
-        "Las posibilidades de compilar este commit a la primera son de 3.720 contra una."               
-      ],
-      "hot-avion": [
-        "Listos para el despegue hacia la nube. Sin escalas y con cero downtime.",
-        "Checklist de pre-vuelo: tests unitarios pasados, contenedores listos y café en la taza.",
-        "Volando alto sobre la nube. O sobre servidores en producción, según cómo lo mires.",
-        "Atravesando turbulencias. Nada que un buen sistema de reintentos y rollback no pueda solucionar.",
-        "Velocidad de crucero alcanzada. Siguiente escala: tu equipo de desarrollo."
+        "¿Tu primer despliegue? Que la Fuerza te acompañe..."
       ],
       "hot-cajon": [
-        "Cajones llenos de cables enredados, móviles viejos y cargadores de Nokia.",
-        "¿Buscas un cable HDMI? Al fondo a la derecha, debajo de tres adaptadores VGA.",
-        "Vete tú a saber qué hay aquí dentro... creo que acabo de tocar un euroconector de 1998.",
-        "Ley de los cajones: si necesitas un cable específico, tendrás todos los existentes excepto ese.",
-        "He encontrado un pendrive de 512 MB con un README.txt que dice 'IMPORTANTE - NO BORRAR'. Lo he borrado."
+        "Cajones llenos de cables enredados, móviles viejos y cargadores de Nokia",
+        "Si vas a buscar un cable, seguro que hay de todos menos ese"
       ],
       "hot-tux": [
-        "Tux lleva desde 1991 guardando el kernel. Más leal que un golden retriever.",
-        "sudo su - root. Ya soy el amo del sistema.",
-        "apt-get install cerveza. Paquete no encontrado. Compilando desde fuentes...",
-        "chmod 777 todo. El servidor de producción puede esperar.",        
-        "En Kali entro como root por defecto. Hay que vivir peligrosamente."        
+        "Tux lleva desde 1991 guardando el kernel. Más leal que un golden retriever",
+        "sudo su - root. Ya soy el amo del sistema",
+        "apt-get install cerveza. Paquete no encontrado. Compilando desde fuentes..."
       ],
       "hot-rollo": [
-        "Si funciona, mejor no tocarlo." ,
-        "¡¡NO LO TOQUES!!",
-        "Ala. Ya se ha roto. \n$ git restore ."
+        "Si algo funciona, mejor no tocarlo",
+        "Ya se ha roto. \n$ git restore .",
+        "El plano maestro del proyecto... o la lista de la compra, no me acuerdo"
       ]
     },
     en: {
-      "hot-taza": [
-        "Caffeine level: dangerously low.",
-        "It's hot. At least it hasn't frozen yet.",
-        "Cold coffee: the distracted programmer's signature drink.",
-        "Thermodynamics law: coffee cools down at the speed of compilation.",
-        "One more sip and I'll be speaking directly to the machine."
-      ],
       "hot-taza-mesa": [
-        "Afternoon coffee. Freshly poured and steaming.",
-        "Main caffeine supply to handle the debugging session.",
-        "If the cup is near the keyboard, disaster risk doubles.",
-        "Freshly brewed coffee. The true backend fuel.",
-        "Optimal temperature for coding."
+        "Keep out of mouse reach",
+        "3 lines of code = cold coffee"
       ],
       "hot-ventana": [
-        "Beautiful sunset on the coast. Pure peace.",
-        "Sunset. The perfect time to code.",
-        "I love the Tenerife views from the window.",
         "Is that cloud out there the 'cloud' everyone is talking about?",
-        "They say there is a real world out there, but my screen resolution is better."
+        "Incredible views, but this code won't write itself"
       ],
       "hot-raspberry": [
-        "A systems prototype. If I touch this wire, everything crashes.",
-        "Single-node cluster. Technically it's Hadoop. Chews through Kaggle datasets at night.",
-        "A red LED is blinking. It's probably fine... hopefully.",
-        "Real hardware administration. This is where it all started.",
-        "Do you smell that? The sweet scent of processing power running at 80°C."
-      ],
-      "hot-puerta": [
-        "It's my 'life.log' file. My routine's main loop.",
-        "'study, work, coffee, debug, repeat...' An infinite while loop.",
-        "The log shows I consumed more caffeine today than recommended by the CPU.",
-        "This is where I log my milestones and lessons as a self-taught developer.",
-        "life.log: No fatal errors detected in the main execution thread."
+        "A cluster running Hadoop, chewing through Kaggle datasets at night",
+        "A red LED is blinking... surely nothing serious, I hope..."
       ],
       "hot-poster": [
-        "Tenerife poster. The island of Mount Teide and eternal summer.",
-        "Reminds me of the hike I did to climb to the top of Mount Teide.",
-        "Tenerife is beautiful, all it needs is serving great tapas like back in my hometown.",
-        "Spain's highest mountain (3718 m) right next to the world's largest ocean. An inspiring place.",
-        "Did you know Mount Teide is the third tallest volcanic structure in the world from its base?"
+        "Tenerife, Mount Teide and the ocean: an inspiring place",
+        "Nice place to live, too bad they don't serve tapas like back home",
+        "Reaching the summit or debugging a RuntimeException: not sure which is harder"
       ],
       "hot-planta": [
-        "Surprisingly, it's still alive.",
-        "Yes, I'll water it now, wait, I'm making a commit.",
-        "I programmed a soil moisture sensor, but forgot to hook it to the database.",
-        "It feeds on artificial light, evaporated coffee, and JavaScript complaints.",
-        "Green leaves, green code... everything compiles in harmony."
+        "Surprisingly, it's still alive",
+        "It feeds on artificial light and JavaScript complaints"
       ],
       "hot-pizza": [
-        "Error 404: Pizza not found. Only crusts left.",
-        "Object pizza = null;",
-        "Pineapple on pizza is an unhandled RuntimeException.",
-        "Local variable: pizza = null; debugging a beer...",
-        "The official fuel of the midnight developer."
+        "Error 404: Pizza not found. Only crusts left",
+        "Pineapple on pizza is an unhandled RuntimeException",
+        "Object pizza = null; debugging a beer..."
       ],
       "hot-c3po": [
-        "Tonight I'm meeting Claude and Gemini for a few tokens to swap compilation war stories.",
-        "Fluent in over six million forms of communication, and I still don't understand this script!",
+        "R2-D2? He went off with Claude to burn a few tokens",
         "Oh my heavens!\nNullPointerException! We are doomed!",
-        "R2-D2 insists we should use Python, but I am more of a traditional Java droid.",
-        "The odds of compiling this commit on the first try are 3,720 to one!"
-      ],
-      "hot-avion": [
-        "Ready for takeoff to the cloud. Non-stop flight with zero downtime.",
-        "Pre-flight checklist: unit tests passed, containers ready, and coffee in the mug.",
-        "Flying high above the cloud. Or production servers, depending on how you look at it.",
-        "Navigating turbulence. Nothing a solid retry policy and rollback plan can't fix.",
-        "Cruising altitude reached. Next stop: your engineering team."
+        "Your first deployment? May the Force be with you..."
       ],
       "hot-cajon": [
-        "Drawers full of tangled cables, old mobile phones, and ancient Nokia chargers.",
-        "Looking for an HDMI cable? Way in the back on the right, under three VGA adapters.",
-        "Who knows what's in here... I think I just touched a SCART cable from 1998.",
-        "Law of drawers: if you need a specific cable, you will have every existing cable except that one.",
-        "Found a 512 MB pendrive with a README.txt that says 'IMPORTANT - DO NOT DELETE'. I deleted it."
+        "Drawers full of tangled cables, old phones, and Nokia chargers",
+        "If you look for a cable, you will definitely find every one except that one"
       ],
       "hot-tux": [
-        "Tux has been guarding the kernel since 1991. More loyal than a golden retriever.",
-        "sudo su - root. I am now the master of the system.",
-        "apt-get install beer. Package not found. Compiling from source...",
-        "chmod 777 everything. Production server can wait.",
-        "On Kali Linux I boot as root by default. Living dangerously."
+        "Tux has been guarding the kernel since 1991. More loyal than a golden retriever",
+        "sudo su - root. I am now the master of the system",
+        "apt-get install beer. Package not found. Compiling from source..."
       ],
       "hot-rollo": [
-        "If it works, better not touch it.",
-        "DON'T TOUCH IT!!",
-        "Great. Now it's broken. \n$ git restore ."
+        "If it works, better not touch it",
+        "Great, it's broken. \n$ git restore .",
+        "Master project blueprint... or the grocery list, can't remember"
       ]
     }
   };
@@ -235,32 +147,32 @@
   // Árboles de conversación interactivos (Diálogos)
   const dialogueDB = {
     es: {
-      timelink: {
+      oktimedesk: {
         root: {
-          speech: "Entorno local: SaaS de control horario 'TimeLink'. ¿Qué deseas inspeccionar?",
+          speech: "Entorno de desarrollo: Aplicación de escritorio 'OkTimeDesk' (Tauri v2 + Supabase). ¿Qué deseas auditar?",
           choices: [
-            { text: "1. ¿Qué problema resuelve este producto?", next: "problem" },
+            { text: "1. ¿Qué problema resuelve esta app?", next: "problem" },
             { text: "2. Explícame la arquitectura técnica.", next: "architecture" },
-            { text: "3. Formato de respuesta JSON de la API.", next: "api" },
-            { text: "4. [Abrir demostración en producción]", action: "link", url: "https://timelink-bootstrap.onrender.com" },
+            { text: "3. ¿Cuáles fueron los mayores desafíos técnicos?", next: "challenges" },
+            { text: "4. [Ver caso de estudio detallado]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
             { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
         },
         problem: {
-          speech: "TimeLink resuelve el control de jornada para pymes. Permite registros legales simplificados y móviles para operarios externos, automatizando cobros con Stripe sin gestiones manuales.",
+          speech: "Resuelve el control horario y de presencia laboral para empresas con múltiples centros. Ofrece un modo kiosko táctil con PIN para empleados, gestión de cuadrantes de turnos y generación de informes oficiales de inspección de trabajo",
           choices: [
             { text: "[ <- Volver al ordenador ]", next: "root" }
           ]
         },
         architecture: {
-          speech: "Desarrollado en Laravel (PHP) con Bootstrap/JS. Desplegado mediante contenedores Docker aislados en Render.com (Apache, MySQL, PHP-FPM) para garantizar consistencia lógica.",
+          speech: "App de escritorio ultra ligera desarrollada con Tauri v2 (Rust) y frontend en React 19 con TypeScript y Tailwind CSS. Base de datos PostgreSQL en tiempo real con Supabase y auto-actualizaciones firmadas con Minisign",
           choices: [
             { text: "[ <- Volver al ordenador ]", next: "root" }
           ]
         },
-        api: {
-          speech: "Expone endpoints internos asíncronos para fichajes en AJAX. Respuesta JSON típica al registrar fichaje:\n{\n  'status': 'success',\n  'message': 'Fichaje registrado',\n  'data': { 'user_id': 42, 'check_in': '2026-07-18 16:15:00' }\n}",
+        challenges: {
+          speech: "Implementar el pipeline de compilación y firma criptográfica para el auto-updater de Tauri, diseñar el modo kiosko con tolerancia a fallos de red (Dexie.js offline) y la integración de fichajes con terminales biométricos CrossChex",
           choices: [
             { text: "[ <- Volver al ordenador ]", next: "root" }
           ]
@@ -268,7 +180,7 @@
         switch_proj: {
           speech: "Selecciona el proyecto que deseas auditar en la terminal:",
           choices: [
-            { text: "[ Auditar TimeLink SaaS ]", next: "root" },
+            { text: "[ Auditar OkTimeDesk ]", next: "root" },
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
@@ -308,7 +220,7 @@
         switch_proj: {
           speech: "Selecciona el proyecto que deseas auditar en la terminal:",
           choices: [
-            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Auditar GoToPádel App ]", next: "root" },
             { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
@@ -328,19 +240,19 @@
           ]
         },
         problem: {
-          speech: "Los comercios a menudo pierden sus bases de datos locales (Firebird, MySQL) por cortes de luz. OKBackups automatiza la extracción, compresión y subida desasistida a Firebase Storage.",
+          speech: "Los comercios pierden sus bases de datos de TPV (Glop, Sysme, BDP) por averías o cortes de luz. OKBackups automatiza la extracción en caliente, compresión cifrada y subida desasistida a la nube",
           choices: [
             { text: "[ <- Volver al TPV ]", next: "root" }
           ]
         },
         architecture: {
-          speech: "Agente de bajo nivel desarrollado en Python, empaquetado a ejecutable Windows independiente (.exe) usando PyInstaller, corriendo como Windows Service nativo. Dashboard Flask.",
+          speech: "Agente en Python compilado a .exe independiente con PyInstaller. Se ejecuta desasistido como Tarea Programada de Windows (incluso tras apagones) y se monitoriza desde un panel central en Flask con semáforo de estado",
           choices: [
             { text: "[ <- Volver al TPV ]", next: "root" }
           ]
         },
         challenges: {
-          speech: "Soportar cortes de red en subidas de archivos pesados. Diseñé un algoritmo de reintentos exponencial con Backoff y fragmentación para reanudar subidas fallidas.",
+          speech: "Garantizar la subida en conexiones lentas de comercios y la extracción de datos sin detener la venta (hot backup en Firebird, MySQL y SQL Server), además de rotar copias locales para no llenar el disco",
           choices: [
             { text: "[ <- Volver al TPV ]", next: "root" }
           ]
@@ -348,7 +260,7 @@
         switch_proj: {
           speech: "Selecciona el proyecto que deseas auditar en la terminal:",
           choices: [
-            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Auditar OKBackups Systems ]", next: "root" },
             { text: "[ Auditar MailReply AI ]", action: "switch", project: "mailreply" }
@@ -471,7 +383,7 @@
           ]
         },
         saas: {
-          speech: "Diseño, implementación y puesta en marcha de aplicaciones de control horario (TimeLink) y gestión de pistas deportivas (GoToPádel) para clientes autónomos reales.",
+          speech: "Diseño, implementación y puesta en marcha de aplicaciones de control horario (OkTimeDesk) y gestión de pistas deportivas (GoToPádel) para clientes autónomos reales.",
           choices: [
             { text: "[ <- Volver a la experiencia ]", next: "root" }
           ]
@@ -533,7 +445,7 @@
         switch_proj: {
           speech: "Selecciona el proyecto que deseas auditar en la terminal:",
           choices: [
-            { text: "[ Auditar TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Auditar OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Auditar GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Auditar OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Auditar MailReply AI ]", next: "root" }
@@ -549,32 +461,32 @@
       }
     },
     en: {
-      timelink: {
+      oktimedesk: {
         root: {
-          speech: "Local environment: TimeLink time-tracking SaaS. What do you want to inspect?",
+          speech: "Development environment: 'OkTimeDesk' desktop application (Tauri v2 + Supabase). What do you want to inspect?",
           choices: [
-            { text: "1. What problem does this product solve?", next: "problem" },
+            { text: "1. What problem does this application solve?", next: "problem" },
             { text: "2. Tell me about the technical architecture.", next: "architecture" },
-            { text: "3. JSON API response format.", next: "api" },
-            { text: "4. [Open production live demo]", action: "link", url: "https://timelink-bootstrap.onrender.com" },
+            { text: "3. What were the key technical challenges?", next: "challenges" },
+            { text: "4. [View detailed case study]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
             { text: "5. Switch to another software project.", next: "switch_proj" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
         },
         problem: {
-          speech: "TimeLink automates employee clock-ins for SMEs. It provides legally compliant mobile tracking for remote workforces, automating card billing with Stripe without manual interactions.",
+          speech: "Solves employee time tracking and workforce presence for multi-location companies. Features a touch kiosk mode with employee PIN, shift quadrant planning, and legal labor inspection report generation",
           choices: [
             { text: "[ <- Back to computer ]", next: "root" }
           ]
         },
         architecture: {
-          speech: "Developed in Laravel (PHP) with Bootstrap/JS. Deployed via Docker containers on Render.com (Apache, MySQL, PHP-FPM) to secure development environments.",
+          speech: "Ultra-lightweight desktop app built with Tauri v2 (Rust) and React 19 frontend with TypeScript and Tailwind CSS. Realtime PostgreSQL backend via Supabase and Minisign-signed auto-updates",
           choices: [
             { text: "[ <- Back to computer ]", next: "root" }
           ]
         },
-        api: {
-          speech: "Exposes internal async endpoints for quick AJAX clock-ins. Typical JSON response when checking in:\n{\n  'status': 'success',\n  'message': 'Check-in logged',\n  'data': { 'user_id': 42, 'check_in': '2026-07-18 16:15:00' }\n}",
+        challenges: {
+          speech: "Implementing cryptographic build and signing pipelines for Tauri's auto-updater, designing offline-resilient kiosk mode with Dexie.js, and integrating biometric sync with CrossChex time clocks",
           choices: [
             { text: "[ <- Back to computer ]", next: "root" }
           ]
@@ -582,7 +494,7 @@
         switch_proj: {
           speech: "Select the software project you want to audit in the terminal:",
           choices: [
-            { text: "[ Audit TimeLink SaaS ]", next: "root" },
+            { text: "[ Audit OkTimeDesk ]", next: "root" },
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
@@ -622,7 +534,7 @@
         switch_proj: {
           speech: "Select the software project you want to audit in the terminal:",
           choices: [
-            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Audit GoToPádel App ]", next: "root" },
             { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
@@ -642,19 +554,19 @@
           ]
         },
         problem: {
-          speech: "Local shops lose POS databases due to hardware failures or power cuts. OKBackups automates background extraction, compression, and secure uploads to Firebase Storage.",
+          speech: "Local shops lose POS databases (Glop, Sysme, BDP) due to hardware failures or power cuts. OKBackups automates hot extraction, encrypted compression, and unattended uploads to the cloud",
           choices: [
             { text: "[ <- Back to POS ]", next: "root" }
           ]
         },
         architecture: {
-          speech: "Low-level system agent written in Python, compiled to a standalone Windows executable (.exe) using PyInstaller, running as a native Windows Service. Flask monitor dashboard.",
+          speech: "Python agent compiled to a standalone .exe with PyInstaller. Runs unattended via Windows Task Scheduler (even after power outages) and is monitored through a central Flask dashboard with traffic-light status",
           choices: [
             { text: "[ <- Back to POS ]", next: "root" }
           ]
         },
         challenges: {
-          speech: "Supporting network dropouts during large file uploads. I designed an exponential backoff retry algorithm with file chunking to safely resume interrupted uploads.",
+          speech: "Ensuring reliable uploads over poor shop connections, performing hot backups without interrupting sales (Firebird, MySQL, SQL Server), and rotating local archives to prevent disk exhaustion",
           choices: [
             { text: "[ <- Back to POS ]", next: "root" }
           ]
@@ -662,7 +574,7 @@
         switch_proj: {
           speech: "Select the software project you want to audit in the terminal:",
           choices: [
-            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Audit OKBackups Systems ]", next: "root" },
             { text: "[ Audit MailReply AI ]", action: "switch", project: "mailreply" }
@@ -785,7 +697,7 @@
           ]
         },
         saas: {
-          speech: "Design, deployment, and operation of TimeLink (time-tracking app) and GoToPádel (court booking ecosystem) for real local clients.",
+          speech: "Design, deployment, and operation of OkTimeDesk (desktop time-tracking app) and GoToPádel (court booking ecosystem) for real local clients.",
           choices: [
             { text: "[ <- Back to experience ]", next: "root" }
           ]
@@ -847,7 +759,7 @@
         switch_proj: {
           speech: "Select the software project you want to audit in the terminal:",
           choices: [
-            { text: "[ Audit TimeLink SaaS ]", action: "switch", project: "timelink" },
+            { text: "[ Audit OkTimeDesk ]", action: "switch", project: "oktimedesk" },
             { text: "[ Audit GoToPádel App ]", action: "switch", project: "gotopadel" },
             { text: "[ Audit OKBackups Systems ]", action: "switch", project: "okbackups" },
             { text: "[ Audit MailReply AI ]", next: "root" }
@@ -932,7 +844,7 @@
 
     // Cargar diálogo interactivo correspondiente
     const projectKeys = {
-      "hot-pc": "timelink",
+      "hot-pc": "oktimedesk",
       "hot-movil": "gotopadel",
       "hot-tpv": "okbackups",
       "hot-estanteria": "estanteria",
@@ -984,7 +896,7 @@
     gameState.dialogueStep = "root";
 
     const speakers = {
-      timelink: "SYSTEM_STATUS_TIMELINK //",
+      oktimedesk: "SYSTEM_STATUS_OKTIMEDESK //",
       gotopadel: "SYSTEM_STATUS_GOTOPADEL //",
       okbackups: "SYSTEM_STATUS_OKBACKUPS //",
       curriculum: "CV_DOSSIER //",
@@ -1201,11 +1113,10 @@
       hands: [
         { top: "86.0%", left: "77.0%", icon: "🤖" }, // C-3PO
         { top: "42.0%", left: "3.5%", icon: "🐧" },  // Tux
-        { top: "15.5%", left: "41.5%", icon: "✈️" }, // Avión
         { top: "83.5%", left: "56.6%", icon: "🍕" }  // Pizza
       ],
-      textEs: "El resto de objetos (<strong>Tux, C-3PO, el avión, la pizza...</strong>) son puro atrezzo decorativo. No abren proyectos, sino que dirán tonterías, frases geek y alguna frikada random.",
-      textEn: "The rest of the objects (<strong>Tux, C-3PO, the airplane, pizza...</strong>) are just prop items. They don't open projects; they say geeky jokes and fun nonsense when clicked."
+      textEs: "El resto de objetos (<strong>Tux, C-3PO, la pizza...</strong>) son puro atrezzo decorativo. No abren proyectos, sino que dirán tonterías, frases geek y alguna frikada random.",
+      textEn: "The rest of the objects (<strong>Tux, C-3PO, pizza...</strong>) are just prop items. They don't open projects; they say geeky jokes and fun nonsense when clicked."
     }
   ];
 
@@ -1650,7 +1561,7 @@
       menuProj.addEventListener("click", () => {
         closeBottomMenu();
         resetZoom();
-        setTimeout(() => openDialoguePanel("timelink"), 200);
+        setTimeout(() => openDialoguePanel("oktimedesk"), 200);
       });
     }
 
