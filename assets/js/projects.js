@@ -22,7 +22,20 @@ const projects = {
     challenges: "1. **Compilación y Firma Criptográfica del Auto-Updater**: Configurar el flujo de distribución con Tauri v2 y Minisign, permitiendo generar instaladores NSIS firmados (`.sig`) y manifiestos `latest.json` servidos desde GitHub Releases con verificación criptográfica en el arranque.\n2. **Tolerancia a Caídas de Red y Modo Kiosko**: Garantizar que el modo kiosko de fichaje nunca se bloquee ante pérdidas de internet, almacenando temporalmente las marcas en Dexie.js (IndexedDB) y sincronizándolas automáticamente con Supabase al restablecer la conexión.\n3. **Generación e Integridad de Informes Legales**: Diseñar el motor de cálculo de jornadas efectivas e incidencias para emitir reportes mensuales oficiales en PDF conformes a la normativa de la Inspección de Trabajo.",
     challengesEn: "1. **Cryptographic Build & Auto-Updater Pipeline**: Configuring Tauri v2 distribution with Minisign, producing digitally signed NSIS installers (`.sig`) and `latest.json` manifests published to GitHub Releases with tamper-proof boot verification.\n2. **Offline Resilience & Kiosk Mode**: Ensuring the touch kiosk clock-in never fails during network dropouts by queuing stamps into Dexie.js (IndexedDB) and auto-reconciling with Supabase once reconnected.\n3. **Legal Compliance & PDF Report Engine**: Calculating effective working hours, overtime, and anomalies to generate official monthly inspection-ready PDF reports conforming to Spanish labor regulations.",
     images: [
-      "assets/img/projects/oktime_icon.png"
+      "assets/img/projects/oktimedesk1.JPG",
+      "assets/img/projects/oktimedesk2.JPG",
+      "assets/img/projects/oktimedesk3.JPG",
+      "assets/img/projects/oktimedesk4.JPG",
+      "assets/img/projects/oktimedesk5.JPG",
+      "assets/img/projects/oktimedesk6.JPG",
+      "assets/img/projects/oktimedesk7.JPG",
+      "assets/img/projects/oktimedesk8.JPG",
+      "assets/img/projects/oktimedesk9.JPG",
+      "assets/img/projects/oktimedesk10.JPG",
+      "assets/img/projects/oktimedesk11.JPG",
+      "assets/img/projects/oktimedesk12.JPG",
+      "assets/img/projects/oktimedesk13.JPG",
+      "assets/img/projects/oktimedesk14.JPG",
     ]
   },
   gotopadel: {
