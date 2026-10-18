@@ -870,14 +870,17 @@
 
     if (!roomWrapper || !btnZoomOut || !gameViewport) return;
 
+    if (gameState.activeZoom) {
+      playSound("snd-zoom");
+    }
     gameState.activeZoom = null;
     gameState.activeDialogueProject = null;
     gameState.dialogueStep = "root";
 
-    playSound("snd-zoom");
     roomWrapper.style.transform = "scale(1) translate(0, 0)";
     gameViewport.classList.remove("zoomed-in");
     btnZoomOut.classList.remove("active");
+    closeSpeechBubble();
     closeDialoguePanel();
   }
 
@@ -914,7 +917,10 @@
   }
 
   function closeDialoguePanel() {
+    if (window.typewriterInterval) clearInterval(window.typewriterInterval);
     if (diagPanel) diagPanel.classList.remove("active");
+    gameState.activeDialogueProject = null;
+    gameState.dialogueStep = "root";
   }
 
   function renderDialogueStep() {
@@ -979,8 +985,21 @@
 
   const speechBubble = document.getElementById("speech-bubble");
 
+  function closeSpeechBubble() {
+    if (speechBubble) {
+      speechBubble.classList.add("d-none");
+      speechBubble.textContent = "";
+    }
+    if (window.bubbleInterval) clearInterval(window.bubbleInterval);
+    if (window.bubbleTimeout) clearTimeout(window.bubbleTimeout);
+    gameState.activeBubble = false;
+  }
+
   function triggerSpeechBubble(hotspotId, clientX, clientY) {
     if (!speechBubble) return;
+
+    // Si había un diálogo interactivo de proyecto abierto, cerrarlo de inmediato
+    closeDialoguePanel();
 
     const lang = gameState.lang;
     const list = speechBubbleDB[lang][hotspotId];
@@ -1030,8 +1049,7 @@
         clearInterval(window.bubbleInterval);
         
         window.bubbleTimeout = setTimeout(() => {
-          speechBubble.classList.add("d-none");
-          gameState.activeBubble = false;
+          closeSpeechBubble();
         }, 3500);
       }
     }, 15);
@@ -1352,9 +1370,18 @@
 
       // Clic interactivo en los hotspots SVG de la habitación
       hot.addEventListener("click", function (e) {
-        if (gameState.activeZoom) return; // Bloquear clics paralelos
-
         const hotId = this.getAttribute("id");
+
+        if (gameState.activeZoom) {
+          if (gameState.activeZoom === hotId) {
+            // Clic sobre el mismo objeto ya enfocado: cerrar diálogo y salir de zoom
+            resetZoom();
+            return;
+          }
+          // Clic sobre otro marcador diferente: salir del zoom previo para abrir el nuevo
+          resetZoom();
+        }
+
         const currentIdx = gameState.clickIndices[hotId] || 0;
 
         if (zoomSettings[hotId]) {
@@ -1391,7 +1418,13 @@
 
       // Sincronizar click directo para disparar el zoom o globo de diálogo sin intermediarios
       beacon.addEventListener("click", (e) => {
-        if (gameState.activeZoom) return;
+        if (gameState.activeZoom) {
+          if (gameState.activeZoom === targetId) {
+            resetZoom();
+            return;
+          }
+          resetZoom();
+        }
         
         playSound("snd-click");
         const currentIdx = gameState.clickIndices[targetId] || 0;
@@ -1544,6 +1577,10 @@
     if (menuCv) {
       menuCv.addEventListener("click", () => {
         closeBottomMenu();
+        if (gameState.activeDialogueProject === "curriculum" && diagPanel && diagPanel.classList.contains("active")) {
+          closeDialoguePanel();
+          return;
+        }
         resetZoom();
         setTimeout(() => openDialoguePanel("curriculum"), 200);
       });
@@ -1552,6 +1589,10 @@
     if (menuExp) {
       menuExp.addEventListener("click", () => {
         closeBottomMenu();
+        if (gameState.activeDialogueProject === "experiencia" && diagPanel && diagPanel.classList.contains("active")) {
+          closeDialoguePanel();
+          return;
+        }
         resetZoom();
         setTimeout(() => openDialoguePanel("experiencia"), 200);
       });
@@ -1560,6 +1601,10 @@
     if (menuProj) {
       menuProj.addEventListener("click", () => {
         closeBottomMenu();
+        if (gameState.activeDialogueProject === "oktimedesk" && diagPanel && diagPanel.classList.contains("active")) {
+          closeDialoguePanel();
+          return;
+        }
         resetZoom();
         setTimeout(() => openDialoguePanel("oktimedesk"), 200);
       });
@@ -1594,6 +1639,54 @@
     if (btnZoomOut) {
       btnZoomOut.addEventListener("click", () => {
         resetZoom();
+      });
+    }
+
+    // Cerrar diálogo interactivo o globo de texto al hacer clic fuera donde no hay ningún otro marcador
+    document.addEventListener("click", (e) => {
+      const isDialogueOpen = diagPanel && diagPanel.classList.contains("active");
+      const isBubbleOpen = !!gameState.activeBubble;
+      const isZoomed = !!gameState.activeZoom;
+
+      if (!isDialogueOpen && !isBubbleOpen && !isZoomed) return;
+
+      // Si el clic fue dentro del propio panel de diálogo interactivo, permitir interacción normal con sus opciones
+      if (e.target.closest("#dialogue-panel")) return;
+
+      // Si el clic fue en un botón o control de la interfaz, ignorar
+      if (
+        e.target.closest("#btn-zoom-out") ||
+        e.target.closest(".bottom-menu-bar") ||
+        e.target.closest(".top-controls") ||
+        e.target.closest(".game-lang-selector") ||
+        e.target.closest("#tutorial-overlay") ||
+        e.target.closest("#modal-overlay")
+      ) {
+        return;
+      }
+
+      // Si el clic fue sobre un marcador (hotspot o baliza), su listener específico ya lo gestiona
+      if (e.target.closest(".hotspot") || e.target.closest(".hotspot-beacon")) {
+        return;
+      }
+
+      // Si hay un globo de diálogo de humor activo y se hace clic fuera (o sobre él), cerrarlo
+      if (isBubbleOpen) {
+        closeSpeechBubble();
+      }
+
+      // Clic fuera del diálogo y donde no hay ningún otro marcador: cerrar diálogo y restaurar zoom
+      if (isZoomed) {
+        resetZoom();
+      } else if (isDialogueOpen) {
+        closeDialoguePanel();
+      }
+    });
+
+    // Clic directo sobre el globo de texto para cerrarlo de inmediato
+    if (speechBubble) {
+      speechBubble.addEventListener("click", () => {
+        closeSpeechBubble();
       });
     }
 
