@@ -8,6 +8,7 @@ const projects = {
     startDate: "01/09/2026",
     endDate: "En producción / Desarrollo activo",
     repo: "https://github.com/drbarrancodev/oktime-releases",
+    url: "https://oktime.oksistemas.online",
     privateRepo: true,
     description: "Aplicación de escritorio para el control horario, presencia laboral y gestión de cuadrantes con modo kiosko táctil y sincronización en tiempo real con Supabase.",
     descriptionEn: "Desktop application for employee time-tracking, workforce presence, and shift scheduling featuring a touch kiosk mode and real-time Supabase sync.",

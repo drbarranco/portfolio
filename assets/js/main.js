@@ -154,8 +154,9 @@
             { text: "1. ¿Qué problema resuelve esta app?", next: "problem" },
             { text: "2. Explícame la arquitectura técnica.", next: "architecture" },
             { text: "3. ¿Cuáles fueron los mayores desafíos técnicos?", next: "challenges" },
-            { text: "4. [Ver caso de estudio detallado]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
-            { text: "5. Cambiar a otro proyecto de software.", next: "switch_proj" },
+            { text: "4. [Ver en producción: oktime.oksistemas.online]", action: "link", url: "https://oktime.oksistemas.online" },
+            { text: "5. [Ver caso de estudio detallado]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
+            { text: "6. Cambiar a otro proyecto de software.", next: "switch_proj" },
             { text: "[ ← Volver al despacho ]", action: "exit" }
           ]
         },
@@ -468,8 +469,9 @@
             { text: "1. What problem does this application solve?", next: "problem" },
             { text: "2. Tell me about the technical architecture.", next: "architecture" },
             { text: "3. What were the key technical challenges?", next: "challenges" },
-            { text: "4. [View detailed case study]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
-            { text: "5. Switch to another software project.", next: "switch_proj" },
+            { text: "4. [View in production: oktime.oksistemas.online]", action: "link", url: "https://oktime.oksistemas.online" },
+            { text: "5. [View detailed case study]", action: "link", url: "portfolio-details.html?id=oktimedesk" },
+            { text: "6. Switch to another software project.", next: "switch_proj" },
             { text: "[ ← Back to room ]", action: "exit" }
           ]
         },
